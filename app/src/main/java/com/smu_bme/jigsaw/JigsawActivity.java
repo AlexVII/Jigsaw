@@ -17,6 +17,7 @@ public class JigsawActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(JigsawActivity.this, MainActivity.class);
+                intent.putExtra("Get Started", 2);
                 startActivity(intent);
             }
         });
