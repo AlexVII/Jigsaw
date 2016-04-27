@@ -72,7 +72,7 @@ public class DbData {
 
         MydatabaseHelper db_one = new MydatabaseHelper();
 
-        public List<DbData> findData(String mode,String item) {
+        public List<DbData> findData(String dataBaseName,String mode,String item) {
             SQLiteDatabase db = db_one.getWritableDatabase();
             List<DbData> list = new ArrayList<DbData>();
 
@@ -104,6 +104,7 @@ public class DbData {
             values.put("remark", remark);
             db.insert("DATA", null, values);
             values.clear();
+            this.findData("",)
         }
 
 

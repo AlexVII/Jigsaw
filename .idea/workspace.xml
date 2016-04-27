@@ -9,24 +9,9 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04ff657-4bc7-4c48-bea1-487d56c37f23" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" />
+    <list default="true" id="f04ff657-4bc7-4c48-bea1-487d56c37f23" name="Default" comment="DB">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/smu_bme/jigsaw/JigsawActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/smu_bme/jigsaw/JigsawActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
     </list>
     <ignored path="Jigsaw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -106,12 +91,12 @@
       <file leaf-file-name="JigsawActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/smu_bme/jigsaw/JigsawActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8507853">
-              <caret line="116" column="1" selection-start-line="116" selection-start-column="1" selection-end-line="116" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.35340315">
+              <caret line="79" column="42" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="42" />
               <folding>
                 <element signature="e#806#1097#0" expanded="true" />
                 <element signature="e#1096#1097#0" expanded="true" />
-                <element signature="e#2433#2441#0" expanded="true" />
+                <element signature="e#2453#2461#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2254,7 +2239,13 @@
       <option name="project" value="LOCAL" />
       <updated>1461758902852</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="DB">
+      <created>1461771031773</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1461771031773</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2315,7 +2306,8 @@
     <MESSAGE value="Added Jigsaw Activity." />
     <MESSAGE value="Add MPAndroidChart" />
     <MESSAGE value="Figure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Figure" />
+    <MESSAGE value="DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="DB" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2397,7 +2389,7 @@
           <folding>
             <element signature="e#806#1097#0" expanded="true" />
             <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#2433#2441#0" expanded="true" />
+            <element signature="e#2453#2461#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2492,7 +2484,7 @@
           <folding>
             <element signature="e#806#1097#0" expanded="true" />
             <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#2433#2441#0" expanded="true" />
+            <element signature="e#2453#2461#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2582,7 +2574,7 @@
           <folding>
             <element signature="e#806#1097#0" expanded="true" />
             <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#2433#2441#0" expanded="true" />
+            <element signature="e#2453#2461#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2789,12 +2781,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/smu_bme/jigsaw/JigsawActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8507853">
-          <caret line="116" column="1" selection-start-line="116" selection-start-column="1" selection-end-line="116" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.35340315">
+          <caret line="79" column="42" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="42" />
           <folding>
             <element signature="e#806#1097#0" expanded="true" />
             <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#2433#2441#0" expanded="true" />
+            <element signature="e#2453#2461#0" expanded="true" />
           </folding>
         </state>
       </provider>
