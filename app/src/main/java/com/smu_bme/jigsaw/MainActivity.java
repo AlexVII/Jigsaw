@@ -4,6 +4,8 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -11,16 +13,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-import android.widget.TextView;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -68,6 +72,17 @@ public class MainActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+        private RecyclerView recyclerView;
+        private RecyclerView.Adapter adapter;
+        private RecyclerView.LayoutManager layoutManager;
+        private Spinner spinner;
+        private ArrayAdapter<CharSequence> arrayAdapter;
+
+        private int currentDay;
+        private int currentMouth;
+        private int currentYear;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -92,9 +107,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            eventTest one = new eventTest("one");
+            int [] idArr = {one.getid()};
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+//            if ( 查看日期 == 现在日期){
+//            progressBar.setMax(14400);
+//            progressBar.setSecondaryProgress(现在时间mins);
+//            } else { progressBar.setSecondaryProgress(1440);
+//        }
+//            progressBar.setProgress( 查看日期总计时间mins );
+            recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(mApplication.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new mAdapter(idArr);
+            recyclerView.setAdapter(adapter);
+            spinner = (Spinner) rootView.findViewById(R.id.spinner_mouth);
+//            arrayAdapter = Arr;
+
+
+
+
+
+
             return rootView;
         }
     }
@@ -132,4 +170,5 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
 }
