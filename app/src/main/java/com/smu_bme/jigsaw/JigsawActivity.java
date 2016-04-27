@@ -53,27 +53,34 @@ public class DbData {
                 + "name text"
                 + "remark text";
 
-        public static final String CREATE_SUM = "create table SUM("
-                + "id integer primary key autoincrement,"
-                + "date text"
-                + "sum integer)";
+//        public static final String CREATE_SUM = "create table SUM("
+//                + "id integer primary key autoincrement,"
+//                + "date text"
+//                + "sum integer)";
+
+
+
+        public MydatabaseHelper(Context context,String name, SQLiteDatabase.CursorFactory factory,int version){
+            super(context,name,factory,version);
+        }
 
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_DATA);
-            db.execSQL(CREATE_SUM);
-            db.execSQL("insert into SUM (date,sum) values(?,?)", new String[]{"all", "0"});
+//            db.execSQL(CREATE_SUM);
+//            db.execSQL("insert into SUM (date,sum) values(?,?)", new String[]{"all", "0"});
         }
+
+
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
 
-        MydatabaseHelper db_one = new MydatabaseHelper();
 
         public List<DbData> findData(String dataBaseName,String mode,String item) {
-            SQLiteDatabase db = db_one.getWritableDatabase();
+            SQLiteDatabase db = this.getWritableDatabase();
             List<DbData> list = new ArrayList<DbData>();
 
             Cursor cursor = db.rawQuery("select * from DATA where ?=?",new String[]{ mode ,item});
@@ -94,7 +101,7 @@ public class DbData {
 
         public void addData(String name, String date, String time, String duration, String remark) {
 
-            SQLiteDatabase db = db_one.getWritableDatabase();
+            SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             //开始组装数据
             values.put("name", name);
@@ -104,15 +111,115 @@ public class DbData {
             values.put("remark", remark);
             db.insert("DATA", null, values);
             values.clear();
-            this.findData("",)
+//            this.findData("",);
         }
 
 
         public void deleteData(String id) {
-            SQLiteDatabase db = db_one.getWritableDatabase();
+            SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL("delete from DATA where id=? ", new String[]{id});
         }
-
-
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
