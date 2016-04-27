@@ -19,24 +19,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -67,35 +53,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
 
         private RecyclerView recyclerView;
         private RecyclerView.Adapter adapter;
         private RecyclerView.LayoutManager layoutManager;
-        private Spinner spinner;
-        private ArrayAdapter<CharSequence> arrayAdapter;
 
         private int currentDay;
         private int currentMouth;
         private int currentYear;
 
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -111,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
             eventTest one = new eventTest("one");
             int [] idArr = {one.getid()};
 
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 //            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
 //            if ( 查看日期 == 现在日期){
 //            progressBar.setMax(14400);
@@ -119,21 +92,18 @@ public class MainActivity extends AppCompatActivity {
 //            } else { progressBar.setSecondaryProgress(1440);
 //        }
 //            progressBar.setProgress( 查看日期总计时间mins );
-            recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
-            recyclerView.setHasFixedSize(true);
-            layoutManager = new LinearLayoutManager(mApplication.getContext());
-            recyclerView.setLayoutManager(layoutManager);
-            adapter = new mAdapter(idArr);
-            recyclerView.setAdapter(adapter);
-            spinner = (Spinner) rootView.findViewById(R.id.spinner_mouth);
-//            arrayAdapter = Arr;
-
-
-
-
-
-
-            return rootView;
+                recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
+                recyclerView.setHasFixedSize(true);
+                layoutManager = new LinearLayoutManager(mApplication.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                adapter = new mAdapter(idArr);
+                recyclerView.setAdapter(adapter);
+                return rootView;
+            } else {
+                View rootView = inflater.inflate(R.layout.data_layout, container, false);
+//                TODO
+                return rootView;
+            }
         }
     }
 
@@ -152,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
+
         }
 
         @Override
