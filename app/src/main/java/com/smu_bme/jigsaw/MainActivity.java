@@ -13,11 +13,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.sql.Time;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         private RecyclerView.Adapter adapter;
         private RecyclerView.LayoutManager layoutManager;
 
-        private int currentDay;
+        Calendar calendar = Calendar.getInstance();
+        private int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
         private int currentMouth;
         private int currentYear;
 
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(layoutManager);
                 adapter = new mAdapter(idArr);
                 recyclerView.setAdapter(adapter);
+                Log.d("Helloooo", "Year is " + currentDay );
                 return rootView;
             } else {
                 View rootView = inflater.inflate(R.layout.data_layout, container, false);
