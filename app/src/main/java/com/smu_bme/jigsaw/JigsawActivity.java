@@ -5,12 +5,9 @@ package com.smu_bme.jigsaw;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteAbortException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -63,35 +60,10 @@ public class MydatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-
-    }
-}
-
-
-public class event {
-    private MydatabaseHelper dbHelper;
-
-    private String name;
-    private String date;
-    private int duration;
-    private String time;
-    private String remark;
-
-    public void event(String name,String date,String time,int duration, String remark){
-        this.name = name;
-        this.duration = duration;
-        this.date = date;
-        this.time = time;
-        this.remark = remark;
     }
 
-    public void getDate(){
-
-        return
-    }
-
-    public void addData(String name,String date,String time,int duration, String remark){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public void addData(String name,String date,String time,String duration, String remark){
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         //开始组装数据
         values.put("name",name);
@@ -103,9 +75,12 @@ public class event {
         values.clear();
     }
 
-    public void deleteData(String name,String date,String time,int duration, String remark){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete("Book","name=?",new String[]{name,date,time,String.valueOf(duration),remark});
 
+    public void deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from DATA where id=? ",new String[]{id});
     }
+
+    public void uo
+
 }
