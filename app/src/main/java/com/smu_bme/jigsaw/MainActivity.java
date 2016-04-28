@@ -1,8 +1,12 @@
 package com.smu_bme.jigsaw;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +21,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -33,6 +42,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -43,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     int currentYear = calendar.get(Calendar.YEAR);
     int currentMonth = calendar.get(Calendar.MONTH);
     int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -71,19 +80,34 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                switch (view.getId()){
+                    case R.id.fab:
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                        dialog.setTitle("Create A New Plan");
+                        dialog.setMessage("Create");
+                        dialog.setCancelable(false);
+                        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MainActivity.this, "Take this", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        dialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        dialog.show();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
     }
     public static class PlaceholderFragment extends Fragment {
 
-        private RecyclerView recyclerView;
-        private RecyclerView.Adapter adapter;
-        private RecyclerView.LayoutManager layoutManager;
-
-//        Get Current Date
         Calendar calendar = Calendar.getInstance();
         private int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
         private int currentMouth = calendar.get(Calendar.MONTH);
@@ -105,49 +129,61 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
-
-
-            eventTest one = new eventTest("one");
-            eventTest two = new eventTest("two");
-            int [] idArr = {one.getid(), two.getid()};
-
-
-
-
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                View rootView = inflater.inflate(R.layout.log_layout, container, false);
-            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
-//            if ( 查看日期 == 现在日期){
-            progressBar.setMax(14400);
-//            progressBar.setSecondaryProgress(现在时间mins);
-//            } else { progressBar.setSecondaryProgress(1440);
-//        }
-//            progressBar.setProgress( 查看日期总计时间mins );
-                recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
-                recyclerView.setHasFixedSize(true);
-                layoutManager = new LinearLayoutManager(mApplication.getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                adapter = new mAdapter(idArr);
-                recyclerView.setAdapter(adapter);
-                return rootView;
+                return initCardAndProgressBar(inflater, container);
             } else {
-                View rootView = inflater.inflate(R.layout.data_layout, container, false);
-                BarChart barChart = (BarChart) rootView.findViewById(R.id.line_chart);
-                initChart(barChart, null);
-                return rootView;
+                return initChart(inflater, container);
             }
         }
 
 
-        public void initChart (BarChart barChart, PieChart pieChart){
+        public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
+            eventTest one = new eventTest("one");
+            eventTest two = new eventTest("two");
+            int [] idArr = {one.getid(), two.getid()};
+            View rootView = inflater.inflate(R.layout.log_layout, container, false);
+            final TextView textView = (TextView) rootView.findViewById(R.id.date);
+            textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+            ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+                       @Override
+                       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                           calendar.set(Calendar.YEAR, year);
+                           calendar.set(Calendar.MONTH, monthOfYear);
+                           calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+                       }
+                   };
+                   new DatePickerDialog(getActivity(), dateListener,
+                           calendar.get(Calendar.DAY_OF_MONTH),
+                           calendar.get(Calendar.MONTH),
+                           calendar.get(Calendar.DAY_OF_MONTH)).show();
+               }
+           });
+            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+            progressBar.setMax(14400);
+//            if ( 查看日期 == 现在日期){
+//            progressBar.setSecondaryProgress(现在时间mins);
+//            } else { progressBar.setSecondaryProgress(1440);
+//        }
+//            progressBar.setProgress( 查看日期总计时间mins );
+            RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(new mAdapter(idArr));
+            return rootView;
 
+        }
+
+        public View initChart (LayoutInflater inflater, ViewGroup container){
+
+            View rootView = inflater.inflate(R.layout.data_layout, container, false);
+            BarChart barChart = (BarChart) rootView.findViewById(R.id.line_chart);
             ArrayList<String> xVals = new ArrayList<String>();
-            xVals.add(String.valueOf(currentDay));
-            for (int i = 0; i <= 5; i++ ){
-                calendar.add(Calendar.DAY_OF_MONTH, -1);
-                xVals.add(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-            }
+            xVals.add("星期日");xVals.add("星期一");xVals.add("星期二");xVals.add("星期三");xVals.add("星期四");xVals.add("星期五");xVals.add("星期六");
 
             ArrayList<BarEntry> valsComp1 = new ArrayList<>();
             ArrayList<BarEntry> valsComp2 = new ArrayList<>();
@@ -172,14 +208,11 @@ public class MainActivity extends AppCompatActivity {
             BarData data = new BarData(xVals, dataSet);
             barChart.setData(data);
             barChart.invalidate();
+            return rootView;
 
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
