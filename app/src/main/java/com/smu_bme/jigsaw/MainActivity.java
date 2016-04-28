@@ -1,11 +1,9 @@
 package com.smu_bme.jigsaw;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,34 +18,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    public FloatingActionButton fab;
 
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
@@ -60,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,43 +57,39 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.fab:
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                        dialog.setTitle("Create A New Plan");
-                        dialog.setMessage("Create");
-                        dialog.setCancelable(false);
-                        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+                final View layout = inflater.inflate(R.layout.create_dialog, null);
+                final EditText name = (EditText) layout.findViewById(R.id.create_name);
+                final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
+                new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(MainActivity.this, "Take this", Toast.LENGTH_LONG).show();
+                                String nameInput = name.getText().toString();
+                                String remarkInput = remark.getText().toString();
+                                if (nameInput.equals("")){
+                                    Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
+                                } else if (remarkInput.equals("")) {
+                                    Toast.makeText(MainActivity.this, getString(R.string.noRemark), Toast.LENGTH_SHORT).show();
+                                } else {
+
+                                }
                             }
-                        });
-                        dialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        dialog.show();
-                        break;
-                    default:
-                        break;
+                        }).setNegativeButton(getString(R.string.cancel), null).show();
                 }
-            }
         });
 
     }
+
     public static class PlaceholderFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
@@ -129,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            MainActivity mainActivity = (MainActivity) getActivity();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -136,12 +121,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
+            View rootView = inflater.inflate(R.layout.log_layout, container, false);
             eventTest one = new eventTest("one");
             eventTest two = new eventTest("two");
             int [] idArr = {one.getid(), two.getid()};
-            View rootView = inflater.inflate(R.layout.log_layout, container, false);
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
             textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
@@ -175,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(new mAdapter(idArr));
             return rootView;
-
         }
 
         public View initChart (LayoutInflater inflater, ViewGroup container){
@@ -234,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Log";
+                    return getString(R.string.Log);
                 case 1:
-                    return "Data";
+                    return getString(R.string.Data);
             }
             return null;
         }
