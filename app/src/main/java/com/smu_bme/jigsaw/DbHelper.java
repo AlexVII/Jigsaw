@@ -5,9 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by gollyrui on 4/28/16.
@@ -17,17 +15,6 @@ public class DbHelper{
     private MyDatabaseHelper dbHelper;
     private String tableName;
     private final String tableSum= "SUM";
-
-    private class DbData {
-        int id;
-        String date;
-        String duration;
-        String time;
-        String name;
-        String remark;
-        int sumDate;
-        int sumAll;
-    }
 
 
     public DbHelper(Context context, String tableNameIn){
@@ -40,64 +27,130 @@ public class DbHelper{
         this.context = context;
         dbHelper= new MyDatabaseHelper(context);
         tableName = "DATA";
-
     }
-    private int findSum(String mode,String date){
-        int sum;
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        if(mode == "date") {
-            Cursor cursorSum = db.rawQuery("select * from ? where ?=?", new String[]{tableSum, "date", date});
+    //To find the sum of duration on a day
+    private int findSum(String date){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // Initialization
+        int sum ;
+        //get the sum of the very date
+        Cursor cursorSum = db.rawQuery("select * from ? where ? = ?", new String[]{tableSum, "date", date});
+
+        if(cursorSum.getCount()>0) { // if found
             sum =  cursorSum.getInt(cursorSum.getColumnIndex("sum"));
-        } else if(mode == "all"){
-            Cursor cursorSum = db.rawQuery("select * from ? where ?=?", new String[]{tableSum, "id", "1"});
-            sum = cursorSum.getInt(cursorSum.getColumnIndex("sum"));
-        }
+        } else {sum = -1;}// if not find, then the sum of duration of the very date is not created yet
+
+        cursorSum.close();
+        db.close();
         return sum;
     }
 
-    public List<DbData> findData(String mode, String item) {
+    private int findAll(){// find the sum of all date
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        List<DbData> list = new ArrayList<DbData>();
-
-            Cursor cursor = db.rawQuery("select * from ? where ?=?", new String[]{tableName, mode, item});
-            while (cursor.moveToFirst()) {
-                DbData dbData = new DbData();
-                dbData.id = cursor.getInt(cursor.getColumnIndex("id"));
-                dbData.date = cursor.getString(cursor.getColumnIndex("data"));
-                dbData.duration = cursor.getString(cursor.getColumnIndex("duration"));
-                dbData.time = cursor.getString(cursor.getColumnIndex("time"));
-                dbData.name = cursor.getString(cursor.getColumnIndex("name"));
-                dbData.remark = cursor.getString(cursor.getColumnIndex("remark"));
-                list.add(dbData);
-            }
-            cursor.close();
-            db.close();
-            return list;
-
+        Cursor cursorSum = db.rawQuery("select * from ? where ? = ?", new String[]{tableSum, "id", "1"});
+        int sum = cursorSum.getInt(cursorSum.getColumnIndex("sum"));
+        cursorSum.close();
+        db.close();
+        return sum;
     }
 
-    public void addData(String name, String date, String time, String duration, String remark) {
+    public ArrayList<DbData> findData(String mode, String item) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<DbData> list = new ArrayList<>();
 
+            Cursor cursor = db.rawQuery("select * from ? where ? = ?", new String[]{tableName, mode, item});
+            if(cursor.getCount()>0) {
+                while (cursor.moveToFirst()) {
+                    String date = cursor.getString(cursor.getColumnIndex("date"));
+                    int sumAll = this.findAll();
+                    int sumDate = this.findSum(date);
+                    DbData dbData = new DbData(
+                            cursor.getInt(cursor.getColumnIndex("id")),
+                            cursor.getString(cursor.getColumnIndex("date")),
+                            cursor.getInt(cursor.getColumnIndex("duration")),
+                            cursor.getString(cursor.getColumnIndex("time")),
+                            cursor.getString(cursor.getColumnIndex("name")),
+                            cursor.getString(cursor.getColumnIndex("remark")),
+                            sumDate,
+                            sumAll);
+                    list.add(dbData);
+                }
+            }//else return null
+                cursor.close();
+                db.close();
+
+        //TODO what if the list is null
+            return list;
+    }
+
+    private void addSum(String date,int duration){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        db.execSQL("insert into SUM (date,sum) values (?, ?)",new Object[]{date,duration});
+    }
 
+    public void addData(DbData dbDate) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
         //开始组装数据
-        values.put("name", name);
-        values.put("date", date);
-        values.put("time", time);
-        values.put("duration", duration);
-        values.put("remark", remark);
+        values.put("name", dbDate.getName());
+        values.put("date", dbDate.getDate());
+        values.put("time", dbDate.getTime());
+        values.put("duration",dbDate.getDuration());
+        values.put("remark", dbDate.getRemark());
         db.insert("DATA", null, values);
         values.clear();
-//            this.findData("",);
+
+        // SUM
+        int sumSameDate= this.findSum(dbDate.getDate());
+        int sumAll = this.findAll();
+        if(sumSameDate==-1) {
+            db.execSQL("insert into SUM num values ?",new String[]{String.valueOf(dbDate.getDuration())});
+            int nSumAll =sumAll+dbDate.getDuration();
+            db.execSQL("update SUM set sum = ? where id = 1", new String[]{String.valueOf(nSumAll)});
+        }
+        else{
+            updateSum(dbDate.getDate(),dbDate.getDuration());
+        }
+        db.close();
     }
 
 
-    public void deleteData(String id) {
+    public void deleteData(int id) {
         SQLiteDatabase db =dbHelper.getWritableDatabase();
-        db.execSQL("delete from DATA where id=? ", new String[]{id});
+        db.execSQL("delete from DATA where id = ? ", new String[]{String.valueOf(id)});
+        db.close();
     }
 
+    public void updateData(DbData dbData){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<DbData> previousList = this.findData("id",String.valueOf( dbData.getId() ));
+        if(!previousList.isEmpty()) {
+            db.execSQL("update DATA set date = ?, duration = ?, time = ?, name = ?, remark = ? where id = ?",
+                    new String[]{dbData.getDate(),
+                            String.valueOf(dbData.getDuration()),
+                            dbData.getTime(),
+                            dbData.getName(),
+                            dbData.getRemark()
+                    });
+            DbData previous = previousList.get(0);
+            int deltaDuration = dbData.getDuration()-previous.getDuration();
+            updateSum(dbData.getDate(), deltaDuration);
+        }
+
+        db.close();
+    }
+
+    private void updateSum(String date,int deltaDuration){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int nDateSum = findSum(date)+deltaDuration;
+        db.execSQL("update SUM set sum = ? where date = ?", new String[]{String.valueOf(nDateSum),date});
+        int nDataAll = findAll() + deltaDuration;
+        db.execSQL("update SUM set sum = ? where id = 1", new String[]{String.valueOf(nDataAll)});
+        }
 
 }
+
+
+
