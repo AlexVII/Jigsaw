@@ -14,7 +14,7 @@ public class DbData {
     private int sumAll;
 
     // Full
-    public DbData(int id, String date, int duration, String time, String  name, String remark, int sumDate,int sumAll){
+    public DbData(int id, String date, int duration, String time, String  name, String remark, int sumDate, int sumAll){
         this.id= id;
         this.date=date;
         this.duration=duration;
@@ -42,6 +42,12 @@ public class DbData {
         this.time = time;
         this.name = name;
         this.remark = remark;
+    }
+    public DbData(String date, int duration, String time, String  name){
+        this.date=date;
+        this.duration=duration;
+        this.time = time;
+        this.name = name;
     }
 
     public void setDuration(int duration) {
@@ -86,5 +92,16 @@ public class DbData {
 
     public String getTime() {
         return time;
+    }
+    public String Print(){
+        return String.valueOf(this.getId())+this.getDate()+String.valueOf(this.getDuration());
+//        private int id;
+//        private String date;
+//        private int duration;
+//        private String time;
+//        private String name;
+//        private String remark;
+//        private int sumDate;
+//        private int sumAll;
     }
 }
