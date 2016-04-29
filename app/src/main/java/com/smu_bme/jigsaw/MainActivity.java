@@ -1,14 +1,11 @@
 package com.smu_bme.jigsaw;
 
-import android.app.ActivityManager;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,13 +15,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,28 +38,22 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public FloatingActionButton fab;
 
     Calendar calendar = Calendar.getInstance();
-    int currentYear = calendar.get(Calendar.YEAR);
-    int currentMonth = calendar.get(Calendar.MONTH);
-    int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+//    private CreateEventListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +72,16 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+//        listener = new CreateEventListener(MainActivity.this, calendar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-                final View layout = inflater.inflate(R.layout.create_dialog, null);
+                final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
+//        PopupMenu popupMenu = new PopupMenu(context, )
                 new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -94,18 +89,18 @@ public class MainActivity extends AppCompatActivity {
                                 String nameInput = name.getText().toString();
                                 String remarkInput = remark.getText().toString();
                                 if (nameInput.equals("")){
-                                    Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this,getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else if (remarkInput.equals("")) {
                                     Toast.makeText(MainActivity.this, getString(R.string.noRemark), Toast.LENGTH_SHORT).show();
                                 } else {
-
+//                                    DbData dbData = new DbData(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
-                }
+            }
         });
 
-    }
+}
 
     public static class PlaceholderFragment extends Fragment {
 
@@ -139,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
-            View rootView = inflater.inflate(R.layout.log_layout, container, false);
-            eventTest one = new eventTest("one");
-            eventTest two = new eventTest("two");
-            int [] idArr = {one.getid(), two.getid()};
+            View rootView = inflater.inflate(R.layout.layout_log, container, false);
+//            eventTest one = new eventTest("one");
+//            eventTest two = new eventTest("two");
+//            int [] idArr = {one.getid(), two.getid()};
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
             textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
@@ -174,14 +169,14 @@ public class MainActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(new mAdapter(idArr, getActivity()));
+//            recyclerView.setAdapter(new mAdapter(idArr, getActivity()));
             return rootView;
 
         }
 
         public View initChart (LayoutInflater inflater, ViewGroup container){
 
-            View rootView = inflater.inflate(R.layout.data_layout, container, false);
+            View rootView = inflater.inflate(R.layout.layout_data, container, false);
             BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
             ArrayList<String> xVals = new ArrayList<String>();
             xVals.add("星期日");xVals.add("星期一");xVals.add("星期二");xVals.add("星期三");xVals.add("星期四");xVals.add("星期五");xVals.add("星期六");
@@ -214,9 +209,6 @@ public class MainActivity extends AppCompatActivity {
             setc1.setColors(ColorTemplate.COLORFUL_COLORS);
             setc2.setColors(ColorTemplate.COLORFUL_COLORS);
             barChart.animateY(5000);
-
-
-
 
 
             PieChart pieChart = (PieChart) rootView.findViewById(R.id.pie_chart);
@@ -310,4 +302,11 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+         public void showPopup(View view){
+            PopupMenu popupMenu = new PopupMenu(this, view);
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.duration, popupMenu.getMenu());
+            popupMenu.show();
+        }
+
 }

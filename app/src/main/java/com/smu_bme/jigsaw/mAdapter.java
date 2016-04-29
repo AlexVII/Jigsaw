@@ -2,8 +2,6 @@ package com.smu_bme.jigsaw;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.LayoutInflaterCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +39,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }

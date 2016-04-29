@@ -22,8 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CardActivity"></activity>
-        <activity android:name=".StatisticFigure" />
-        <activity android:name=".DbtestActivity"></activity>
     </application>
 
 </manifest>
