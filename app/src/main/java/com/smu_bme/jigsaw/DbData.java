@@ -36,14 +36,15 @@ public class DbData {
     }
 
     // when input data
-    public DbData(String date, int duration, String time, String  name, String remark){
+//    For ale
+    public DbData(String date, String time,int duration, String  name, String remark){
         this.date=date;
         this.duration=duration;
         this.time = time;
         this.name = name;
         this.remark = remark;
     }
-    public DbData(String date, int duration, String time, String  name){
+    public DbData(String date, String time, int duration, String  name){
         this.date=date;
         this.duration=duration;
         this.time = time;
@@ -70,11 +71,11 @@ public class DbData {
         return id;
     }
 
-    public int getSumAll() {
+    public int getSumOfAll() {
         return sumAll;
     }
 
-    public int getSumDate() {
+    public int getSumOnDate() {
         return sumDate;
     }
 

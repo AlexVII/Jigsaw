@@ -12,36 +12,11 @@ import java.util.List;
  * Created by gollyrui on 4/28/16.
  */
 public class DbHelper{
+
     Context context;
     private MyDatabaseHelper dbHelper;
     private final String tableName = "DATA";
     private final String tableSum= "SUM";
-
-private void initialAndCheck() {
-    SQLiteDatabase db = dbHelper.getWritableDatabase();
-//    Cursor cursor = db.query(tableSum,null,"id=?",new String[]{"1"},null,null,null,null);
-    Cursor cursor = db.rawQuery("select * from SUM where id = 1",new String[]{});
-    if (cursor.getCount() == 0) {
-        ContentValues values = new ContentValues();
-        values.put("date","all");
-        values.put("sum",0);
-        db.insert(tableSum,null,values);
-        values.clear();
-//        db.execSQL("insert into SUM (date, sum) values ('all', 0)");
-    }
-
-    cursor = db.query("NUM",null,"id=?",new String[]{"1"},null,null,null,null);
-//    cursor = db.rawQuery("select * from NUM where id = 1",new String[]{});
-    if (cursor.getCount() == 0) {
-        ContentValues values = new ContentValues();
-        values.put("num",0);
-        db.insert("NUM",null,values);
-        values.clear();
-
-        cursor.close();
-
-    }
-}
 
 
     public DbHelper(Context context){
@@ -49,6 +24,35 @@ private void initialAndCheck() {
         dbHelper= new MyDatabaseHelper(context);
         initialAndCheck();
     }
+
+    private void initialAndCheck() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//          Cursor cursor = db.query(tableSum,null,"id=?",new String[]{"1"},null,null,null,null);
+        Cursor cursor = db.rawQuery("select * from SUM where id = 1",new String[]{});
+        if (cursor.getCount() == 0) {
+            ContentValues values = new ContentValues();
+            values.put("date","all");
+            values.put("sum",0);
+            db.insert(tableSum,null,values);
+            values.clear();
+//          db.execSQL("insert into SUM (date, sum) values ('all', 0)");
+        }
+
+        cursor = db.query("NUM",null,"id=?",new String[]{"1"},null,null,null,null);
+//          cursor = db.rawQuery("select * from NUM where id = 1",new String[]{});
+        if (cursor.getCount() == 0) {
+        ContentValues values = new ContentValues();
+        values.put("num",0);
+        db.insert("NUM",null,values);
+        values.clear();
+
+        cursor.close();
+
+        }
+    }
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------------
 
 ///////////////////// Find //////////////////////////
@@ -60,8 +64,8 @@ private void initialAndCheck() {
         // Initialization
         int sum ;
         //get the sum of the very date
-        Cursor cursorSum = db.query(tableSum,null,"date=?",new String[]{date},null,null,null,null);
-//        Cursor cursorSum = db.rawQuery("select * from ? where ? = ?", new String[]{tableSum, "date", date});
+//        Cursor cursorSum = db.query(tableSum,null,"date=?",new String[]{date},null,null,null,null);
+        Cursor cursorSum = db.rawQuery("select * from SUM where date = ?", new String[]{date});
 
         if(cursorSum.getCount()>0) {
             // if found, get sum
@@ -72,33 +76,46 @@ private void initialAndCheck() {
         cursorSum.close();
         return sum;
     }
-//TODO
+
+
     private int queryAll(){// find the sum of all date
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int sum=0;
 //        Cursor cursorSum = db.query(tableSum,null,"id=?",new String[]{"1"},null,null,null,null);
-        Cursor cursorSum = db.rawQuery("select * from DATA where ? = ?", new String[]{ "id", "1"});
+        Cursor cursorSum = db.rawQuery("select sum from SUM where id = 1", new String[]{});
         if(cursorSum.moveToFirst()){
         sum = cursorSum.getInt(cursorSum.getColumnIndex("sum"));}
         cursorSum.close();
         return sum;
     }
+
+
     public int queryProgress(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select num from NUM where id =1",new String[]{});
         cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex("num"));
+        int out = cursor.getInt(cursor.getColumnIndex("num"));
+        cursor.close();
+        return out;
     }
 
     public List<DbData> queryData(String mode, String item) {
 //        Log.d("DEBUGGING_MARKER","init");
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<DbData> list = new ArrayList<>();
-//        Cursor cursor  = db.rawQuery("select * from DATA where id = ?",new String[]{item});
+        Cursor cursor = null;
 //        Log.d("DEBUGGING_MARKER","1");
 
-//        Log.d("DEBUGGING_MARKER","count"+String.valueOf( cursor.getCount()) );
-           Cursor cursor = db.rawQuery("select * from DATA where ? = ?", new String[]{ mode, item});
+    if (mode.equals("id")) {
+        cursor = db.rawQuery("select * from DATA where id = ?", new String[]{item});
+    }
+        else if (mode.equals("name")){
+            cursor = db.rawQuery("select * from DATA where name = ?", new String[]{item});
+        }
+        else if(mode.equals("date")){
+            cursor = db.rawQuery("select * from DATA where date = ?", new String[]{item});
+        }
+//           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
             if(cursor.getCount()>0) {
                 while (cursor.moveToNext()) {
 
@@ -125,6 +142,38 @@ private void initialAndCheck() {
         //TODO what if the list is null
             return list;
     }
+    public List<DbData> queryData(String mode, String date,String name) {
+//        Log.d("DEBUGGING_MARKER","init");
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        List<DbData> list = new ArrayList<>();
+        Cursor cursor = null;
+//        Log.d("DEBUGGING_MARKER","1");
+
+        if (mode.equals("D&N")) {
+            cursor = db.rawQuery("select * from DATA where date = ? & name =?", new String[]{date,name});
+        }
+//           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
+        if(cursor.getCount()>0) {
+            while (cursor.moveToNext()) {
+//                    Log.d("DEBUGGING_MARKER","loop");
+
+                int sumAll = this.queryAll();
+                int sumDate = this.querySum(date);
+                DbData dbData = new DbData(
+                        cursor.getInt(cursor.getColumnIndex("id")),
+                        cursor.getString(cursor.getColumnIndex("date")),
+                        cursor.getInt(cursor.getColumnIndex("duration")),
+                        cursor.getString(cursor.getColumnIndex("time")),
+                        cursor.getString(cursor.getColumnIndex("name")),
+                        cursor.getString(cursor.getColumnIndex("remark")),
+                        sumDate,
+                        sumAll);
+                list.add(dbData);
+            }
+        }//else return null
+        cursor.close();
+        return list;
+    }
 
     ///////////////////// Add//////////////////////////
     private void addSum(String date,int duration){
@@ -145,24 +194,24 @@ private void initialAndCheck() {
 //        db.execSQL("update ? set sum = ? where id = 1",new String[]{tableSum,String.valueOf( queryAll()+duration )});
     }
 
-    public int addData(DbData dbDate) {
+    public int addData(DbData dbData) {
         int out;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if (!dbDate.validation()) {
+        if (!dbData.validation()) {
             out = -1;//"Input is not valid. Any of date, time or duration is empty."
         } else  {
             //check whether already exists
-            Cursor cursor = db.rawQuery("select id from DATA where date = ? and time = ?", new String[]{dbDate.getDate(), dbDate.getTime()});
+            Cursor cursor = db.rawQuery("select id from DATA where date = ? and time = ?", new String[]{dbData.getDate(), dbData.getTime()});
             if (cursor.getCount() != 0) {
                 out = -2;//"Data with same date and time already exists"
             }else{
                 ContentValues values = new ContentValues();
                 //开始组装数据
-                values.put("name", dbDate.getName());
-                values.put("date", dbDate.getDate());
-                values.put("time", dbDate.getTime());
-                values.put("duration", dbDate.getDuration());
-                values.put("remark", dbDate.getRemark());
+                values.put("name", dbData.getName());
+                values.put("date", dbData.getDate());
+                values.put("time", dbData.getTime());
+                values.put("duration", dbData.getDuration());
+                values.put("remark", dbData.getRemark());
                 db.insert("DATA", null, values);
                 values.clear();
 
@@ -176,16 +225,16 @@ private void initialAndCheck() {
 //                        });
 
                 // SUM
-                int sumSameDate = this.querySum(dbDate.getDate());
+                int sumSameDate = this.querySum(dbData.getDate());
                 if (sumSameDate == -1) {//if the date is new
 
                     // Add
-                    this.addSum(dbDate.getDate(), dbDate.getDuration());
+                    this.addSum(dbData.getDate(), dbData.getDuration());
 
                 } else {//if the date already exists
 
                     //update
-                    this.updateSum(dbDate.getDate(), dbDate.getDuration());
+                    this.updateSum(dbData.getDate(), dbData.getDuration());
 
                 }
                 out =0;
@@ -214,7 +263,7 @@ private void initialAndCheck() {
     ///////////////////// Update//////////////////////////
     public Boolean updateData(DbData dbData){
         Boolean out;
-        if (dbData.getId()==0)         out = false;// Id not Found
+        if (dbData.getId()==0) out = false;// Id not Found
         else {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             List<DbData> previousList = this.queryData("id", String.valueOf(dbData.getId()));
@@ -252,7 +301,7 @@ private void initialAndCheck() {
         int nProgress = this.queryProgress() + 1;
         ContentValues values = new ContentValues();
         values.put("sum",String.valueOf(nProgress));
-        db.update("NUM",values,"date=?",new String[]{"1"});
+        db.update("NUM",values,"id=?",new String[]{"1"});
         values.clear();
 //        db.execSQL("update NUM set num = ? where id = 1",new String[]{String.valueOf(nProgress)});
     }

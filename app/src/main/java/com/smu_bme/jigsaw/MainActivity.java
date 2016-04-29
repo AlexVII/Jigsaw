@@ -44,12 +44,19 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.logging.SocketHandler;
 
 public class MainActivity extends AppCompatActivity{
 
     public FloatingActionButton fab;
 
-    Calendar calendar = Calendar.getInstance();
+    public Calendar CurrentCalendar = Calendar.getInstance();
+    public Calendar ShowCalendar = null;
+
+    public Calendar getCrruentCalendar(){
+        return this.CurrentCalendar;
+    }
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (WrapContentHeightPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -73,7 +80,6 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-//        listener = new CreateEventListener(MainActivity.this, calendar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +87,6 @@ public class MainActivity extends AppCompatActivity{
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
-//        PopupMenu popupMenu = new PopupMenu(context, )
                 new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -104,15 +109,12 @@ public class MainActivity extends AppCompatActivity{
 
     public static class PlaceholderFragment extends Fragment {
 
-        Calendar calendar = Calendar.getInstance();
-        private int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        private int currentMouth = calendar.get(Calendar.MONTH);
-        private int currentYear = calendar.get(Calendar.YEAR);
+        Calendar CurrentCalendar = Calendar.getInstance();
+        Calendar ShowedCalendar = CurrentCalendar;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
+        public PlaceholderFragment() {}
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            MainActivity mainActivity = (MainActivity) getActivity();
+            initEvent();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -135,11 +137,8 @@ public class MainActivity extends AppCompatActivity{
 
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
-//            eventTest one = new eventTest("one");
-//            eventTest two = new eventTest("two");
-//            int [] idArr = {one.getid(), two.getid()};
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
-            textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+            textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime()));
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
             imageButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -147,25 +146,25 @@ public class MainActivity extends AppCompatActivity{
                    DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
                        @Override
                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                           calendar.set(Calendar.YEAR, year);
-                           calendar.set(Calendar.MONTH, monthOfYear);
-                           calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+                           ShowedCalendar.set(Calendar.YEAR, year);
+                           ShowedCalendar.set(Calendar.MONTH, monthOfYear);
+                           ShowedCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(ShowedCalendar.getTime()));
                        }
                    };
                    new DatePickerDialog(getActivity(), dateListener,
-                           calendar.get(Calendar.DAY_OF_MONTH),
-                           calendar.get(Calendar.MONTH),
-                           calendar.get(Calendar.DAY_OF_MONTH)).show();
+                           ShowedCalendar.get(Calendar.DAY_OF_MONTH),
+                           ShowedCalendar.get(Calendar.MONTH),
+                           ShowedCalendar.get(Calendar.DAY_OF_MONTH)).show();
                }
            });
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
             progressBar.setMax(14400);
-//            if ( 查看日期 == 现在日期){
-//            progressBar.setSecondaryProgress(现在时间mins);
-//            } else { progressBar.setSecondaryProgress(1440);
-//        }
-//            progressBar.setProgress( 查看日期总计时间mins );
+            if (ShowedCalendar == CurrentCalendar){
+            progressBar.setSecondaryProgress(CurrentCalendar.get(Calendar.MINUTE));
+            } else { progressBar.setSecondaryProgress(1440);
+        }
+//            progressBar.setProgress();
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -272,7 +271,25 @@ public class MainActivity extends AppCompatActivity{
             return rootView;
 
         }
+        public void initEvent(){
+            DbData dbData1 = new DbData("1970-1-1", "03:33", 200, "Test1");
+            DbData dbData2 = new DbData("1970-1-1", "05:33", 200, "Test2");
+            DbData dbData3 = new DbData("1970-1-1", "20:33", 200, "Test1");
+            DbData dbData4 = new DbData("1970-1-1", "23:33", 200, "Test2");
+            DbData dbData5 = new DbData("1970-1-2", "03:33", 200, "Test5");
+            DbData dbData6 = new DbData("1970-1-2", "13:33", 200, "Test1");
+            DbData dbData7 = new DbData("1970-1-2", "23:33", 200, "Test2");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            dbHelper.addData(dbData1);
+            dbHelper.addData(dbData2);
+            dbHelper.addData(dbData3);
+            dbHelper.addData(dbData4);
+            dbHelper.addData(dbData5);
+            dbHelper.addData(dbData6);
+            dbHelper.addData(dbData7);
+        }
     }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
