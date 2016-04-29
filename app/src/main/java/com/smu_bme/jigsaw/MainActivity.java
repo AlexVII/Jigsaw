@@ -49,7 +49,12 @@ public class MainActivity extends AppCompatActivity{
 
     public FloatingActionButton fab;
 
-    Calendar calendar = Calendar.getInstance();
+    public Calendar CrruentCalendar = Calendar.getInstance();
+    public Calendar ShowCalendar = null;
+
+    public Calendar getCrruentCalendar(){
+        return this.CrruentCalendar;
+    }
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (WrapContentHeightPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -73,7 +78,6 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-//        listener = new CreateEventListener(MainActivity.this, calendar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity{
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
-//        PopupMenu popupMenu = new PopupMenu(context, )
                 new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -104,15 +107,12 @@ public class MainActivity extends AppCompatActivity{
 
     public static class PlaceholderFragment extends Fragment {
 
-        Calendar calendar = Calendar.getInstance();
-        private int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        private int currentMouth = calendar.get(Calendar.MONTH);
-        private int currentYear = calendar.get(Calendar.YEAR);
+        Calendar CurrentCalendar = Calendar.getInstance();
+        Calendar ShowedCalenfar = null;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
+        public PlaceholderFragment() {}
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            MainActivity mainActivity = (MainActivity) getActivity();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -135,9 +134,6 @@ public class MainActivity extends AppCompatActivity{
 
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
-//            eventTest one = new eventTest("one");
-//            eventTest two = new eventTest("two");
-//            int [] idArr = {one.getid(), two.getid()};
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
             textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
