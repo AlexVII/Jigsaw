@@ -20,6 +20,7 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
             android:layout_weight="1"
-            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
             android:layout_height="200dp"/>
 </LinearLayout>
+    </LinearLayout>
