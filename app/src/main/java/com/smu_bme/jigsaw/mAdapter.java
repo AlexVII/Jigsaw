@@ -3,19 +3,26 @@ package com.smu_bme.jigsaw;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * Created by bme-lab2 on 4/28/16.
  */
 public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
 
-    private int [] id;
     private Context context;
+    private String calendar;
+    private DbHelper dbHelper;
+    private List<DbData> list;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
@@ -32,9 +39,11 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
         }
     }
 
-    public mAdapter(int [] id, Context context){
-        this.id = id;
+    public mAdapter(String calendar, Context context){
+        this.calendar = calendar;
         this.context = context;
+        dbHelper = new DbHelper(this.context);
+        list = dbHelper.queryData("date", calendar);
     }
 
     @Override
@@ -47,19 +56,24 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 //        TODO  Using Database here:
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CardActivity.class);
-                intent.putExtra("Event", 1);
-                context.startActivity(intent);
-            }
-        });
+        if (list.isEmpty()){
+        } else {
+            holder.name.setText(list.get(position).getName());
+            holder.time.setText(list.get(position).getTime());
+            holder.duration.setText(list.get(position).getDuration());
+            holder.more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CardActivity.class);
+                    intent.putExtra("Event", 1);
+                    context.startActivity(intent);
+                }
+            });}
     }
 
     @Override
     public int getItemCount() {
-        return id.length;
+        return new DbHelper(context).querySum(calendar);
     }
 
 }

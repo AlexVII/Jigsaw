@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,11 +101,11 @@ public class DbHelper{
     }
 
     public List<DbData> queryData(String mode, String item) {
-//        Log.d("DEBUGGING_MARKER","init");
+        Log.d("DEBUGGING_MARKER","init");
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<DbData> list = new ArrayList<>();
         Cursor cursor = null;
-//        Log.d("DEBUGGING_MARKER","1");
+        Log.d("DEBUGGING_MARKER","1");
 
     if (mode.equals("id")) {
         cursor = db.rawQuery("select * from DATA where id = ?", new String[]{item});
@@ -115,11 +116,11 @@ public class DbHelper{
         else if(mode.equals("date")){
             cursor = db.rawQuery("select * from DATA where date = ?", new String[]{item});
         }
-//           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
+           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
             if(cursor.getCount()>0) {
                 while (cursor.moveToNext()) {
 
-//                    Log.d("DEBUGGING_MARKER","loop");
+                    Log.d("DEBUGGING_MARKER","loop");
 
                     String date = cursor.getString(cursor.getColumnIndex("date"));
                     int sumAll = this.queryAll();
