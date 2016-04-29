@@ -18,7 +18,7 @@ public class JigsawActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(JigsawActivity.this, DbtestActivity.class);
+                Intent intent = new Intent(JigsawActivity.this, MainActivity.class);
                 intent.putExtra("Get Started", 2);
                 startActivity(intent);
             }
