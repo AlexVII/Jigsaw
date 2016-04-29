@@ -70,11 +70,11 @@ public class DbData {
         return id;
     }
 
-    public int getSumAll() {
+    public int getSumOfAll() {
         return sumAll;
     }
 
-    public int getSumDate() {
+    public int getSumOnDate() {
         return sumDate;
     }
 
