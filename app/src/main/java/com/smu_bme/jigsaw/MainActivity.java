@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -190,6 +191,9 @@ public class MainActivity extends AppCompatActivity{
             ArrayList<BarEntry> valsComp1 = new ArrayList<>();
             ArrayList<BarEntry> valsComp2 = new ArrayList<>();
 
+             Calendar calendar= Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+            Log.d("DEBUGGING",String.valueOf(calendar.get(Calendar.DATE)));
             BarEntry c1e1 = new BarEntry(233f, 0);
             valsComp1.add(c1e1);
             BarEntry c1e2 = new BarEntry(2333f, 1);
@@ -198,6 +202,7 @@ public class MainActivity extends AppCompatActivity{
             valsComp1.add(c2e1);
             BarEntry c2e2 = new BarEntry(233f, 1);
             valsComp1.add(c2e2);
+//            if()
 
             BarDataSet setc1 = new BarDataSet(valsComp1, "C1");
             setc1.setAxisDependency(YAxis.AxisDependency.LEFT);

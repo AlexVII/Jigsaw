@@ -22,16 +22,10 @@ public class DbHelper{
 
 
     public DbHelper(Context context){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DbHelper.context = context;
+                this.context = context;
                 dbHelper= new MyDatabaseHelper(context);
                 initialAndCheck();
                 dbHelper.close();
-            }
-        }).start();
-
     }
 
     private void initialAndCheck() {
