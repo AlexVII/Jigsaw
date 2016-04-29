@@ -1,5 +1,6 @@
 package com.smu_bme.jigsaw;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,10 +22,16 @@ public class DbHelper{
 
 
     public DbHelper(Context context){
-        this.context = context;
-        dbHelper= new MyDatabaseHelper(context);
-        initialAndCheck();
-        dbHelper.close();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DbHelper.context = context;
+                dbHelper= new MyDatabaseHelper(context);
+                initialAndCheck();
+                dbHelper.close();
+            }
+        }).start();
+
     }
 
     private void initialAndCheck() {
