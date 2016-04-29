@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity{
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
             progressBar.setMax(14400);
             if (ShowedCalendar == CurrentCalendar){
-            progressBar.setSecondaryProgress(CurrentCalendar.get(Calendar.MINUTE));
+//            progressBar.setSecondaryProgress(CurrentCalendar.get(Calendar.MINUTE));
             } else { progressBar.setSecondaryProgress(1440);
         }
 //            progressBar.setProgress();
@@ -187,8 +188,14 @@ public class MainActivity extends AppCompatActivity{
             ArrayList<BarEntry> valsComp1 = new ArrayList<>();
             ArrayList<BarEntry> valsComp2 = new ArrayList<>();
             DbHelper dbhelper = new DbHelper(getActivity());
+            Calendar calendar;
+            calendar =Calendar.getInstance();
+            calendar.getFirstDayOfWeek();
+
+//            calendar.after();
+            Log.d("DEBUGGING","");
             for(int i=0;i<7;i++){
-                dbhelper.queryData("date",CurrentCalendar);
+//                dbhelper.queryData("date",CurrentCalendar);
                 BarEntry c1ei = new BarEntry(100*i, 7-i);
                 valsComp1.add(c1ei);
             }

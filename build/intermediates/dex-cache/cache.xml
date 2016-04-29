@@ -37,18 +37,18 @@
         <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_b15882e2054c507e8801b1e1fb8321a350d15401/classes.dex" />
     </item>
     <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/libs/mpandroidchartlibrary-2-2-4.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="e5455fb794bfcbeb75da252dffd907794614f7fd">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/2/mpandroidchartlibrary-2-2-4_33b89c0cb419871688b5a90ce563297af73e4a6e/classes.dex" />
-    </item>
-    <item
         jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
         sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
         <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_e34aab75ce2ff51adb882e16df8385f3b64c110b/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/libs/mpandroidchartlibrary-2-2-4.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="e5455fb794bfcbeb75da252dffd907794614f7fd">
+        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/2/mpandroidchartlibrary-2-2-4_33b89c0cb419871688b5a90ce563297af73e4a6e/classes.dex" />
     </item>
     <item
         jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
@@ -61,7 +61,7 @@
         jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
-        sha1="dbb1e8ccc0d33ec9a85a9da01b67bd3247a8a2bb">
+        sha1="c5959c50506e6c16254d48cc7af279e5e0f27faf">
         <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_cc6aa0f4bb4cb162639e13fa041f9180b787d66c/classes.dex" />
     </item>
     <item
@@ -75,7 +75,7 @@
         jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
-        sha1="3284418107c2f177ce78989ba1f06b5668cb47aa">
+        sha1="d0b012002fc2156476cc6dc153dcb5537cf9634a">
         <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9e24d1586ef0b760d4b1da29b3d8c7ee586c2e8c/classes.dex" />
     </item>
     <item
