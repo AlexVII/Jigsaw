@@ -53,11 +53,10 @@ public class DbtestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 DbHelper dbHelper = new DbHelper(DbtestActivity.this);
-                List<DbData> dbDataList = dbHelper.queryData("id","1");
+                List<DbData> dbDataList = dbHelper.queryData("id","2");
                 DbData dbData  = dbDataList.get(0);
 
-
-                Toast.makeText(DbtestActivity.this, dbData.getDate(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DbtestActivity.this, dbData.getDate()+ dbData.getSumOfAll(), Toast.LENGTH_SHORT).show();
             }
         });
 
