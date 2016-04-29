@@ -2,6 +2,7 @@ package com.smu_bme.jigsaw;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -25,15 +26,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -164,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         public View initChart (LayoutInflater inflater, ViewGroup container){
 
             View rootView = inflater.inflate(R.layout.data_layout, container, false);
-            BarChart barChart = (BarChart) rootView.findViewById(R.id.line_chart);
+            BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
             ArrayList<String> xVals = new ArrayList<String>();
             xVals.add("星期日");xVals.add("星期一");xVals.add("星期二");xVals.add("星期三");xVals.add("星期四");xVals.add("星期五");xVals.add("星期六");
 
@@ -191,6 +204,74 @@ public class MainActivity extends AppCompatActivity {
             BarData data = new BarData(xVals, dataSet);
             barChart.setData(data);
             barChart.invalidate();
+
+            barChart.setDescription("一周学习");  // set the description
+            setc1.setColors(ColorTemplate.COLORFUL_COLORS);
+            setc2.setColors(ColorTemplate.COLORFUL_COLORS);
+            barChart.animateY(5000);
+
+
+
+
+
+            PieChart pieChart = (PieChart) rootView.findViewById(R.id.pie_chart);
+            ArrayList<String> labels = new ArrayList<String>();
+            pieChart.setUsePercentValues(true);
+            pieChart.setExtraOffsets(5, 10, 5, 5);
+            pieChart.setDragDecelerationFrictionCoef(0.95f);
+           // pieChart.setCenterText(false);
+            pieChart.setRotationAngle(0);
+            // enable rotation of the chart by touch
+            pieChart.setRotationEnabled(true);
+            pieChart.setHighlightPerTapEnabled(false);
+
+            // add a selection listener
+            // mPieChart.setOnChartValueSelectedListener(this);
+/*
+            TreeMap<String, Float> data3 = new TreeMap<>();
+            data3.put("data1", 0.5f);
+            data3.put("data2", 0.3f);
+            data3.put("data3", 0.1f);
+            data3.put("data4", 0.1f);
+            pieChart.setData(data3);
+
+            // 设置动画
+            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+            // 设置显示的比例
+            Legend l = pieChart.getLegend();
+            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+            l.setXEntrySpace(7f);
+            l.setYEntrySpace(0f);
+            l.setYOffset(0f);
+
+*/
+
+
+            labels.add("Math");
+            labels.add("English");
+            labels.add("Physics");
+        //    ArrayList<PieEntry> valsComp1 = new ArrayList<>();
+            ArrayList<Entry> entries = new ArrayList<>();
+            entries.add(new Entry(4f, 0));
+            entries.add(new Entry(8f, 1));
+            entries.add(new Entry(6f, 2));
+
+            // 设置显示的比例
+            Legend l = pieChart.getLegend();
+            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+            l.setXEntrySpace(7f);
+            l.setYEntrySpace(0f);
+            l.setYOffset(0f);
+
+            pieChart.setCenterText("每日学习");
+            PieDataSet dataset2 = new PieDataSet(entries, "# of Calls");
+            PieData data2 = new PieData(labels, dataset2);
+            pieChart.setData(data2);
+      //      PieChart.invalidate();
+            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+            dataset2.setColors(ColorTemplate.COLORFUL_COLORS);
+            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
             return rootView;
 
         }
