@@ -59,7 +59,7 @@ public class DbHelper{
 
 //    ------------------------------------------------------------------------------------------------------------------------------------
     //To find the sum of duration on a day
-    private int querySum(String date){
+    public int querySum(String date){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Initialization
         int sum ;
@@ -78,7 +78,7 @@ public class DbHelper{
     }
 
 
-    private int queryAll(){// find the sum of all date
+    public int queryAll(){// find the sum of all date
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int sum=0;
 //        Cursor cursorSum = db.query(tableSum,null,"id=?",new String[]{"1"},null,null,null,null);

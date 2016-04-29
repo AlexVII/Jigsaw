@@ -36,7 +36,7 @@ public class DbData {
     }
 
     // when input data
-//    For ale
+//    For alex
     public DbData(String date, String time,int duration, String  name, String remark){
         this.date=date;
         this.duration=duration;

@@ -2,19 +2,18 @@ package com.smu_bme.jigsaw;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -44,8 +43,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.logging.SocketHandler;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -182,15 +179,12 @@ public class MainActivity extends AppCompatActivity{
 
             ArrayList<BarEntry> valsComp1 = new ArrayList<>();
             ArrayList<BarEntry> valsComp2 = new ArrayList<>();
-
-            BarEntry c1e1 = new BarEntry(233f, 0);
-            valsComp1.add(c1e1);
-            BarEntry c1e2 = new BarEntry(2333f, 1);
-            valsComp1.add(c1e2);
-            BarEntry c2e1 = new BarEntry(233f, 0);
-            valsComp1.add(c2e1);
-            BarEntry c2e2 = new BarEntry(233f, 1);
-            valsComp1.add(c2e2);
+            DbHelper dbhelper = new DbHelper(getActivity());
+            for(int i=0;i<7;i++){
+                dbhelper.queryData("date",CurrentCalendar);
+                BarEntry c1ei = new BarEntry(100*i, 7-i);
+                valsComp1.add(c1ei);
+            }
 
             BarDataSet setc1 = new BarDataSet(valsComp1, "C1");
             setc1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -207,19 +201,21 @@ public class MainActivity extends AppCompatActivity{
             barChart.setDescription("一周学习");  // set the description
             setc1.setColors(ColorTemplate.COLORFUL_COLORS);
             setc2.setColors(ColorTemplate.COLORFUL_COLORS);
-            barChart.animateY(5000);
+            barChart.animateY(2000);
 
 
             PieChart pieChart = (PieChart) rootView.findViewById(R.id.pie_chart);
             ArrayList<String> labels = new ArrayList<String>();
             pieChart.setUsePercentValues(true);
             pieChart.setExtraOffsets(5, 10, 5, 5);
+//          pieChart.setTransparentCircleAlpha(255);
             pieChart.setDragDecelerationFrictionCoef(0.95f);
+            pieChart.setAlpha(0.85f);
            // pieChart.setCenterText(false);
             pieChart.setRotationAngle(0);
             // enable rotation of the chart by touch
             pieChart.setRotationEnabled(true);
-            pieChart.setHighlightPerTapEnabled(false);
+            pieChart.setHighlightPerTapEnabled(true);
 
             // add a selection listener
             // mPieChart.setOnChartValueSelectedListener(this);
