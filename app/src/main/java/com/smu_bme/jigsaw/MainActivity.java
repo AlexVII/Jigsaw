@@ -2,6 +2,7 @@ package com.smu_bme.jigsaw;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -14,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -44,21 +44,23 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
     public FloatingActionButton fab;
 
-    public Calendar CurrentCalendar = Calendar.getInstance();
     public Calendar ShowCalendar = null;
 
-    public Calendar getCrruentCalendar(){
-        return this.CurrentCalendar;
-    }
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 //    private CreateEventListener listener;
+
+    public static final String CurrentDateString =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    public static final String ShowedDateString = CurrentDateString;
+    public static Calendar ShowedDate = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +93,13 @@ public class MainActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
                                 String remarkInput = remark.getText().toString();
+
                                 if (nameInput.equals("")){
                                     Toast.makeText(MainActivity.this,getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else if (remarkInput.equals("")) {
                                     Toast.makeText(MainActivity.this, getString(R.string.noRemark), Toast.LENGTH_SHORT).show();
                                 } else {
-//                                    DbData dbData = new DbData(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+//                                    DbData dbData = new DbData(CurrentDateString,   );
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
@@ -107,10 +110,11 @@ public class MainActivity extends AppCompatActivity{
 
     public static class PlaceholderFragment extends Fragment {
 
-        String CurrentCalendar =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String CurrentCalendar =  MainActivity.CurrentDateString;
         String ShowedCalendar = CurrentCalendar;
         Calendar calendar;
         int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
+        private List<DbData> list;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -129,7 +133,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            initEvent();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -169,42 +172,49 @@ public class MainActivity extends AppCompatActivity{
 //            progressBar.setProgress();
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(linearLayoutManager);
             DbHelper dbHelper = new DbHelper(getActivity());
-
-            if (dbHelper.queryData("Date", ShowedCalendar) != null){
-                recyclerView.setAdapter(new mAdapter(ShowedCalendar, getActivity()));
-            } else {
-
-                }
+            list = dbHelper.queryData("date","1970-1-1");
+            mAdapter mAdapter = new mAdapter(list, getActivity()) ;
+            recyclerView.setAdapter(mAdapter);
             return rootView;
 
         }
+
 
         public View initChart (LayoutInflater inflater, ViewGroup container){
 
             View rootView = inflater.inflate(R.layout.layout_data, container, false);
             BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
-            ArrayList<String> xVals = new ArrayList<String>();
+            ArrayList<String> xVals = new ArrayList<>();
+
             xVals.add("星期日");xVals.add("星期一");xVals.add("星期二");xVals.add("星期三");xVals.add("星期四");xVals.add("星期五");xVals.add("星期六");
 
             ArrayList<BarEntry> valsComp1 = new ArrayList<>();
             ArrayList<BarEntry> valsComp2 = new ArrayList<>();
 
-             Calendar calendar= Calendar.getInstance();
-            calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-            Log.d("DEBUGGING",String.valueOf(calendar.get(Calendar.DATE)));
-            BarEntry c1e1 = new BarEntry(233f, 0);
-            valsComp1.add(c1e1);
-            BarEntry c1e2 = new BarEntry(2333f, 1);
-            valsComp1.add(c1e2);
-            BarEntry c2e1 = new BarEntry(233f, 0);
-            valsComp1.add(c2e1);
-            BarEntry c2e2 = new BarEntry(233f, 1);
-            valsComp1.add(c2e2);
-//            if()
+            Calendar calendar= ShowedDate;
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            for(int i=1;i<8;i++) {
+                calendar.set(Calendar.DAY_OF_WEEK, i);
+                String date = f.format(calendar.getTime());
+                float sum = (float)dbHelper.querySum(date);
+                if (sum<0)sum=0;
+                BarEntry Chart1Element = new BarEntry(87,i-1);
+                valsComp1.add(Chart1Element);
+            }
+//            BarEntry c1e1 = new BarEntry(233f, 0);
+//            valsComp1.add(c1e1);
+//            BarEntry c1e2 = new BarEntry(2333f, 1);
+//            valsComp1.add(c1e2);
+//            BarEntry c2e1 = new BarEntry(233f, 0);
+//            valsComp1.add(c2e1);
+//            BarEntry c2e2 = new BarEntry(233f, 1);
+//            valsComp1.add(c2e2);
 
-            BarDataSet setc1 = new BarDataSet(valsComp1, "C1");
+            BarDataSet setc1 = new BarDataSet(valsComp1, null);
             setc1.setAxisDependency(YAxis.AxisDependency.LEFT);
             BarDataSet setc2 = new BarDataSet(valsComp2, "C2");
             setc2.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -213,8 +223,14 @@ public class MainActivity extends AppCompatActivity{
             dataSet.add(setc1);
             dataSet.add(setc2);
             BarData data = new BarData(xVals, dataSet);
+            data.setGroupSpace(30f);
             barChart.setData(data);
+            barChart.setHighlightPerTapEnabled(true);
+//            barChart.setDrawBarShadow(true);
+//            barChart.setMinimumWidth(60);
+
             barChart.invalidate();
+
 
             barChart.setDescription("一周学习");  // set the description
             setc1.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -231,6 +247,9 @@ public class MainActivity extends AppCompatActivity{
             pieChart.setRotationAngle(0);
             // enable rotation of the chart by touch
             pieChart.setRotationEnabled(true);
+/
+// /            pieChart.setBackgroundColor(Color.LTGRAY);
+//            pieChart.setBackgroundTintMode();
             pieChart.setHighlightPerTapEnabled(false);
 
             // add a selection listener
@@ -254,8 +273,6 @@ public class MainActivity extends AppCompatActivity{
             l.setYOffset(0f);
 
 */
-
-
             labels.add("Math");
             labels.add("English");
             labels.add("Physics");
@@ -273,7 +290,7 @@ public class MainActivity extends AppCompatActivity{
             l.setYOffset(0f);
 
             pieChart.setCenterText("每日学习");
-            PieDataSet dataset2 = new PieDataSet(entries, "# of Calls");
+            PieDataSet dataset2 = new PieDataSet(entries, "项目");
             PieData data2 = new PieData(labels, dataset2);
             pieChart.setData(data2);
       //      PieChart.invalidate();
