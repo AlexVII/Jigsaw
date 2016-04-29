@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DbtestActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class DbtestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DbData dbData = new DbData("2016-3-4", 90, "17:30", "高数");
                 DbHelper dbHelper = new DbHelper(DbtestActivity.this);
-                dbHelper.findData("id","1");
+                dbHelper.queryData("id","1");
                 dbHelper.deleteData(1);
             }
         });
@@ -53,9 +53,10 @@ public class DbtestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 DbHelper dbHelper = new DbHelper(DbtestActivity.this);
-                ArrayList<DbData> dbDataList = dbHelper.findData("id","1");
+                List<DbData> dbDataList = dbHelper.queryData("id","1");
+                DbData dbData  = dbDataList.get(0);
 
-                DbData dbData = dbDataList.get(0);
+
                 Toast.makeText(DbtestActivity.this, dbData.getDate(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -93,8 +93,9 @@ public class DbData {
     public String getTime() {
         return time;
     }
-    public String Print(){
-        return String.valueOf(this.getId())+this.getDate()+String.valueOf(this.getDuration());
+    public boolean validation(){
+        return (date!=null&&duration!=0&& time != null);
+
 //        private int id;
 //        private String date;
 //        private int duration;
