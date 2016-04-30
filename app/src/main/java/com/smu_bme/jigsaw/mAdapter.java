@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
         this.context = context;
         this.list = list;
         if (list.isEmpty()) {
-            Log.d("DEBUGGING", "NULL");
+//            Log.d("DEBUGGING", "NULL");
         }
 //        dbHelper = new DbHelper(this.context);
 //        this.list = dbHelper.queryData("date", "1970-1-1");

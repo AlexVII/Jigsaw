@@ -22,31 +22,23 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Created by gollyrui on 4/30/16.
  */
-public class Chart {
+public class Chart extends View{
         private LayoutInflater inflater;
         private ViewGroup container;
         private Context context;
         protected Calendar ShowedDate;
 
-        public Chart(LayoutInflater inflater, ViewGroup container, Context context, Calendar calendar) {
+        public Chart(LayoutInflater inflater, ViewGroup container, Context context, Calendar ShowedDate) {
+            super(context);
             this.inflater = inflater;
             this.container = container;
             this.context = context;
-            this.ShowedDate = calendar;
-        }
-//        @Override
-//        public void run() {
-//
-//        }
+            this.ShowedDate = ShowedDate;
 
-
-
-    public View initChart( ) {
                 View rootView = inflater.inflate(R.layout.layout_data, container, false);
                 BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
                 ArrayList<String> xVals = new ArrayList<>();
@@ -62,25 +54,16 @@ public class Chart {
                 ArrayList<BarEntry> valsComp1 = new ArrayList<>();
                 ArrayList<BarEntry> valsComp2 = new ArrayList<>();
 
-                Calendar calendar = ShowedDate;
                 SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 DbHelper dbHelper = new DbHelper(context);
                 for (int i = 1; i < 8; i++) {
-                    calendar.set(Calendar.DAY_OF_WEEK, i);
-                    String date = f.format(calendar.getTime());
+                    ShowedDate.set(Calendar.DAY_OF_WEEK, i);
+                    String date = f.format(ShowedDate.getTime());
                     float sum = (float) dbHelper.querySum(date);
                     if (sum < 0) sum = 0;
-                    BarEntry Chart1Element = new BarEntry(87, i - 1);
+                    BarEntry Chart1Element = new BarEntry(sum, i - 1);
                     valsComp1.add(Chart1Element);
                 }
-//            BarEntry c1e1 = new BarEntry(233f, 0);
-//            valsComp1.add(c1e1);
-//            BarEntry c1e2 = new BarEntry(2333f, 1);
-//            valsComp1.add(c1e2);
-//            BarEntry c2e1 = new BarEntry(233f, 0);
-//            valsComp1.add(c2e1);
-//            BarEntry c2e2 = new BarEntry(233f, 1);
-//            valsComp1.add(c2e2);
 
                 BarDataSet setc1 = new BarDataSet(valsComp1, null);
                 setc1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -165,8 +148,8 @@ public class Chart {
                 pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 dataset2.setColors(ColorTemplate.COLORFUL_COLORS);
                 pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                return rootView;
-
+    }
+    public void update(Calendar ShowedDate){
 
     }
 }
