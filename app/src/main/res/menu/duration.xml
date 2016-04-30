@@ -3,7 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.smu_bme.jigsaw.MainActivity">
     <item
-        android:id="@+id/select_duration"
+        android:id="@+id/quart_hour"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/half_hour"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/one_hour"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/one_and_half_hour"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/two_hour"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/three_hour"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
