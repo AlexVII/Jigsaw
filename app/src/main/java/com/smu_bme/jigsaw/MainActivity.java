@@ -109,12 +109,14 @@ public class MainActivity extends AppCompatActivity{
 
     public static class PlaceholderFragment extends Fragment {
 
-        Calendar CurrentCalendar = Calendar.getInstance();
-        Calendar ShowedCalendar = CurrentCalendar;
+        String CurrentCalendar =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String ShowedCalendar = CurrentCalendar;
+        Calendar calendar;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {}
+
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity{
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
+
         }
 
         @Override
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity{
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
-            textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime()));
+            textView.setText(ShowedCalendar);
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
             imageButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -146,16 +149,16 @@ public class MainActivity extends AppCompatActivity{
                    DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
                        @Override
                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                           ShowedCalendar.set(Calendar.YEAR, year);
-                           ShowedCalendar.set(Calendar.MONTH, monthOfYear);
-                           ShowedCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(ShowedCalendar.getTime()));
+                           calendar.set(Calendar.YEAR, year);
+                           calendar.set(Calendar.MONTH, monthOfYear);
+                           calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
                        }
                    };
                    new DatePickerDialog(getActivity(), dateListener,
-                           ShowedCalendar.get(Calendar.DAY_OF_MONTH),
-                           ShowedCalendar.get(Calendar.MONTH),
-                           ShowedCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                           calendar.get(Calendar.DAY_OF_MONTH),
+                           calendar.get(Calendar.MONTH),
+                           calendar.get(Calendar.DAY_OF_MONTH)).show();
                }
            });
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
@@ -168,7 +171,11 @@ public class MainActivity extends AppCompatActivity{
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//            recyclerView.setAdapter(new mAdapter(idArr, getActivity()));
+            if (new DbHelper(getActivity()).queryData("Date", ShowedCalendar) != null){
+                recyclerView.setAdapter(new mAdapter(ShowedCalendar, getActivity()));
+            } else {
+
+                }
             return rootView;
 
         }
