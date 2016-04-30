@@ -165,6 +165,8 @@ public class MainActivity extends AppCompatActivity{
     }
     public static class PlaceholderFragment extends Fragment {
 
+        String CurrentCalendar =  MainActivity.CurrentCalendar;
+        String ShowedCalendar = CurrentCalendar;
         Calendar calendar;
         int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
         private List<DbData> list;
@@ -198,7 +200,7 @@ public class MainActivity extends AppCompatActivity{
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
-            textView.setText(MainActivity.ShowedDateString);
+            textView.setText(ShowedCalendar);
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
             imageButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -238,125 +240,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
-        public View initChart (LayoutInflater inflater, ViewGroup container){
-
-            View rootView = inflater.inflate(R.layout.layout_data, container, false);
-            BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
-            ArrayList<String> xVals = new ArrayList<String>();
-            xVals.add("星期日");xVals.add("星期一");xVals.add("星期二");xVals.add("星期三");xVals.add("星期四");xVals.add("星期五");xVals.add("星期六");
-
-            ArrayList<BarEntry> valsComp1 = new ArrayList<>();
-            ArrayList<BarEntry> valsComp2 = new ArrayList<>();
-
-            BarEntry c1e1 = new BarEntry(233f, 0);
-            valsComp1.add(c1e1);
-            BarEntry c1e2 = new BarEntry(2333f, 1);
-            valsComp1.add(c1e2);
-            BarEntry c2e1 = new BarEntry(233f, 0);
-            valsComp1.add(c2e1);
-            BarEntry c2e2 = new BarEntry(233f, 1);
-            valsComp1.add(c2e2);
-
-            BarDataSet setc1 = new BarDataSet(valsComp1, "C1");
-            setc1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            BarDataSet setc2 = new BarDataSet(valsComp2, "C2");
-            setc2.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-            ArrayList<IBarDataSet> dataSet = new ArrayList<IBarDataSet>();
-            dataSet.add(setc1);
-            dataSet.add(setc2);
-            BarData data = new BarData(xVals, dataSet);
-            barChart.setData(data);
-            barChart.invalidate();
-
-            barChart.setDescription("一周学习");  // set the description
-            setc1.setColors(ColorTemplate.COLORFUL_COLORS);
-            setc2.setColors(ColorTemplate.COLORFUL_COLORS);
-            barChart.animateY(5000);
-
-
-            PieChart pieChart = (PieChart) rootView.findViewById(R.id.pie_chart);
-            ArrayList<String> labels = new ArrayList<String>();
-            pieChart.setUsePercentValues(true);
-            pieChart.setExtraOffsets(5, 10, 5, 5);
-            pieChart.setDragDecelerationFrictionCoef(0.95f);
-           // pieChart.setCenterText(false);
-            pieChart.setRotationAngle(0);
-            // enable rotation of the chart by touch
-            pieChart.setRotationEnabled(true);
-            pieChart.setHighlightPerTapEnabled(false);
-
-            // add a selection listener
-            // mPieChart.setOnChartValueSelectedListener(this);
-/*
-            TreeMap<String, Float> data3 = new TreeMap<>();
-            data3.put("data1", 0.5f);
-            data3.put("data2", 0.3f);
-            data3.put("data3", 0.1f);
-            data3.put("data4", 0.1f);
-            pieChart.setData(data3);
-
-            // 设置动画
-            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-
-            // 设置显示的比例
-            Legend l = pieChart.getLegend();
-            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(0f);
-            l.setYOffset(0f);
-
-*/
-
-
-            labels.add("Math");
-            labels.add("English");
-            labels.add("Physics");
-        //    ArrayList<PieEntry> valsComp1 = new ArrayList<>();
-            ArrayList<Entry> entries = new ArrayList<>();
-            entries.add(new Entry(4f, 0));
-            entries.add(new Entry(8f, 1));
-            entries.add(new Entry(6f, 2));
-
-            // 设置显示的比例
-            Legend l = pieChart.getLegend();
-            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(0f);
-            l.setYOffset(0f);
-
-            pieChart.setCenterText("每日学习");
-            PieDataSet dataset2 = new PieDataSet(entries, "# of Calls");
-            PieData data2 = new PieData(labels, dataset2);
-            pieChart.setData(data2);
-      //      PieChart.invalidate();
-            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-            dataset2.setColors(ColorTemplate.COLORFUL_COLORS);
-            pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-            return rootView;
-
-        }
-        public void initEvent(){
-            DbData dbData1 = new DbData("1970-1-1", "03:33", 200, "Test1");
-            DbData dbData2 = new DbData("1970-1-1", "05:33", 200, "Test2");
-            DbData dbData3 = new DbData("1970-1-1", "20:33", 200, "Test1");
-            DbData dbData4 = new DbData("1970-1-1", "23:33", 200, "Test2");
-            DbData dbData5 = new DbData("1970-1-2", "03:33", 200, "Test5");
-            DbData dbData6 = new DbData("1970-1-2", "13:33", 200, "Test1");
-            DbData dbData7 = new DbData("1970-1-2", "23:33", 200, "Test2");
-            DbHelper dbHelper = new DbHelper(getActivity());
-            dbHelper.addData(dbData1);
-            dbHelper.addData(dbData2);
-            dbHelper.addData(dbData3);
-            dbHelper.addData(dbData4);
-            dbHelper.addData(dbData5);
-            dbHelper.addData(dbData6);
-            dbHelper.addData(dbData7);
-        }
-    }
-
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
