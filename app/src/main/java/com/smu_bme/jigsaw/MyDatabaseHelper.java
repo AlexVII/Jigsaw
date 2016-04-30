@@ -1,5 +1,18 @@
 package com.smu_bme.jigsaw;
-    public static final String CREATE_NUM = "create table if not exists NUM("
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class MyDatabaseHelper extends SQLiteOpenHelper{
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "Jigsaw.git";
+
+    private Context context;
+    public static final String CREATE_DATA = "create table if not exits DATA("
+            + "id integer primary"
+public static final String CREATE_NUM = "create table if not exists NUM("
             + "id integer primary key autoincrement,"
             + "num integer)";
 //    Constructor
