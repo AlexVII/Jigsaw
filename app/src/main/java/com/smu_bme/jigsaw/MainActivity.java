@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity{
         int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
         private List<DbData> list;
 
-        private DbHelper dbHelper = new DbHelper(getActivity());
+//        private DbHelper dbHelper = new DbHelper(getActivity());
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
