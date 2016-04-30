@@ -41,6 +41,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,16 +52,15 @@ public class MainActivity extends AppCompatActivity{
 
     public FloatingActionButton fab;
 
-    public Calendar CurrentCalendar = Calendar.getInstance();
     public Calendar ShowCalendar = null;
 
-    public Calendar getCrruentCalendar(){
-        return this.CurrentCalendar;
-    }
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 //    private CreateEventListener listener;
+
+    public static final String CurrentDateString =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    public static final String ShowedDateString = CurrentDateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +93,13 @@ public class MainActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
                                 String remarkInput = remark.getText().toString();
+
                                 if (nameInput.equals("")){
                                     Toast.makeText(MainActivity.this,getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else if (remarkInput.equals("")) {
                                     Toast.makeText(MainActivity.this, getString(R.string.noRemark), Toast.LENGTH_SHORT).show();
                                 } else {
-//                                    DbData dbData = new DbData(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+                                    DbData dbData = new DbData(CurrentDateString,   );
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
@@ -109,10 +110,11 @@ public class MainActivity extends AppCompatActivity{
 
     public static class PlaceholderFragment extends Fragment {
 
-        String CurrentCalendar =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String CurrentCalendar =  MainActivity.CurrentCalendar;
         String ShowedCalendar = CurrentCalendar;
         Calendar calendar;
         int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
+        private List<DbData> list;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -131,7 +133,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            initEvent();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -171,17 +172,16 @@ public class MainActivity extends AppCompatActivity{
 //            progressBar.setProgress();
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(linearLayoutManager);
             DbHelper dbHelper = new DbHelper(getActivity());
-
-            if (dbHelper.queryData("Date", ShowedCalendar) != null){
-                recyclerView.setAdapter(new mAdapter(ShowedCalendar, getActivity()));
-            } else {
-
-                }
+            list = dbHelper.queryData("date","1970-1-1");
+            mAdapter mAdapter = new mAdapter(list, getActivity()) ;
+            recyclerView.setAdapter(mAdapter);
             return rootView;
 
         }
+
 
         public View initChart (LayoutInflater inflater, ViewGroup container){
 

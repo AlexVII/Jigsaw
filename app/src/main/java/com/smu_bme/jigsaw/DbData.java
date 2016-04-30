@@ -1,9 +1,11 @@
 package com.smu_bme.jigsaw;
 
+import java.io.Serializable;
+
 /**
  * Created by bme-lab on 4/28/16.
  */
-public class DbData {
+public class DbData implements Serializable {
     private int id;
     private String date;
     private int duration;
