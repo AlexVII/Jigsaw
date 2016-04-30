@@ -1,4 +1,25 @@
 package com.smu_bme.jigsaw;
+    public static final String CREATE_NUM = "create table if not exists NUM("
+            + "id integer primary key autoincrement,"
+            + "num integer)";
+//    Constructor
+    public MyDatabaseHelper(Context context){
+        super(context,DB_NAME,null,DB_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_DATA);
+        db.execSQL(CREATE_SUM);
+        db.execSQL(CREATE_NUM);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+}
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
