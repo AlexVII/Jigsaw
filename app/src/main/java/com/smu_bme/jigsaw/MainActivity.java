@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity{
         String CurrentCalendar =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         String ShowedCalendar = CurrentCalendar;
         Calendar calendar;
+        int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -164,14 +165,16 @@ public class MainActivity extends AppCompatActivity{
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
             progressBar.setMax(14400);
             if (ShowedCalendar == CurrentCalendar){
-            progressBar.setSecondaryProgress(CurrentCalendar.get(Calendar.MINUTE));
+            progressBar.setSecondaryProgress(CurrentMins);
             } else { progressBar.setSecondaryProgress(1440);
         }
 //            progressBar.setProgress();
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.event_list);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (new DbHelper(getActivity()).queryData("Date", ShowedCalendar) != null){
+            DbHelper dbHelper = new DbHelper(getActivity());
+
+            if (dbHelper.queryData("Date", ShowedCalendar) != null){
                 recyclerView.setAdapter(new mAdapter(ShowedCalendar, getActivity()));
             } else {
 

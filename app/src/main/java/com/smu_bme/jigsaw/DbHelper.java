@@ -24,6 +24,7 @@ public class DbHelper{
         this.context = context;
         dbHelper= new MyDatabaseHelper(context);
         initialAndCheck();
+        dbHelper.close();
     }
 
     private void initialAndCheck() {
@@ -42,12 +43,13 @@ public class DbHelper{
         cursor = db.query("NUM",null,"id=?",new String[]{"1"},null,null,null,null);
 //          cursor = db.rawQuery("select * from NUM where id = 1",new String[]{});
         if (cursor.getCount() == 0) {
-        ContentValues values = new ContentValues();
-        values.put("num",0);
-        db.insert("NUM",null,values);
-        values.clear();
+            ContentValues values = new ContentValues();
+            values.put("num", 0);
+            db.insert("NUM", null, values);
+            values.clear();
 
-        cursor.close();
+            cursor.moveToLast();
+            cursor.close();
 
         }
     }
@@ -96,6 +98,7 @@ public class DbHelper{
         Cursor cursor = db.rawQuery("select num from NUM where id =1",new String[]{});
         cursor.moveToFirst();
         int out = cursor.getInt(cursor.getColumnIndex("num"));
+        cursor.moveToLast();
         cursor.close();
         return out;
     }
@@ -116,8 +119,8 @@ public class DbHelper{
         else if(mode.equals("date")){
             cursor = db.rawQuery("select * from DATA where date = ?", new String[]{item});
         }
-           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
-            if(cursor.getCount()>0) {
+//           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor == null );
+            if(cursor!=null) {
                 while (cursor.moveToNext()) {
 
                     Log.d("DEBUGGING_MARKER","loop");
@@ -136,9 +139,9 @@ public class DbHelper{
                             sumAll);
                     list.add(dbData);
                 }
-            }//else return null
+                cursor.moveToLast();
                 cursor.close();
-//        Log.d("DEBUGGING_MARKER","close");
+            }//else return null
 
         //TODO what if the list is null
             return list;
@@ -172,6 +175,7 @@ public class DbHelper{
                 list.add(dbData);
             }
         }//else return null
+        cursor.moveToLast();
         cursor.close();
         return list;
     }

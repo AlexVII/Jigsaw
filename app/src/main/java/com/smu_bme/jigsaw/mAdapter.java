@@ -43,7 +43,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
         this.calendar = calendar;
         this.context = context;
         dbHelper = new DbHelper(this.context);
-        list = dbHelper.queryData("date", calendar);
+        this.list = dbHelper.queryData("date", "1970-1-1");
     }
 
     @Override
@@ -57,7 +57,9 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 //        TODO  Using Database here:
         if (list.isEmpty()){
+            Log.d("DEBUGGING", "list is empty");
         } else {
+            Log.d("DEBUGGING", "list not empty");
             holder.name.setText(list.get(position).getName());
             holder.time.setText(list.get(position).getTime());
             holder.duration.setText(list.get(position).getDuration());
