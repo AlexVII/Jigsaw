@@ -2,88 +2,88 @@
 <items version="2" >
 
     <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_28b32e68b7e07844cebed12dcb48b1347524bc7f/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="debf30ce0a7560396b6235edef77e447006454c2">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_361e318dff94bdb68f5f2ae7a61d0498aa568539/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.3.0_f88cb45bbbde880648cf42c70760e90afb353c89/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/SDK/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_1183d9fbc4c78e2567a2600791a89ad1e4fe3fe5/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_b15882e2054c507e8801b1e1fb8321a350d15401/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_e34aab75ce2ff51adb882e16df8385f3b64c110b/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/libs/mpandroidchartlibrary-2-2-4.jar"
+        jar="/home/bme-lab2/Jigsaw/app/libs/mpandroidchartlibrary-2-2-4.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
         sha1="e5455fb794bfcbeb75da252dffd907794614f7fd">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/2/mpandroidchartlibrary-2-2-4_33b89c0cb419871688b5a90ce563297af73e4a6e/classes.dex" />
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/2/mpandroidchartlibrary-2-2-4_c0575bf96ed7a5ab964ca8e8ecf6c3d5a97678b5/classes.dex" />
     </item>
     <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_a6b77de99f4029cdc9f52e7a8a317efab3eef39c/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="c5959c50506e6c16254d48cc7af279e5e0f27faf">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_cc6aa0f4bb4cb162639e13fa041f9180b787d66c/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
         sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_75a09566debe13681febb3ecbc1646372687d5d6/classes.dex" />
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_873f7ed3a4477b0267b7fc3bc20aea07cd3f8e56/classes.dex" />
     </item>
     <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        revision="24.0.0 rc3"
-        sha1="d0b012002fc2156476cc6dc153dcb5537cf9634a">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9e24d1586ef0b760d4b1da29b3d8c7ee586c2e8c/classes.dex" />
-    </item>
-    <item
-        jar="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
         jumboMode="true"
         revision="24.0.0 rc3"
         sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
-        <dex dex="/home/bme-lab/Android/AndroidStudioProjects/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.3.0_279a1e8b7a8bd9aab6cf3938b075aa09372acae2/classes.dex" />
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.3.0_bd53b1b74003aecd7dc12591f7cb83cc7319f130/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_8168400236d641ffc3bddb3b778d787642f9fb03/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.3.0_0c509dcd6ccaaa5697bb8177fb8e4f56732b0c9e/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Android/SDK/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_a3f175b9d5bce1e10e2c90264d1b77a77ca5dbe9/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_80701843dbdbd24605e6085d0d850a52b8972153/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="f50fe9a2e5690449c1e18476af46d8a2de463dff">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_95630a6280ebaf52dec744b6385c16e347b34a92/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_6702df94fc3cb6a59b28be5a41ef9640aaa5fd0e/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_ce7c148304df17e19a0ee8e8b7e1be85b9eeb5bb/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="53e4ea91311b823e53fadb205c8f6540bf235ff6">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_6d750dad50336fd24e7605b7bc08947dc3c6c28d/classes.dex" />
+    </item>
+    <item
+        jar="/home/bme-lab2/Jigsaw/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="24.0.0 rc3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/home/bme-lab2/Jigsaw/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_755e3c43ea3726c37bd0855e5011322520bfdea2/classes.dex" />
     </item>
 
 </items>
