@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity{
 
     public static final String CurrentDateString =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
     public static final String ShowedDateString = CurrentDateString;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 11721b72d8e46cf20a9c3d1cb54ca7d381a80698
     public static final Calendar ShowedDate = Calendar.getInstance();
 
     @Override
@@ -165,6 +168,11 @@ public class MainActivity extends AppCompatActivity{
     }
     public static class PlaceholderFragment extends Fragment {
 
+<<<<<<< HEAD
+=======
+        String CurrentCalendar =  MainActivity.CurrentCalendar;
+        String ShowedCalendar = CurrentCalendar;
+>>>>>>> 11721b72d8e46cf20a9c3d1cb54ca7d381a80698
         Calendar calendar;
         int CurrentMins  = Calendar.getInstance().get(Calendar.MINUTE);
         private List<DbData> list;
@@ -198,7 +206,7 @@ public class MainActivity extends AppCompatActivity{
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
-            textView.setText(MainActivity.ShowedDateString);
+            textView.setText(ShowedCalendar);
             ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
             imageButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -238,6 +246,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+<<<<<<< HEAD
         public View initChart (LayoutInflater inflater, ViewGroup container){
 
             View rootView = inflater.inflate(R.layout.layout_data, container, false);
@@ -373,6 +382,9 @@ public class MainActivity extends AppCompatActivity{
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+=======
+        public class SectionsPagerAdapter extends FragmentPagerAdapter {
+>>>>>>> 11721b72d8e46cf20a9c3d1cb54ca7d381a80698
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);

@@ -1,5 +1,4 @@
 .gradle/*
-<<<<<<< HEAD
 .idea/*
-=======
->>>>>>> fe949ddbebdf15e30478f2ec9850b03672626863
+local.properties
+build/*
