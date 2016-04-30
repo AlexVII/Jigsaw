@@ -29,6 +29,13 @@
     <string name="t21">21</string>
     <string name="t24">24</string>
 
+    <string name="quart_hour">Quart Hour</string>
+    <string name="half_hour">Half Hour</string>
+    <string name="one_hour">One Hour</string>
+    <string name="one_and_half_hour">One and Half Hours</string>
+    <string name="two_hour">Two Hours</string>
+    <string name="three_hour">Three Hours</string>
+
     <string name="title_activity_jigsaw_fullscreen">JigsawFullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>

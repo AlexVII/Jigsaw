@@ -33,11 +33,13 @@
             android:layout_height="wrap_content"
             android:text="For Now Duration"/>
         <TextView
-            android:onClick="showPopup"
-            android:clickable="true"
             android:id="@+id/edit_duration"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="1 h"/>
+        <ImageButton
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
     </TableRow>
 </TableLayout>
