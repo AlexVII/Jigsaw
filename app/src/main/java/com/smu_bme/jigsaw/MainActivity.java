@@ -300,9 +300,6 @@ public class MainActivity extends AppCompatActivity{
             pieChart.setRotationAngle(0);
             // enable rotation of the chart by touch
             pieChart.setRotationEnabled(true);
-/
-// /            pieChart.setBackgroundColor(Color.LTGRAY);
-//            pieChart.setBackgroundTintMode();
             pieChart.setHighlightPerTapEnabled(false);
 
             // add a selection listener
