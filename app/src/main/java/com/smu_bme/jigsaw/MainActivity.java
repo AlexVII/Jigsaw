@@ -2,7 +2,6 @@ package com.smu_bme.jigsaw;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+
 }
 
     public static class PlaceholderFragment extends Fragment {
@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            initEvent();
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity{
                 String date = f.format(calendar.getTime());
                 float sum = (float)dbHelper.querySum(date);
                 if (sum<0)sum=0;
-                BarEntry Chart1Element = new BarEntry(87,i-1);
+                BarEntry Chart1Element = new BarEntry(sum,i-1);
                 valsComp1.add(Chart1Element);
             }
 //            BarEntry c1e1 = new BarEntry(233f, 0);
@@ -247,7 +248,6 @@ public class MainActivity extends AppCompatActivity{
             pieChart.setRotationAngle(0);
             // enable rotation of the chart by touch
             pieChart.setRotationEnabled(true);
-/
 // /            pieChart.setBackgroundColor(Color.LTGRAY);
 //            pieChart.setBackgroundTintMode();
             pieChart.setHighlightPerTapEnabled(false);
