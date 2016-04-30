@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 public class JigsawActivity extends AppCompatActivity {
@@ -17,6 +18,10 @@ public class JigsawActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jisaw);
         ContentView = findViewById(R.id.jigsaw_content);
         fullScreen(ContentView);
+        DbHelper dbHelper  = new DbHelper (JigsawActivity.this);
+        switch (dbHelper.queryProgress()){
+            case 0: Toast.makeText(JigsawActivity.this, "h", Toast.LENGTH_SHORT).show();
+        }
         button = (Button) findViewById(R.id.get_started);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +45,5 @@ public class JigsawActivity extends AppCompatActivity {
                 Toast.makeText(JigsawActivity.this, "Take This!!", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
