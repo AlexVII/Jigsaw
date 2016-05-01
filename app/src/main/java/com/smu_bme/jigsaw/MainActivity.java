@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
 
+import java.sql.Date;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -150,21 +152,24 @@ public class MainActivity extends AppCompatActivity{
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
                 view =  logUI.getView(getContext(), ShowedCalendar);
-//            } else {
+            } else {
 ////                return initChart(inflater, container);
-//            }
+                ChartView chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
+                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
+                initEvent();
+                view = chart.getView(ShowedCalendar);
             }
             return view;
         }
 
         public void initEvent(){
-            DbData dbData1 = new DbData("1970-1-1", "03:33", 200, "Test1");
-            DbData dbData2 = new DbData("1970-1-1", "05:33", 200, "Test2");
-            DbData dbData3 = new DbData("1970-1-1", "20:33", 200, "Test1");
-            DbData dbData4 = new DbData("1970-1-1", "23:33", 200, "Test2");
-            DbData dbData5 = new DbData("1970-1-2", "03:33", 200, "Test5");
-            DbData dbData6 = new DbData("1970-1-2", "13:33", 200, "Test1");
-            DbData dbData7 = new DbData("1970-1-2", "23:33", 200, "Test2");
+            DbData dbData1 = new DbData("1970-01-01", "03:33", 200, "Test1");
+            DbData dbData2 = new DbData("1970-01-01", "05:33", 200, "Test2");
+            DbData dbData3 = new DbData("1970-01-01", "20:33", 200, "Test1");
+            DbData dbData4 = new DbData("1970-01-01", "23:33", 200, "Test2");
+            DbData dbData5 = new DbData("1970-01-02", "03:33", 200, "Test5");
+            DbData dbData6 = new DbData("1970-01-02", "13:33", 200, "Test1");
+            DbData dbData7 = new DbData("1970-01-02", "23:33", 200, "Test2");
             DbHelper dbHelper = new DbHelper(getActivity());
             dbHelper.addData(dbData1);
             dbHelper.addData(dbData2);
