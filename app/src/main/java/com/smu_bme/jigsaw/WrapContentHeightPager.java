@@ -14,11 +14,11 @@ import android.view.View;
  */
 public class WrapContentHeightPager extends ViewPager {
 
-    public WrapContentHeightPager(Context context){
+    public WrapContentHeightPager(Context context) {
         super(context);
     }
 
-    public WrapContentHeightPager (Context context, AttributeSet attributeSet){
+    public WrapContentHeightPager(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 
@@ -26,11 +26,11 @@ public class WrapContentHeightPager extends ViewPager {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int height = 0;
 
-        for (int i = 0; i <getChildCount(); i ++){
+        for (int i = 0; i < getChildCount(); i++) {
             View chlid = getChildAt(i);
             chlid.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             int h = chlid.getMeasuredHeight();
-            if (h > height){
+            if (h > height) {
                 height = h;
             }
         }

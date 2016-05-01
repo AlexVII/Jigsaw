@@ -28,10 +28,10 @@ public class LogUI extends View {
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private mAdapter adapter;
-    private DbHelper dbHelper ;
+    private DbHelper dbHelper;
     private List<DbData> list;
 
-    public LogUI(Context context, LayoutInflater inflater, final ViewGroup container){
+    public LogUI(Context context, LayoutInflater inflater, final ViewGroup container) {
         super(context);
         this.view = inflater.inflate(R.layout.layout_log, container, false);
         this.textView = (TextView) view.findViewById(R.id.date);
@@ -44,7 +44,7 @@ public class LogUI extends View {
         dbHelper = new DbHelper(context);
     }
 
-    public View getView(final Context context, final Calendar calendar){
+    public View getView(final Context context, final Calendar calendar) {
 //        String CurrentDate  = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
         Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
         String Date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
@@ -67,14 +67,14 @@ public class LogUI extends View {
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        if (calendar.equals(CurrentDate)){
+        if (calendar.equals(CurrentDate)) {
             progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
         } else {
             progressBar.setSecondaryProgress(14400);
         }
         progressBar.setProgress(dbHelper.querySum(Date) + 1);
         list = dbHelper.queryData("date", "1970-1-1");
-        if (list != null){
+        if (list != null) {
 //            Log.d("DEBUGGING", "list is null");
         } else {
 //            Log.d("DEBUGGING", "list is not null");

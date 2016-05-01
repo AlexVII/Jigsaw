@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.mikephil.charting.charts.Chart;
 
 import java.sql.Date;
@@ -30,15 +31,15 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
+    public Calendar CurrentCalendar = Calendar.getInstance();
+    public Calendar ShowedCalendar = CurrentCalendar;
     private FloatingActionButton fab;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     private DbHelper dbHelper;
-    public Calendar CurrentCalendar = Calendar.getInstance();
-    public Calendar ShowedCalendar = CurrentCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             private int durationInt = 900;
             private String durationString = getString(R.string.quart_hour);
+
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -75,19 +77,31 @@ public class MainActivity extends AppCompatActivity{
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()){
-                                    case R.id.quart_hour: durationString = getString(R.string.quart_hour);
-                                        durationInt = 900; break;
-                                    case R.id.half_hour: durationString = getString(R.string.half_hour);
-                                        durationInt = 1800; break;
-                                    case R.id.one_hour: durationString = getString(R.string.one_hour);
-                                        durationInt = 3600; break;
-                                    case R.id.one_and_half_hour: durationString = getString(R.string.one_and_half_hour);
-                                        durationInt = 5400; break;
-                                    case R.id.two_hour: durationString = getString(R.string.two_hour);
-                                        durationInt = 7200; break;
-                                    case R.id.three_hour: durationString = getString(R.string.three_hour);
-                                        durationInt = 14400; break;
+                                switch (item.getItemId()) {
+                                    case R.id.quart_hour:
+                                        durationString = getString(R.string.quart_hour);
+                                        durationInt = 900;
+                                        break;
+                                    case R.id.half_hour:
+                                        durationString = getString(R.string.half_hour);
+                                        durationInt = 1800;
+                                        break;
+                                    case R.id.one_hour:
+                                        durationString = getString(R.string.one_hour);
+                                        durationInt = 3600;
+                                        break;
+                                    case R.id.one_and_half_hour:
+                                        durationString = getString(R.string.one_and_half_hour);
+                                        durationInt = 5400;
+                                        break;
+                                    case R.id.two_hour:
+                                        durationString = getString(R.string.two_hour);
+                                        durationInt = 7200;
+                                        break;
+                                    case R.id.three_hour:
+                                        durationString = getString(R.string.three_hour);
+                                        durationInt = 14400;
+                                        break;
                                 }
                                 textView.setText(durationString);
                                 return true;
@@ -100,6 +114,7 @@ public class MainActivity extends AppCompatActivity{
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
                             String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
@@ -108,26 +123,26 @@ public class MainActivity extends AppCompatActivity{
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbHelper = new DbHelper(MainActivity.this);
-                                    if (remarkInput.equals("")){
-                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput));
+                                    if (remarkInput.equals("")) {
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput));
                                     } else {
-                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput));
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput, remarkInput));
                                     }
-                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput +  getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput + getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
         Intent intent = getIntent();
-        if (intent.getStringExtra("PressButton").equals("true")){
-           fab.callOnClick();
+        if (intent.getStringExtra("PressButton").equals("true")) {
+            fab.callOnClick();
         }
     }
 
-//    private int checkedItemId = R.id.quart_hour;
+    //    private int checkedItemId = R.id.quart_hour;
 //    private String duration = getString(R.string.quart_hour);
-    private void showPopupMenu(final Context context, View view){
+    private void showPopupMenu(final Context context, View view) {
 //        final int checkedItemId = R.id.quart_hour;
 //        final String duration;
         PopupMenu popupMenu = new PopupMenu(context, view);
@@ -137,7 +152,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 //                int checkedItemId = R.id.quart_hour;
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.quart_hour:
 //                        checkedItemId = R.id.quart_hour;
 //                        duration = getString(R.string.qujjjart_hour);
@@ -172,16 +187,17 @@ public class MainActivity extends AppCompatActivity{
         });
         popupMenu.show();
     }
+
     public static class PlaceholderFragment extends Fragment {
 
+        private static final String ARG_SECTION_NUMBER = "section_number";
         public static Calendar CurrentCalendar = Calendar.getInstance();
         public Calendar ShowedCalendar = CurrentCalendar;
         private LogUI logUI;
         private Chart chart;
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {}
+        public PlaceholderFragment() {
+        }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -197,10 +213,10 @@ public class MainActivity extends AppCompatActivity{
             View view = null;
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
-                view =  logUI.getView(getContext(), ShowedCalendar);
+                view = logUI.getView(getContext(), ShowedCalendar);
             } else {
 ////                return initChart(inflater, container);
-                ChartView chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
+                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
                 ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
                 initEvent();
                 view = chart.getView(ShowedCalendar);
@@ -208,7 +224,7 @@ public class MainActivity extends AppCompatActivity{
             return view;
         }
 
-        public void initEvent(){
+        public void initEvent() {
             DbData dbData1 = new DbData("1970-01-01", "03:33", 200, "Test1");
             DbData dbData2 = new DbData("1970-01-01", "05:33", 200, "Test2");
             DbData dbData3 = new DbData("1970-01-01", "20:33", 200, "Test1");
@@ -244,8 +260,8 @@ public class MainActivity extends AppCompatActivity{
             return 2;
         }
 
-            @Override
-            public CharSequence getPageTitle(int position) {
+        @Override
+        public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
                     return getString(R.string.Log);
