@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -27,7 +28,7 @@ public class LogUI extends View {
     private ImageButton imageButton;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    private mAdapter adapter;
+    public static mAdapter adapter;
     private DbHelper dbHelper ;
     private List<DbData> list;
 
@@ -73,14 +74,13 @@ public class LogUI extends View {
             progressBar.setSecondaryProgress(14400);
         }
         progressBar.setProgress(dbHelper.querySum(Date) + 1);
-        list = dbHelper.queryData("date", "1970-1-1");
-        if (list != null){
-            Log.d("DEBUGGING", "list is null");
-        } else {
-            Log.d("DEBUGGING", "list is not null");
-        }
+        list = dbHelper.queryData("date", Date);
         adapter = new mAdapter(list, context);
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    public void refresh(){
+        adapter.notifyDataSetChanged();
     }
 }

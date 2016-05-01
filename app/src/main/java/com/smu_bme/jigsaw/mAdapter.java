@@ -24,14 +24,8 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
 
 
     public mAdapter(List<DbData> list, Context context) {
-//        this.calendar = calendar;
         this.context = context;
         this.list = list;
-        if (list.isEmpty()) {
-//            Log.d("DEBUGGING", "NULL");
-        }
-//        dbHelper = new DbHelper(this.context);
-//        this.list = dbHelper.queryData("date", "1970-1-1");
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +48,6 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
-        Log.d("DEBUGGING", "list is empty");
         return viewHolder;
     }
 

@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity{
                                     dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput));
                                     }
                                     Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput +  getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
+                                    PlaceholderFragment.logUI.refresh();
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
@@ -123,58 +124,11 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-//    private int checkedItemId = R.id.quart_hour;
-//    private String duration = getString(R.string.quart_hour);
-    private void showPopupMenu(final Context context, View view){
-//        final int checkedItemId = R.id.quart_hour;
-//        final String duration;
-        PopupMenu popupMenu = new PopupMenu(context, view);
-        popupMenu.inflate(R.menu.duration);
-        popupMenu.getMenu().findItem(R.id.quart_hour).setChecked(true);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-//                int checkedItemId = R.id.quart_hour;
-                switch (item.getItemId()){
-                    case R.id.quart_hour:
-//                        checkedItemId = R.id.quart_hour;
-//                        duration = getString(R.string.qujjjart_hour);
-                        Toast.makeText(context, "ID" + R.id.quart_hour, Toast.LENGTH_SHORT).show();
-//                        durationString = getString(R.string.quart_hour);
-                        break;
-                    case R.id.half_hour:
-//                        checkedItemId = R.id.half_hour;
-                        Toast.makeText(context, "ID" + R.id.half_hour, Toast.LENGTH_SHORT).show();
-//                        duration = getString(R.string.half_hour);
-//                        durationString = getString(R.string.half_hour);
-                        break;
-                    case R.id.one_hour:
-//                        checkedItemId = R.id.one_hour;
-//                        duration = getString(R.string.one_hour);
-                        break;
-                    case R.id.one_and_half_hour:
-//                        checkedItemId = R.id.one_and_half_hour;
-//                        duration = getString(R.string.one_and_half_hour);
-                        break;
-                    case R.id.two_hour:
-//                        checkedItemId = R.id.two_hour;
-//                        duration = getString(R.string.two_hour);
-                        break;
-                    case R.id.three_hour:
-//                        checkedItemId = R.id.three_hour;
-//                        duration = getString(R.string.three_hour);
-                        break;
-                }
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
     public static class PlaceholderFragment extends Fragment {
 
         public static Calendar CurrentCalendar = Calendar.getInstance();
         public Calendar ShowedCalendar = CurrentCalendar;
-        private LogUI logUI;
+        public static LogUI logUI;
         private Chart chart;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
@@ -221,7 +175,6 @@ public class MainActivity extends AppCompatActivity{
             dbHelper.addData(dbData7);
         }
     }
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
