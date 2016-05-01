@@ -5,31 +5,31 @@
     <item
         android:id="@+id/quart_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_1"
         app:showAsAction="never" />
     <item
         android:id="@+id/half_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_2"
         app:showAsAction="never" />
     <item
         android:id="@+id/one_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_3"
         app:showAsAction="never" />
     <item
         android:id="@+id/one_and_half_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_4"
         app:showAsAction="never" />
     <item
         android:id="@+id/two_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_5"
         app:showAsAction="never" />
     <item
         android:id="@+id/three_hour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/duration_6"
         app:showAsAction="never" />
 </menu>

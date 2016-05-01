@@ -11,7 +11,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION=1;
     private static final String DB_NAME="Jigsaw.db";
 
-    private Context context;
     public static final String CREATE_DATA = "create table if not exists DATA ("
             + "id integer primary key autoincrement, "
             + "date text not null,"

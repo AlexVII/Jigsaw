@@ -73,7 +73,7 @@ public class LogUI extends View {
             progressBar.setSecondaryProgress(14400);
         }
         progressBar.setProgress(dbHelper.querySum(Date) + 1);
-        list = dbHelper.queryData("date", Date);
+        list = dbHelper.queryData("date", "1970-1-1");
         if (list != null){
             Log.d("DEBUGGING", "list is null");
         } else {

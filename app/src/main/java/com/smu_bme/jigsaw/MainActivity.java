@@ -2,6 +2,7 @@ package com.smu_bme.jigsaw;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,6 +89,10 @@ public class MainActivity extends AppCompatActivity{
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
+        Intent intent = getIntent();
+        if (intent.getStringExtra("PressButton").equals("true")){
+           fab.callOnClick();
+        }
     }
 
     private int checkedItemId = R.id.quart_hour;
