@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity{
         public static Calendar CurrentCalendar = Calendar.getInstance();
         public Calendar ShowedCalendar = CurrentCalendar;
         public static LogUI logUI;
-        private Chart chart;
+        private static ChartView chart;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -148,37 +148,18 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = null;
+            View view;
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
                 view =  logUI.getView(getContext(), ShowedCalendar);
             } else {
-////                return initChart(inflater, container);
-                ChartView chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
+                chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
                 ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
-                initEvent();
                 view = chart.getView(ShowedCalendar);
             }
             return view;
         }
 
-        public void initEvent(){
-            DbData dbData1 = new DbData("1970-01-01", "03:33", 200, "Test1");
-            DbData dbData2 = new DbData("1970-01-01", "05:33", 200, "Test2");
-            DbData dbData3 = new DbData("1970-01-01", "20:33", 200, "Test1");
-            DbData dbData4 = new DbData("1970-01-01", "23:33", 200, "Test2");
-            DbData dbData5 = new DbData("1970-01-02", "03:33", 200, "Test5");
-            DbData dbData6 = new DbData("1970-01-02", "13:33", 200, "Test1");
-            DbData dbData7 = new DbData("1970-01-02", "23:33", 200, "Test2");
-            DbHelper dbHelper = new DbHelper(getActivity());
-            dbHelper.addData(dbData1);
-            dbHelper.addData(dbData2);
-            dbHelper.addData(dbData3);
-            dbHelper.addData(dbData4);
-            dbHelper.addData(dbData5);
-            dbHelper.addData(dbData6);
-            dbHelper.addData(dbData7);
-        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
