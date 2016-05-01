@@ -171,33 +171,34 @@ public class MainActivity extends AppCompatActivity{
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 return initCardAndProgressBar(inflater, container);
             } else {
-                return Chart.initChart(inflater, container);
+                Chart chart = new Chart(inflater, container,getActivity(),ShowedDate);
+                return chart.getView();
             }
         }
 
         public View initCardAndProgressBar(LayoutInflater inflater, final ViewGroup container){
             View rootView = inflater.inflate(R.layout.layout_log, container, false);
             final TextView textView = (TextView) rootView.findViewById(R.id.date);
-            textView.setText(ShowedCalendar);
-            ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
-            imageButton.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
-                       @Override
-                       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                           calendar.set(Calendar.YEAR, year);
-                           calendar.set(Calendar.MONTH, monthOfYear);
-                           calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
-                       }
-                   };
-                   new DatePickerDialog(getActivity(), dateListener,
-                           calendar.get(Calendar.DAY_OF_MONTH),
-                           calendar.get(Calendar.MONTH),
-                           calendar.get(Calendar.DAY_OF_MONTH)).show();
-               }
-           });
+//            textView.setText(ShowedCalendar);
+//            ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.edit_date);
+//            imageButton.setOnClickListener(new View.OnClickListener() {
+//               @Override
+//               public void onClick(View v) {
+//                   DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+//                       @Override
+//                       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                           calendar.set(Calendar.YEAR, year);
+//                           calendar.set(Calendar.MONTH, monthOfYear);
+//                           calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                           textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+//                       }
+//                   };
+//                   new DatePickerDialog(getActivity(), dateListener,
+//                           calendar.get(Calendar.DAY_OF_MONTH),
+//                           calendar.get(Calendar.MONTH),
+//                           calendar.get(Calendar.DAY_OF_MONTH)).show();
+//               }
+//           });
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
             progressBar.setMax(14400);
             if (ShowedDateString.equals(CurrentDateString)){

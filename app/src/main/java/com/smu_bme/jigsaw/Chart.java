@@ -2,6 +2,7 @@ package com.smu_bme.jigsaw;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,19 +32,30 @@ public class Chart extends View{
         private LayoutInflater inflater;
         private ViewGroup container;
         private Context context;
-        protected Calendar ShowedDate;
+//        protected Calendar ShowedDate;
+        protected View view;
+        private SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        private DbHelper dbHelper;
+        private BarChart barChart;
+        private BarDataSet barDataSet;
+        private BarDataSet pieDataSet;
+        private ArrayList<String> xVals;
+        private PieChart pieChart;
+        private ArrayList<BarEntry> valsComp1 = new ArrayList<>();
+        private ArrayList<BarEntry> valsComp2 = new ArrayList<>();
+        private ArrayList<IBarDataSet> dataSet = new ArrayList<>();
+
 
         public Chart(LayoutInflater inflater, ViewGroup container, Context context, Calendar ShowedDate) {
             super(context);
             this.inflater = inflater;
             this.container = container;
             this.context = context;
-            this.ShowedDate = ShowedDate;
-
-                View rootView = inflater.inflate(R.layout.layout_data, container, false);
-                BarChart barChart = (BarChart) rootView.findViewById(R.id.bar_chart);
+//            this.ShowedDate = ShowedDate;
+            dbHelper = new DbHelper(context);
+            //Initialize xVals for BarChart
+            {
                 ArrayList<String> xVals = new ArrayList<>();
-
                 xVals.add("星期日");
                 xVals.add("星期一");
                 xVals.add("星期二");
@@ -50,12 +63,22 @@ public class Chart extends View{
                 xVals.add("星期四");
                 xVals.add("星期五");
                 xVals.add("星期六");
+                this.xVals = xVals;
+            }
 
-                ArrayList<BarEntry> valsComp1 = new ArrayList<>();
-                ArrayList<BarEntry> valsComp2 = new ArrayList<>();
 
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                DbHelper dbHelper = new DbHelper(context);
+                view = inflater.inflate(R.layout.layout_data, container, false);
+            {
+                //Initialize Chart reference
+                barChart = (BarChart) view.findViewById(R.id.bar_chart);
+                pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+            }
+
+                barDataSet = new BarDataSet(valsComp1, "星期");// 'valsComp1" is address
+                pieDataSet= new BarDataSet(valsComp2, "活动");//same
+                dataSet.add(barDataSet);
+                dataSet.add(pieDataSet);
+
                 for (int i = 1; i < 8; i++) {
                     ShowedDate.set(Calendar.DAY_OF_WEEK, i);
                     String date = f.format(ShowedDate.getTime());
@@ -65,31 +88,30 @@ public class Chart extends View{
                     valsComp1.add(Chart1Element);
                 }
 
-                BarDataSet setc1 = new BarDataSet(valsComp1, null);
-                setc1.setAxisDependency(YAxis.AxisDependency.LEFT);
-                BarDataSet setc2 = new BarDataSet(valsComp2, "C2");
-                setc2.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-                ArrayList<IBarDataSet> dataSet = new ArrayList<IBarDataSet>();
-                dataSet.add(setc1);
-                dataSet.add(setc2);
+                barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+
+
                 BarData data = new BarData(xVals, dataSet);
-                data.setGroupSpace(30f);
                 barChart.setData(data);
+                barChart.setScaleEnabled(false);
                 barChart.setHighlightPerTapEnabled(true);
-//            barChart.setDrawBarShadow(true);
-//            barChart.setMinimumWidth(60);
+                barChart.setDescriptionTextSize(10);
+                barChart.animateY(5000);
+                barChart.setNoDataTextDescription("这一周都没有记录呢");
+                barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                barChart.setDescription("一周学习");  // set the description
+
+//              barChart.highlightValues(Highlight[] highs);
 
                 barChart.invalidate();
 
 
-                barChart.setDescription("一周学习");  // set the description
-                setc1.setColors(ColorTemplate.COLORFUL_COLORS);
-                setc2.setColors(ColorTemplate.COLORFUL_COLORS);
-                barChart.animateY(5000);
 
 
-                PieChart pieChart = (PieChart) rootView.findViewById(R.id.pie_chart);
+                pieDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                 ArrayList<String> labels = new ArrayList<String>();
                 pieChart.setUsePercentValues(true);
                 pieChart.setExtraOffsets(5, 10, 5, 5);
@@ -148,8 +170,23 @@ public class Chart extends View{
                 pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 dataset2.setColors(ColorTemplate.COLORFUL_COLORS);
                 pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
     }
     public void update(Calendar ShowedDate){
 
+    }
+    private BarData setBarData(Calendar ShowedDate){
+
+        BarData data = new BarData(xVals, dataSet);
+        return data;
+    }
+    public void pieChart(){
+
+    }
+
+
+
+    public View getView() {
+        return view;
     }
 }

@@ -126,7 +126,7 @@ public class DbHelper{
             cursor = db.rawQuery("select * from DATA where date = ?", new String[]{item});
         }
 //           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor == null );
-            if(cursor!=null) {
+            if(cursor.getCount()>0) {
                 while (cursor.moveToNext()) {
 
 //                    Log.d("DEBUGGING_MARKER","loop");
@@ -164,7 +164,7 @@ public class DbHelper{
             cursor = db.rawQuery("select * from DATA where date = ? & name =?", new String[]{date,name});
         }
 //           Log.d("DEBUGGING_MARKER","count "+String.valueOf( cursor.getCount()) );
-        if(cursor!=null) {
+        if(cursor.getCount()>0) {
             while (cursor.moveToNext()) {
 //                    Log.d("DEBUGGING_MARKER","loop");
 
@@ -218,7 +218,7 @@ public class DbHelper{
        } else  {
             //check whether already exists
             Cursor cursor = db.rawQuery("select id from DATA where date = ? and time = ?", new String[]{dbData.getDate(), dbData.getTime()});
-            if (cursor!=null) {
+            if (cursor.getCount()>0){
                 out = -2;//"Data with same date and time already exists"
             }else{
                 ContentValues values = new ContentValues();
