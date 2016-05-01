@@ -27,7 +27,7 @@ public class CardActivity extends AppCompatActivity {
         DbData item = (DbData) intent.getSerializableExtra("Event");
         cardName.setText(item.getName());
         cardTime.setText(item.getTime());
-        cardDuration.setText(item.getDuration());
+        cardDuration.setText(String.valueOf(item.getDuration()));
         cardRemark.setText(item.getRemark());
 
     }

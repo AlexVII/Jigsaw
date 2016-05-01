@@ -2,4 +2,4 @@
 .idea/*
 local.properties
 build/*
-local.properties
+app/app.iml
