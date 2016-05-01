@@ -75,9 +75,9 @@ public class LogUI extends View {
         progressBar.setProgress(dbHelper.querySum(Date) + 1);
         list = dbHelper.queryData("date", Date);
         if (list != null){
-            Log.d("DEBUGGING", "list is null");
+//            Log.d("DEBUGGING", "list is null");
         } else {
-            Log.d("DEBUGGING", "list is not null");
+//            Log.d("DEBUGGING", "list is not null");
         }
         adapter = new mAdapter(list, context);
         recyclerView.setAdapter(adapter);

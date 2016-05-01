@@ -54,7 +54,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
-        Log.d("DEBUGGING", "list is empty");
+//        Log.d("DEBUGGING", "list is empty");
         return viewHolder;
     }
 

@@ -25,7 +25,7 @@ public class DbHelper{
                 this.context = context;
                 dbHelper= new MyDatabaseHelper(context);
                 initialAndCheck();
-                dbHelper.close();
+
     }
 
     private void initialAndCheck() {
@@ -54,7 +54,7 @@ public class DbHelper{
             cursor.close();
 
         }
-        dbHelper.close();
+
     }
 
 
@@ -77,13 +77,13 @@ public class DbHelper{
 //        if(cursorSum!=null) {
         if(cursorSum.getCount()>0){
             // if found, get sum
-            Log.d("DEBUGGING","not null");
+//            Log.d("DEBUGGING","not null");
             cursorSum.moveToFirst();
             sum =  cursorSum.getInt(cursorSum.getColumnIndex("sum"));
         } else {sum = -1;}// if not find, then the sum of duration of the very date is not created yet
 
         cursorSum.close();
-        dbHelper.close();
+
         return sum;
     }
 
@@ -96,7 +96,7 @@ public class DbHelper{
         if(cursorSum.moveToFirst()){
         sum = cursorSum.getInt(cursorSum.getColumnIndex("sum"));}
         cursorSum.close();
-        dbHelper.close();
+
         return sum;
     }
 
@@ -108,12 +108,12 @@ public class DbHelper{
         int out = cursor.getInt(cursor.getColumnIndex("num"));
         cursor.moveToLast();
         cursor.close();
-        dbHelper.close();
+
         return out;
     }
 
     public List<DbData> queryData(String mode, String item) {
-        Log.d("DEBUGGING_MARKER","init");
+//        Log.d("DEBUGGING_MARKER","init");
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<DbData> list = new ArrayList<>();
         Cursor cursor = null;
@@ -155,7 +155,7 @@ public class DbHelper{
             }//else return null
 
         //TODO what if the list is null
-        dbHelper.close();
+
             return list;
     }
     public List<DbData> queryData(String mode, String date,String name) {
@@ -190,7 +190,7 @@ public class DbHelper{
         }//else return null
         cursor.moveToLast();
         cursor.close();
-        dbHelper.close();
+
         return list;
     }
 
@@ -207,7 +207,7 @@ public class DbHelper{
         values.put("sum",queryAll()+duration);
         db.update(tableSum,values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
+//
 //
 //        db.execSQL("insert into ? (date,sum) values (?, ?)",new String[]{tableSum,date,String.valueOf(duration)});
 //
@@ -215,11 +215,11 @@ public class DbHelper{
     }
 
     public int addData(DbData dbData) {
-        Log.d("DEBUGGING","Init");
+//        Log.d("DEBUGGING","Init");
         int out;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (!dbData.validation()) {
-            Log.d("DEBUGGING","Not Valid");
+//            Log.d("DEBUGGING","Not Valid");
             out = -1;//"Input is not valid. Any of date, time or duration is empty."
        } else  {
             //check whether already exists
@@ -262,7 +262,7 @@ public class DbHelper{
                 out =0;
             }
         }
-        dbHelper.close();
+
         return out;
     }
 
@@ -280,7 +280,7 @@ public class DbHelper{
             db.delete(tableName, "id=?", new String[]{String.valueOf(id)});
 //        db.execSQL("delete from DATA where id = ? ", new String[]{String.valueOf(id)});
         }
-        dbHelper.close();
+
     }
 
 
@@ -316,7 +316,7 @@ public class DbHelper{
                 updateSum(dbData.getDate(), deltaDuration);
                 out = true;//fine
             }
-            dbHelper.close();
+
         }
         return out;
     }
@@ -327,7 +327,7 @@ public class DbHelper{
         values.put("sum",String.valueOf(nProgress));
         db.update("NUM",values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
+
 //        db.execSQL("update NUM set num = ? where id = 1",new String[]{String.valueOf(nProgress)});
     }
 
@@ -345,7 +345,7 @@ public class DbHelper{
         values.put("sum",String.valueOf(nDataAll));
         db.update(tableSum,values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
+
 //        db.execSQL("update SUM set sum = ? where id = 1", new String[]{String.valueOf(nDataAll)});
         }
 
