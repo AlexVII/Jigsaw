@@ -16,12 +16,15 @@
     <string name="noRemark">Remark Cannot be empty</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="duration">Duration</string>
     <string name="duration_1">Quart Hour</string>
     <string name="duration_2">Half Hour</string>
     <string name="duration_3">One Hour</string>
     <string name="duration_4">One and Half Hours</string>
     <string name="duration_5">Two Hours</string>
     <string name="duration_6">Three Hours</string>
+    <string name="successful_add_1">New Plan </string>
+    <string name="successful_add_2">Successful Added.</string>
 
     <string name="t00">00</string>
     <string name="t03">03</string>

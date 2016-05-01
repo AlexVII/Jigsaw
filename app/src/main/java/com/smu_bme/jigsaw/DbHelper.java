@@ -54,7 +54,6 @@ public class DbHelper{
             cursor.close();
 
         }
-        dbHelper.close();
     }
 
 
@@ -83,7 +82,6 @@ public class DbHelper{
         } else {sum = -1;}// if not find, then the sum of duration of the very date is not created yet
 
         cursorSum.close();
-        dbHelper.close();
         return sum;
     }
 
@@ -96,7 +94,6 @@ public class DbHelper{
         if(cursorSum.moveToFirst()){
         sum = cursorSum.getInt(cursorSum.getColumnIndex("sum"));}
         cursorSum.close();
-        dbHelper.close();
         return sum;
     }
 
@@ -108,7 +105,6 @@ public class DbHelper{
         int out = cursor.getInt(cursor.getColumnIndex("num"));
         cursor.moveToLast();
         cursor.close();
-        dbHelper.close();
         return out;
     }
 
@@ -155,7 +151,6 @@ public class DbHelper{
             }//else return null
 
         //TODO what if the list is null
-        dbHelper.close();
             return list;
     }
     public List<DbData> queryData(String mode, String date,String name) {
@@ -190,7 +185,6 @@ public class DbHelper{
         }//else return null
         cursor.moveToLast();
         cursor.close();
-        dbHelper.close();
         return list;
     }
 
@@ -207,7 +201,6 @@ public class DbHelper{
         values.put("sum",queryAll()+duration);
         db.update(tableSum,values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
 //
 //        db.execSQL("insert into ? (date,sum) values (?, ?)",new String[]{tableSum,date,String.valueOf(duration)});
 //
@@ -262,7 +255,6 @@ public class DbHelper{
                 out =0;
             }
         }
-        dbHelper.close();
         return out;
     }
 
@@ -280,7 +272,6 @@ public class DbHelper{
             db.delete(tableName, "id=?", new String[]{String.valueOf(id)});
 //        db.execSQL("delete from DATA where id = ? ", new String[]{String.valueOf(id)});
         }
-        dbHelper.close();
     }
 
 
@@ -316,7 +307,6 @@ public class DbHelper{
                 updateSum(dbData.getDate(), deltaDuration);
                 out = true;//fine
             }
-            dbHelper.close();
         }
         return out;
     }
@@ -327,7 +317,6 @@ public class DbHelper{
         values.put("sum",String.valueOf(nProgress));
         db.update("NUM",values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
 //        db.execSQL("update NUM set num = ? where id = 1",new String[]{String.valueOf(nProgress)});
     }
 
@@ -345,7 +334,6 @@ public class DbHelper{
         values.put("sum",String.valueOf(nDataAll));
         db.update(tableSum,values,"id=?",new String[]{"1"});
         values.clear();
-        dbHelper.close();
 //        db.execSQL("update SUM set sum = ? where id = 1", new String[]{String.valueOf(nDataAll)});
         }
 

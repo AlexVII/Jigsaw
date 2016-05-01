@@ -31,13 +31,14 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="For Now Duration"/>
+            android:text="@string/duration"/>
         <TextView
-            android:id="@+id/edit_duration"
+            android:id="@+id/show_duration"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="1 h"/>
+            android:layout_width="wrap_content"/>
         <ImageButton
+            android:id="@+id/edit_duration"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_arrow_drop_down_black_24dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>

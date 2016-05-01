@@ -19,10 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity{
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity{
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
+    private DbHelper dbHelper;
+    public Calendar CurrentCalendar = Calendar.getInstance();
+    public Calendar ShowedCalendar = CurrentCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,44 +52,66 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            private int durationInt = 900;
+            private String durationString = getString(R.string.quart_hour);
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
-                final TextView textView = (TextView) layout.findViewById(R.id.edit_duration);
-                textView.setOnClickListener(new View.OnClickListener() {
+                TextView textView = (TextView) layout.findViewById(R.id.show_duration);
+                textView.setText(durationString);
+                ImageButton imageButton = (ImageButton) layout.findViewById(R.id.edit_duration);
+                imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showPopupMenu(MainActivity.this, v);
+                        PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
+                        popupMenu.inflate(R.menu.duration);
+                        popupMenu.getMenu().findItem(R.id.quart_hour).setChecked(true);
+                        final TextView textView = (TextView) layout.findViewById(R.id.show_duration);
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case R.id.quart_hour: durationString = getString(R.string.quart_hour);
+                                        durationInt = 900; break;
+                                    case R.id.half_hour: durationString = getString(R.string.half_hour);
+                                        durationInt = 1800; break;
+                                    case R.id.one_hour: durationString = getString(R.string.one_hour);
+                                        durationInt = 3600; break;
+                                    case R.id.one_and_half_hour: durationString = getString(R.string.one_and_half_hour);
+                                        durationInt = 5400; break;
+                                    case R.id.two_hour: durationString = getString(R.string.two_hour);
+                                        durationInt = 7200; break;
+                                    case R.id.three_hour: durationString = getString(R.string.three_hour);
+                                        durationInt = 14400; break;
+                                }
+                                textView.setText(durationString);
+                                return true;
+                            }
+                        });
+                        popupMenu.show();
                     }
                 });
                 new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
+                            String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
+                            String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
                                 String remarkInput = remark.getText().toString();
-                                Calendar calendar = Calendar.getInstance();
                                 if (nameInput.equals("")) {
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    int duration = 900;
-                                    switch (checkedItemId){
-                                        case R.id.quart_hour: duration = 900; break;
-                                        case R.id.half_hour: duration = 1800; break;
-                                        case R.id.one_hour: duration = 3600; break;
-                                        case R.id.one_and_half_hour: duration = 5400; break;
-                                        case R.id.two_hour: duration = 7200; break;
-                                        case R.id.three_hour: duration = 10800; break;
-                                    }
-                                    Toast.makeText(MainActivity.this, "Duration is" + duration, Toast.LENGTH_SHORT).show();
+                                    dbHelper = new DbHelper(MainActivity.this);
                                     if (remarkInput.equals("")){
-//                                        DbData dbData = new DbData(CurrentDateString, calendar.get(Calendar.HOUR) + calendar.get(Calendar.MINUTE) + "",duration, nameInput);
+                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput));
                                     } else {
-//                                        DbData dbData = new DbData(CurrentDateString, calendar.get(Calendar.HOUR) + calendar.get(Calendar.MINUTE) + "",duration, nameInput, remarkInput );
+                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput));
                                     }
+                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput +  getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
@@ -95,32 +123,46 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private int checkedItemId = R.id.quart_hour;
+//    private int checkedItemId = R.id.quart_hour;
+//    private String duration = getString(R.string.quart_hour);
     private void showPopupMenu(final Context context, View view){
+//        final int checkedItemId = R.id.quart_hour;
+//        final String duration;
         PopupMenu popupMenu = new PopupMenu(context, view);
         popupMenu.inflate(R.menu.duration);
-        popupMenu.getMenu().findItem(checkedItemId).setChecked(true);
+        popupMenu.getMenu().findItem(R.id.quart_hour).setChecked(true);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+//                int checkedItemId = R.id.quart_hour;
                 switch (item.getItemId()){
                     case R.id.quart_hour:
-                        checkedItemId = R.id.quart_hour;
+//                        checkedItemId = R.id.quart_hour;
+//                        duration = getString(R.string.qujjjart_hour);
+                        Toast.makeText(context, "ID" + R.id.quart_hour, Toast.LENGTH_SHORT).show();
+//                        durationString = getString(R.string.quart_hour);
                         break;
                     case R.id.half_hour:
-                        checkedItemId = R.id.half_hour;
+//                        checkedItemId = R.id.half_hour;
+                        Toast.makeText(context, "ID" + R.id.half_hour, Toast.LENGTH_SHORT).show();
+//                        duration = getString(R.string.half_hour);
+//                        durationString = getString(R.string.half_hour);
                         break;
                     case R.id.one_hour:
-                        checkedItemId = R.id.one_hour;
+//                        checkedItemId = R.id.one_hour;
+//                        duration = getString(R.string.one_hour);
                         break;
                     case R.id.one_and_half_hour:
-                        checkedItemId = R.id.one_and_half_hour;
+//                        checkedItemId = R.id.one_and_half_hour;
+//                        duration = getString(R.string.one_and_half_hour);
                         break;
                     case R.id.two_hour:
-                        checkedItemId = R.id.two_hour;
+//                        checkedItemId = R.id.two_hour;
+//                        duration = getString(R.string.two_hour);
                         break;
                     case R.id.three_hour:
-                        checkedItemId = R.id.three_hour;
+//                        checkedItemId = R.id.three_hour;
+//                        duration = getString(R.string.three_hour);
                         break;
                 }
                 return true;
