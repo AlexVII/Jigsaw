@@ -8,9 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by gollyrui on 4/28/16.
  */
 public class MyDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DB_VERSION=1;
-    private static final String DB_NAME="Jigsaw.db";
-
     public static final String CREATE_DATA = "create table if not exists DATA ("
             + "id integer primary key autoincrement, "
             + "date text not null,"
@@ -18,18 +15,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "time text not null,"
             + "name text,"
             + "remark text)";
-
     public static final String CREATE_SUM = "create table if not exists SUM("
             + "id integer primary key autoincrement,"
             + "date text unique not null,"
             + "sum integer)";
-
     public static final String CREATE_NUM = "create table if not exists NUM("
             + "id integer primary key autoincrement,"
             + "num integer)";
-//    Constructor
-    public MyDatabaseHelper(Context context){
-        super(context,DB_NAME,null,DB_VERSION);
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "Jigsaw.db";
+
+    //    Constructor
+    public MyDatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override

@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">拼图</string>
+    <string name="Label">Jigsaw</string>
+
+    <string name="create_plan">Create Your Plan</string>
+    <string name="go_to_main_page">返回主界面</string>
+
+    <string name="date">日期</string>
+    <string name="Log">记录</string>
+    <string name="Data">数据</string>
+
+    <string name="create">新事项</string>
+    <string name="Name">事项：</string>
+    <string name="noName">事项要有名称</string>
+    <string name="Remark">备注：</string>
+    <string name="noRemark">备注不能为空</string>
+    <string name="yes">确定</string>
+    <string name="cancel">取消</string>
+    <string name="duration">时长</string>
+    <string name="duration_1">15分钟</string>
+    <string name="duration_2">0.5小时</string>
+    <string name="duration_3">1小时</string>
+    <string name="duration_4">1.5小时</string>
+    <string name="duration_5">2小时</string>
+    <string name="duration_6">3小时</string>
+    <string name="successful_add_1">新计划</string>
+    <string name="successful_add_2">成功添加</string>
+
+    <string name="t00">00</string>
+    <string name="t03">03</string>
+    <string name="t06">06</string>
+    <string name="t09">09</string>
+    <string name="t12">12</string>
+    <string name="t15">15</string>
+    <string name="t18">18</string>
+    <string name="t21">21</string>
+    <string name="t24">24</string>
+
+    <string name="quart_hour">15分钟</string>
+    <string name="half_hour">0.5小时</string>
+    <string name="one_hour">1小时</string>
+    <string name="one_and_half_hour">1.5小时</string>
+    <string name="two_hour">2小时</string>
+    <string name="three_hour">3小时</string>
+
+    <string name="back">返回</string>
+    <string name="edit">修改</string>
+    <string name="delete">删除</string>
+
+
+    <string name="piechart">每日学习</string>
+
+    <string name="sunday">周日</string>
+    <string name="monday">周一</string>
+    <string name="tuesday">周二</string>
+    <string name="wednesday">周三</string>
+    <string name="thursday">周四</string>
+    <string name="friday">周五</string>
+    <string name="saturday">周六</string>
+    <string name="week">星期</string>
+
+    <string name="gettostart">快开始拼图之旅吧</string>
+    <string name="nofoundonday">在这一天并没有找到任何记录</string>
+    <string name="nofoundonweek">整整一周都没有找到记录呢</string>
+</resources>
+
+

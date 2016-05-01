@@ -28,22 +28,6 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
         this.list = list;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public TextView time;
-        public TextView duration;
-        public ImageButton more;
-
-        public ViewHolder(View v) {
-            super(v);
-            name = (TextView) v.findViewById(R.id.card_view_name);
-            time = (TextView) v.findViewById(R.id.card_view_time);
-            duration = (TextView) v.findViewById(R.id.card_view_duration);
-            more = (ImageButton) v.findViewById(R.id.card_more);
-        }
-    }
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
@@ -53,7 +37,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final int j  = holder.getAdapterPosition();
+        final int j = holder.getAdapterPosition();
         holder.name.setText(list.get(position).getName());
         holder.time.setText(list.get(position).getTime());
         holder.duration.setText(String.valueOf(list.get(position).getDuration()));
@@ -70,6 +54,21 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView name;
+        public TextView time;
+        public TextView duration;
+        public ImageButton more;
+
+        public ViewHolder(View v) {
+            super(v);
+            name = (TextView) v.findViewById(R.id.card_view_name);
+            time = (TextView) v.findViewById(R.id.card_view_time);
+            duration = (TextView) v.findViewById(R.id.card_view_duration);
+            more = (ImageButton) v.findViewById(R.id.card_more);
+        }
     }
 
 }

@@ -30,7 +30,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -140,9 +140,8 @@ public class MainActivity extends AppCompatActivity{
         public static LogUI logUI;
         private static ChartView chart;
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {}
+        public PlaceholderFragment() {
+        }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity{
             View view;
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
-                view =  logUI.getView(getContext(), ShowedCalendar);
+                view = logUI.getView(getContext(), ShowedCalendar);
             } else {
                 chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
                 ShowedCalendar.setTime(Date.valueOf("1970-1-1"));

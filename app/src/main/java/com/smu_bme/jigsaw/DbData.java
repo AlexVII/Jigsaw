@@ -16,22 +16,22 @@ public class DbData implements Serializable {
     private int sumAll;
 
     // Full
-    public DbData(int id, String date, int duration, String time, String  name, String remark, int sumDate, int sumAll){
-        this.id= id;
-        this.date=date;
-        this.duration=duration;
+    public DbData(int id, String date, int duration, String time, String name, String remark, int sumDate, int sumAll) {
+        this.id = id;
+        this.date = date;
+        this.duration = duration;
         this.time = time;
         this.name = name;
         this.remark = remark;
-        this.sumDate=sumDate;
-        this.sumAll=sumAll;
+        this.sumDate = sumDate;
+        this.sumAll = sumAll;
     }
 
     //Without information from SUM
-    public DbData(int id, String date, int duration, String time, String  name, String remark){
-        this.id= id;
-        this.date=date;
-        this.duration=duration;
+    public DbData(int id, String date, int duration, String time, String name, String remark) {
+        this.id = id;
+        this.date = date;
+        this.duration = duration;
         this.time = time;
         this.name = name;
         this.remark = remark;
@@ -39,16 +39,17 @@ public class DbData implements Serializable {
 
     // when input data
 //    For alex
-    public DbData(String date, String time,int duration, String  name, String remark){
-        this.date=date;
-        this.duration=duration;
+    public DbData(String date, String time, int duration, String name, String remark) {
+        this.date = date;
+        this.duration = duration;
         this.time = time;
         this.name = name;
         this.remark = remark;
     }
-    public DbData(String date, String time, int duration, String  name){
-        this.date=date;
-        this.duration=duration;
+
+    public DbData(String date, String time, int duration, String name) {
+        this.date = date;
+        this.duration = duration;
         this.time = time;
         this.name = name;
     }
@@ -96,8 +97,9 @@ public class DbData implements Serializable {
     public String getTime() {
         return time;
     }
-    public boolean validation(){
-        return (date!=null&&duration!=0&& time != null);
+
+    public boolean validation() {
+        return (date != null && duration != 0 && time != null);
 
 //        private int id;
 //        private String date;
