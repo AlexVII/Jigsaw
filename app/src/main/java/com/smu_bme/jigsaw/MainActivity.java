@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity{
             private String durationString = getString(R.string.quart_hour);
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+                final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
@@ -108,21 +108,28 @@ public class MainActivity extends AppCompatActivity{
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbHelper = new DbHelper(MainActivity.this);
+                                    DbData dbData;
                                     if (remarkInput.equals("")){
-                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput));
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput);
+                                        dbHelper.addData(dbData);
                                     } else {
-                                    dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput));
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput);
+                                        dbHelper.addData(dbData);
                                     }
-                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput +  getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
-                                    PlaceholderFragment.logUI.refresh();
+                                    Intent intent = new Intent(MainActivity.this, TimerActivity.class);
+                                    intent.putExtra("Event", dbData);
+                                    startActivity(intent);
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
         Intent intent = getIntent();
-        if (intent.getStringExtra("PressButton").equals("true")){
+        if (intent.getStringExtra("Action").equals("button")){
            fab.callOnClick();
+        } else if (intent.getStringExtra("Action").equals("dialog")) {
+            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+                    .setPositiveButton(getString(R.string.yes),null).show();
         }
     }
 

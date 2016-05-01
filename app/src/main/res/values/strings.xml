@@ -66,4 +66,7 @@
     <string name="gettostart">Get to start your Jigsaw Puzzle trip!</string>
     <string name="nofoundonday">在这一天并没有找到任何记录</string>
     <string name="nofoundonweek">整整一周都没有找到记录呢</string>
+
+
+    <string name="timer">Timer</string>
 </resources>

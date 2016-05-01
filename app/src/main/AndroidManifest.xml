@@ -22,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CardActivity"/>
+        <activity android:name=".CardActivity" />
+        <activity android:name=".TimerActivity"
+            android:label="@string/timer">
+        </activity>
     </application>
+
 </manifest>

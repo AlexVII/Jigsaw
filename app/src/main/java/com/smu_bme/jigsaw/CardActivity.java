@@ -55,7 +55,7 @@ public class CardActivity extends AppCompatActivity {
                                         public void onClick(DialogInterface dialog, int which) {
                                             dbHelper.deleteData(item.getId());
                                             Intent intent = new  Intent (CardActivity.this, MainActivity.class);
-                                            intent.putExtra("PressButton", "false");
+                                            intent.putExtra("Action", "nothing");
                                             startActivity(intent);
                                             finish();
 //                                            TODO refresh layout
