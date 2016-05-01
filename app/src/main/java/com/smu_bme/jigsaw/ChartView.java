@@ -54,20 +54,21 @@ public class ChartView extends View{
         private PieChart pieChart;
 //        private PieDataSet pieDataSet;
         private Calendar ShowedDate;
-        private final ArrayList<String> xVals = new ArrayList<>();
-            {
-                xVals.add("周日");
-                xVals.add("周一");
-                xVals.add("周二");
-                xVals.add("周三");
-                xVals.add("周四");
-                xVals.add("周五");
-                xVals.add("周六");
-            }
+        private  ArrayList<String> xVals = new ArrayList<>();
+
 
 
         public ChartView(LayoutInflater inflater, ViewGroup container, Context context, final Calendar ShowedDate) {
             super(context);
+            {
+                xVals.add(context.getString(R.string.sunday));
+                xVals.add(context.getString(R.string.monday));
+                xVals.add(context.getString(R.string.tuesday));
+                xVals.add(context.getString(R.string.wednesday));
+                xVals.add(context.getString(R.string.thursday));
+                xVals.add(context.getString(R.string.friday));
+                xVals.add(context.getString(R.string.saturday));
+            }
             this.inflater = inflater;
             this.container = container;
             this.context = context;
@@ -84,7 +85,7 @@ public class ChartView extends View{
                     new OnChartValueSelectedListener() {
                         @Override
                         public void onValueSelected(Entry entry, int i, Highlight highlight) {
-                            Log.d("DEBUGGING","XIndex:"+String.valueOf(1+entry.getXIndex()));
+//                            Log.d("DEBUGGING","XIndex:"+String.valueOf(1+entry.getXIndex()));
                             setPie(ShowedDate,entry.getXIndex()+1);
 //                            Calendar.MONDAY
                         }
@@ -122,17 +123,17 @@ public class ChartView extends View{
                 barChart.animateY(1500);
                 barChart.animateX(1500);
                 barChart.setAlpha(0.9f);
-                barChart.setNoDataText("整整一周都没有找到记录呢");
-                barChart.setNoDataTextDescription("快开始拼图之旅吧");
+                barChart.setNoDataText(context.getString(R.string.nofoundonweek));
+                barChart.setNoDataTextDescription(context.getString(R.string.gettostart));
                 barChart.setDescription(null);  // set the description
 //              barChart.highlightValues(Highlight[] highs);
             }
 
 
             {
-                pieChart.setNoDataText("在这一天并没有找到任何记录");
-                pieChart.setNoDataTextDescription("快开始拼图之旅吧");
-                pieChart.setDescription("每日学习");
+                pieChart.setNoDataText(context.getString(R.string.nofoundonday));
+                pieChart.setNoDataTextDescription(context.getString(R.string.gettostart));
+                pieChart.setDescription(context.getString(R.string.week));
                 pieChart.setDescriptionTextSize(15f);
                 pieChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
                 pieChart.setUsePercentValues(true);
@@ -185,7 +186,7 @@ public class ChartView extends View{
             BarEntry Chart1Element = new BarEntry(sum, i - 1);
             barEntry.add(Chart1Element);
         }
-        barDataSet = new BarDataSet(barEntry, "星期");// 'barEntry" is address
+        barDataSet = new BarDataSet(barEntry, context.getString(R.string.week));// 'barEntry" is address
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         barDataSet.setValueTextSize(12f);
         barDataSet.setHighlightEnabled(true);
@@ -206,7 +207,7 @@ public class ChartView extends View{
         ArrayList<String> pieLabels = new ArrayList<>();
         ArrayList<Entry> pieEntry = new ArrayList<>();
         String date = f.format(ShowedDate.getTime());
-        Log.d("DEBUGGING",date);
+//        Log.d("DEBUGGING",date);
         List<DbData> dbDatas = dbHelper.queryData("date",date);
         DbData dbData;
         Map<String,Integer> activities = new HashMap<>();
@@ -232,7 +233,7 @@ public class ChartView extends View{
             }
 
 
-            PieDataSet pieDataSet = new PieDataSet(pieEntry, "项目");
+            PieDataSet pieDataSet = new PieDataSet(pieEntry, context.getString(R.string.piechart));
             pieDataSet.setValueTextSize(15);
             pieDataSet.setSliceSpace(5);
             pieDataSet.setHighlightEnabled(true);
