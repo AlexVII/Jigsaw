@@ -26,7 +26,6 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.mikephil.charting.charts.Chart;
 import com.smu_bme.jigsaw.WorkerThreads.WorkerThreads;
 
@@ -35,13 +34,13 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Calendar CurrentCalendar = Calendar.getInstance();
-    public Calendar ShowedCalendar = CurrentCalendar;
     private FloatingActionButton fab;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     private DbHelper dbHelper;
+    public Calendar CurrentCalendar = Calendar.getInstance();
+    public Calendar ShowedCalendar = CurrentCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            private int durationInt = 900;
-            private String durationString = getString(R.string.quart_hour);
+            private int duration = 900;
             @Override
             public void onClick(View v) {
                 final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
                 TextView textView = (TextView) layout.findViewById(R.id.show_duration);
-                textView.setText(durationString);
+                textView.setText(duration / 600 + "hours");
                 ImageButton imageButton = (ImageButton) layout.findViewById(R.id.edit_duration);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,20 +77,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()){
-                                    case R.id.quart_hour: durationString = getString(R.string.quart_hour);
-                                        durationInt = 900; break;
-                                    case R.id.half_hour: durationString = getString(R.string.half_hour);
-                                        durationInt = 1800; break;
-                                    case R.id.one_hour: durationString = getString(R.string.one_hour);
-                                        durationInt = 3600; break;
-                                    case R.id.one_and_half_hour: durationString = getString(R.string.one_and_half_hour);
-                                        durationInt = 5400; break;
-                                    case R.id.two_hour: durationString = getString(R.string.two_hour);
-                                        durationInt = 7200; break;
-                                    case R.id.three_hour: durationString = getString(R.string.three_hour);
-                                        durationInt = 14400; break;
+                                    case R.id.quart_hour: duration = 900;  break;
+                                    case R.id.half_hour: duration = 1800; break;
+                                    case R.id.one_hour: duration = 3600; break;
+                                    case R.id.one_and_half_hour: duration = 5400; break;
+                                    case R.id.two_hour: duration = 7200; break;
+                                    case R.id.three_hour: duration = 14400; break;
                                 }
-                                textView.setText(durationString);
+                                textView.setText(duration / 6000 + "hours");
                                 return true;
                             }
                         });
@@ -103,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
                             String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
@@ -111,12 +104,20 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbHelper = new DbHelper(MainActivity.this);
+<<<<<<< Temporary merge branch 1
+                                    if (remarkInput.equals("")) {
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput));
+                                    } else {
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput, remarkInput));
+                                    }
+                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput + getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
+=======
                                     DbData dbData;
                                     if (remarkInput.equals("")){
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,duration, nameInput);
                                         dbHelper.addData(dbData);
                                     } else {
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,duration, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
                                     Intent intent = new Intent(MainActivity.this, TimerActivity.class);
@@ -127,13 +128,13 @@ public class MainActivity extends AppCompatActivity {
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
-        Intent intent = getIntent();
-        if (intent.getStringExtra("Action").equals("button")){
-           fab.callOnClick();
-        } else if (intent.getStringExtra("Action").equals("dialog")) {
-            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
-                    .setPositiveButton(getString(R.string.yes),null).show();
-        }
+//        Intent intent = getIntent();
+//        if (intent.getStringExtra("Action").equals("button")){
+//           fab.callOnClick();
+//        } else if (intent.getStringExtra("Action").equals("dialog")) {
+//            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+//                    .setPositiveButton(getString(R.string.yes),null).show();
+//        }
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -143,14 +144,13 @@ public class MainActivity extends AppCompatActivity {
         public static LogUI logUI;
         private static ChartView chart;
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {}
+        public PlaceholderFragment() {
+        }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt("section number", sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
@@ -159,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view;
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+            if (getArguments().getInt("section number") == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
-                view =  logUI.getView(getContext(), ShowedCalendar);
+                view = logUI.getView(getContext(), ShowedCalendar);
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

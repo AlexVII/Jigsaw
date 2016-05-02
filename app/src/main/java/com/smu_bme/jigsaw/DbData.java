@@ -1,5 +1,7 @@
 package com.smu_bme.jigsaw;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -48,6 +50,7 @@ public class DbData implements Serializable {
     }
 
     public DbData(String date, String time, int duration, String name) {
+        Log.d ("DEBUGGING", "DbData Constructor Running");
         this.date = date;
         this.duration = duration;
         this.time = time;

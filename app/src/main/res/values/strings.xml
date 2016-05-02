@@ -69,4 +69,6 @@
 
 
     <string name="timer">Timer</string>
+
+    <string name="card_view">Card View</string>
 </resources>

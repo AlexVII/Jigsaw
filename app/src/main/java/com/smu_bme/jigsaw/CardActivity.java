@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,9 @@ public class CardActivity extends AppCompatActivity {
     private Button cardDelete;
     private Button cardEdit;
     private DbHelper dbHelper;
+    private ImageView imageView;
+    private CardView cardView;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +33,6 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
 
         cardName = (EditText) findViewById(R.id.card_name);
-        cardName.setEnabled(false);
         cardTime = (TextView) findViewById(R.id.card_time);
         cardDuration = (TextView) findViewById(R.id.card_duration);
         cardRemark = (EditText) findViewById(R.id.card_remark);
@@ -35,14 +40,19 @@ public class CardActivity extends AppCompatActivity {
         cardDelete = (Button) findViewById(R.id.button_delete);
         cardEdit = (Button) findViewById(R.id.button_edit);
         dbHelper = new DbHelper(CardActivity.this);
+        imageView = (ImageView) findViewById(R.id.card_header);
+        imageView.setImageResource(R.mipmap.bull_red);
+        cardView = (CardView) findViewById(R.id.card_view);
 
-        Intent intent = getIntent();
+//        Intent intent = getIntent();
 
-        final DbData item = (DbData) intent.getSerializableExtra("Event");
+        final DbData item = new DbData("2333-33-33", "33:33", 233, "233"); // (DbData) intent.getSerializableExtra("Event");
+        Log.d("DEBUGGING", "Get Name = " + item.getName());
         cardName.setText(item.getName());
         cardTime.setText(item.getTime());
         cardDuration.setText(String.valueOf(item.getDuration()));
         cardRemark.setText(item.getRemark());
+//        DELETE AND CANCEL
         cardDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,12 +72,17 @@ public class CardActivity extends AppCompatActivity {
                                         }
                                     }).setNegativeButton(getString(R.string.cancel), null).show();
                 } else {
+                    cardName.setEnabled(false);
+                    cardRemark.setEnabled(false);
+                    cardName.setText(item.getName());
+                    cardRemark.setText(item.getRemark());
                     cardEdit.setText(getString(R.string.edit));
                     cardDelete.setText(getString(R.string.delete));
 //                    TODO refresh layout
                 }
             }
         });
+//        EDIT AND ACCEPT
         cardEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
