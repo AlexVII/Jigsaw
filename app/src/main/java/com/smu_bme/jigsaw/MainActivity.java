@@ -3,6 +3,9 @@ package com.smu_bme.jigsaw;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +16,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.Chart;
-
-import java.sql.Date;
+import com.smu_bme.jigsaw.WorkerThreads.WorkerThreads;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -215,11 +216,18 @@ public class MainActivity extends AppCompatActivity {
                 logUI = new LogUI(getContext(), inflater, container);
                 view = logUI.getView(getContext(), ShowedCalendar);
             } else {
-////                return initChart(inflater, container);
-                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
-                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
-                initEvent();
-                view = chart.getView(ShowedCalendar);
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
+                workerThreads.refreshDate(ShowedCalendar);
+//                return initChart(inflater, container);
+//                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
+//                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
+//                initEvent();
+//                view = chart.getView(ShowedCalendar);
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             return view;
         }
