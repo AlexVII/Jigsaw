@@ -3,6 +3,7 @@ package com.smu_bme.jigsaw;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -18,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
@@ -34,11 +37,11 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    private TabLayout tabLayout;
-    private DbHelper dbHelper;
+    FloatingActionButton fab;
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    WrapContentHeightPager mViewPager;
+    TabLayout tabLayout;
+    DbHelper dbHelper;
     public Calendar CurrentCalendar = Calendar.getInstance();
     public Calendar ShowedCalendar = CurrentCalendar;
 
@@ -50,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (WrapContentHeightPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setManager(getWindowManager());
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -189,7 +193,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+            PlaceholderFragment fragment =  PlaceholderFragment.newInstance(position + 1);
+            return fragment;
         }
 
         @Override

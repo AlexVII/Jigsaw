@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
+            android:textColor="@android:color/holo_blue_dark"
             android:text="@string/Name"
             android:layout_column="1"
             android:gravity="center_vertical"
@@ -27,8 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@android:color/holo_blue_dark"
             android:layout_width="wrap_content"
             android:layout_column="1"
+            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:text="@string/duration"/>
@@ -66,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
+            android:textColor="@android:color/holo_blue_dark"
             android:text="@string/Remark"
             android:layout_column="1"
             android:gravity="center_vertical"

@@ -1,18 +1,26 @@
 package com.smu_bme.jigsaw;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.hardware.display.DisplayManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.hardware.display.DisplayManagerCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by bme-lab2 on 4/30/16.
  */
 public class WrapContentHeightPager extends ViewPager {
+
+    private WindowManager manager;
 
     public WrapContentHeightPager(Context context) {
         super(context);
@@ -27,15 +35,18 @@ public class WrapContentHeightPager extends ViewPager {
         int height = 0;
 
         for (int i = 0; i < getChildCount(); i++) {
-            View chlid = getChildAt(i);
-            chlid.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            int h = chlid.getMeasuredHeight();
+            View child = getChildAt(i);
+            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            int h = child.getMeasuredHeight();
             if (h > height) {
                 height = h;
             }
         }
-
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        Display display = manager.getDefaultDisplay();
+        Point size= new Point();
+        display.getSize(size);
+        int h = size.y;
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(h - 450, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -43,5 +54,9 @@ public class WrapContentHeightPager extends ViewPager {
     @Override
     public boolean onInterceptHoverEvent(MotionEvent event) {
         return true;
+    }
+
+    public void setManager(WindowManager manager) {
+        this.manager = manager;
     }
 }
