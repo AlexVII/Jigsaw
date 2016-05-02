@@ -1,9 +1,7 @@
 package com.smu_bme.jigsaw;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -12,23 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.github.mikephil.charting.charts.Chart;
 
 import java.sql.Date;
 
@@ -44,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
     DbHelper dbHelper;
     public Calendar CurrentCalendar = Calendar.getInstance();
     public Calendar ShowedCalendar = CurrentCalendar;
+    AlertDialog dialog;
+    Intent intent;
+    View layout;
+    LayoutInflater inflater;
+//    public final static int THEME_DEFAULT = 0;
+//    public final static int THEME_WHITE = 1;
+//    public final static int THEME_BLUE = 2;
+//    public final static int THEME_BLUE = 2;
+//    public final static int THEME_BLUE = 2;
+//    public final static int THEME_BLUE = 2;
+//    public final static int THEME_BLUE = 2;
+//    public final static int THEME_BLUE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             private double duration = 0.15;
             @Override
             public void onClick(View v) {
-                final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-                final View layout = inflater.inflate(R.layout.dialog, null);
+                inflater = LayoutInflater.from(MainActivity.this);
+                layout = inflater.inflate(R.layout.dialog_create, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
                 final TextView textView = (TextView) layout.findViewById(R.id.show_duration);
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText(duration + "hours");
                     }
                 });
-                new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
+                dialog = new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
                             String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                         dbData = new DbData(CurrentDateString, CurrentTimeString ,(int)duration * 3600, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
-                                    Intent intent = new Intent(MainActivity.this, TimerActivity.class);
+                                    intent = new Intent(MainActivity.this, TimerActivity.class);
                                     intent.putExtra("Event", dbData);
                                     startActivity(intent);
                                 }
@@ -144,10 +149,46 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = getIntent();
 //        if (intent.getStringExtra("Action").equals("button")){
 //           fab.callOnClick();
-//        } else if (intent.getStringExtra("Action").equals("dialog")) {
+//        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
 //            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
 //                    .setPositiveButton(getString(R.string.yes),null).show();
 //        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        inflater = LayoutInflater.from(MainActivity.this);
+        switch (item.getItemId()){
+            case R.id.theme:
+                layout = inflater.inflate(R.layout.dialog_select_theme, null);
+                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
+                        .show();
+                break;
+            case R.id.back_to_jigsaw: intent = new Intent(MainActivity.this, JigsawActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.background:
+                layout = inflater.inflate(R.layout.dialog_select_background, null);
+                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
+                        .show();
+                break;
+//            case R.id.tutorial: intent = new Intent(MainActivity.this, MainActivity.this);
+//                break;
+            case R.id.about_jigsaw:
+                layout = inflater.inflate(R.layout.dialog_about_jigsaw, null);
+                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setTitle(getString(R.string.about_jigsaw)).setPositiveButton(getString(R.string.yes), null).show();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static class PlaceholderFragment extends Fragment {

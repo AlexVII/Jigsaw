@@ -8,6 +8,11 @@
     <string name="date">Date</string>
     <string name="Log">Log</string>
     <string name="Data">Data</string>
+    <string name="theme">Theme</string>
+    <string name="background">Jigsaw</string>
+    <string name="back_to_jigsaw">Back to Jigsaw View</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="about_jigsaw">About Jigsaw</string>
 
     <string name="create">Create A New Plan</string>
     <string name="Name">Name:</string>
@@ -54,7 +59,7 @@
     <string name="delete_title">Deleting</string>
 
 
-    <string name="piechart">每日学习</string>
+    <string name="pie_chart_title">每日学习</string>
 
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
@@ -65,12 +70,26 @@
     <string name="saturday">Saturday</string>
     <string name="week"></string>
 
-    <string name="gettostart">Get to start your Jigsaw Puzzle trip!</string>
-    <string name="nofoundonday">在这一天并没有找到任何记录</string>
-    <string name="nofoundonweek">整整一周都没有找到记录呢</string>
+    <string name="get_to_start">Get to start your Jigsaw Puzzle trip!</string>
+    <string name="no_found_on_day">在这一天并没有找到任何记录</string>
+    <string name="no_found_on_week">整整一周都没有找到记录呢</string>
 
 
     <string name="timer">Timer</string>
 
     <string name="card_view">Card View</string>
+
+    <string name="theme_banana">Banana</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_blueberry">Blueberry</string>
+    <string name="theme_tomato">Tomato</string>
+    <string name="theme_sage">Sage</string>
+    <string name="theme_grape">Grape</string>
+    <string name="theme_graphite">Graphite</string>
+
+
+    <string name="version">Version 1.0</string>
+    <string name="producer">Produced By \n Toaru SMU No Idea Project</string>
+    <string name="introduction">balbalabala</string>
+    <string name="gettostart"></string>
 </resources>

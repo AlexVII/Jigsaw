@@ -122,16 +122,16 @@ public class ChartView extends View {
             barChart.animateY(1500);
             barChart.animateX(1500);
             barChart.setAlpha(0.9f);
-            barChart.setNoDataText(context.getString(R.string.nofoundonweek));
-            barChart.setNoDataTextDescription(context.getString(R.string.gettostart));
+            barChart.setNoDataText(context.getString(R.string.no_found_on_week));
+            barChart.setNoDataTextDescription(context.getString(R.string.get_to_start));
             barChart.setDescription(null);  // set the description
 //              barChart.highlightValues(Highlight[] highs);
         }
 
 
         {
-            pieChart.setNoDataText(context.getString(R.string.nofoundonday));
-            pieChart.setNoDataTextDescription(context.getString(R.string.gettostart));
+            pieChart.setNoDataText(context.getString(R.string.no_found_on_day));
+            pieChart.setNoDataTextDescription(context.getString(R.string.get_to_start));
             pieChart.setDescription(context.getString(R.string.week));
             pieChart.setDescriptionTextSize(15f);
             pieChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);

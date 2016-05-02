@@ -62,6 +62,9 @@
     <string name="gettostart">快开始拼图之旅吧</string>
     <string name="nofoundonday">在这一天并没有找到任何记录</string>
     <string name="nofoundonweek">整整一周都没有找到记录呢</string>
+    <string name="back_to_jigsaw"></string>
+    <string name="background"></string>
+    <string name="card_view"></string>
 </resources>
 
 

@@ -55,7 +55,7 @@ public class TimerActivity extends AppCompatActivity {
             textView.setText("Get");
             progressBar.setProgress(a);
             Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-            intent.putExtra("Action", "dialog");
+            intent.putExtra("Action", "dialog_create");
             startActivity(intent);
             finish();
         }
