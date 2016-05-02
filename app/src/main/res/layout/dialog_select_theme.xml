@@ -1,48 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_layout"
     android:padding="18dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#009688"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</android.support.v7.widget.CardView>-->
 
-    <RadioButton
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_default"
-        android:id="@+id/defaultButton" />
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#FFEB3B"-->
+        <!--app:cardElevation="5dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_banana"
-        android:id="@+id/bananaButton" />
+    <!--</android.support.v7.widget.CardView>-->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_blueberry"
-        android:id="@+id/blueberryButton" />
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#3F51B5"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_height="wrap_content">-->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_grape"
-        android:id="@+id/grapeButton" />
+    <!--</android.support.v7.widget.CardView>-->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_graphite"
-        android:id="@+id/graphiteButton" />
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#9C27B0"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_sage"
-        android:id="@+id/sageButton" />
+    <!--</android.support.v7.widget.CardView>-->
 
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#607D8B"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</android.support.v7.widget.CardView>-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#4CAF50"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</android.support.v7.widget.CardView>-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--app:cardBackgroundColor="#F44336"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--app:cardElevation="5dp"-->
+        <!--app:cardCornerRadius="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</android.support.v7.widget.CardView>-->
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_default"
+            android:id="@+id/defaultButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_banana"
+            android:id="@+id/bananaButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_blueberry"
+            android:id="@+id/blueberryButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_grape"
+            android:id="@+id/grapeButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_graphite"
+            android:id="@+id/graphiteButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_sage"
+            android:id="@+id/sageButton" />
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

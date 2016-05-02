@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -49,8 +50,10 @@ public class LogUI extends View {
     }
 
     public View getView(final Context context, final Calendar calendar){
-//        String CurrentDate  = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
+
         Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
+        String CurrentDateS  = new SimpleDateFormat("yyyy-MM-dd").format(CurrentDate.getTime());
+        Toast.makeText(context, "Current Time" + CurrentDateS, Toast.LENGTH_SHORT).show();
         String Date = format.format(calendar.getTime());
         textView.setText(Date);
         imageButton.setOnClickListener(new View.OnClickListener() {
