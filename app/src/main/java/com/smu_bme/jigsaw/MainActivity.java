@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,10 +59,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             private int durationInt = 900;
             private String durationString = getString(R.string.quart_hour);
-
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+                final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
@@ -78,31 +78,19 @@ public class MainActivity extends AppCompatActivity {
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.quart_hour:
-                                        durationString = getString(R.string.quart_hour);
-                                        durationInt = 900;
-                                        break;
-                                    case R.id.half_hour:
-                                        durationString = getString(R.string.half_hour);
-                                        durationInt = 1800;
-                                        break;
-                                    case R.id.one_hour:
-                                        durationString = getString(R.string.one_hour);
-                                        durationInt = 3600;
-                                        break;
-                                    case R.id.one_and_half_hour:
-                                        durationString = getString(R.string.one_and_half_hour);
-                                        durationInt = 5400;
-                                        break;
-                                    case R.id.two_hour:
-                                        durationString = getString(R.string.two_hour);
-                                        durationInt = 7200;
-                                        break;
-                                    case R.id.three_hour:
-                                        durationString = getString(R.string.three_hour);
-                                        durationInt = 14400;
-                                        break;
+                                switch (item.getItemId()){
+                                    case R.id.quart_hour: durationString = getString(R.string.quart_hour);
+                                        durationInt = 900; break;
+                                    case R.id.half_hour: durationString = getString(R.string.half_hour);
+                                        durationInt = 1800; break;
+                                    case R.id.one_hour: durationString = getString(R.string.one_hour);
+                                        durationInt = 3600; break;
+                                    case R.id.one_and_half_hour: durationString = getString(R.string.one_and_half_hour);
+                                        durationInt = 5400; break;
+                                    case R.id.two_hour: durationString = getString(R.string.two_hour);
+                                        durationInt = 7200; break;
+                                    case R.id.three_hour: durationString = getString(R.string.three_hour);
+                                        durationInt = 14400; break;
                                 }
                                 textView.setText(durationString);
                                 return true;
@@ -115,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
                             String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
-
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
@@ -124,81 +111,41 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbHelper = new DbHelper(MainActivity.this);
-                                    if (remarkInput.equals("")) {
-                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput));
+                                    DbData dbData;
+                                    if (remarkInput.equals("")){
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput);
+                                        dbHelper.addData(dbData);
                                     } else {
-                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput, remarkInput));
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,durationInt, nameInput, remarkInput);
+                                        dbHelper.addData(dbData);
                                     }
-                                    Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput + getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, TimerActivity.class);
+                                    intent.putExtra("Event", dbData);
+                                    startActivity(intent);
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
         Intent intent = getIntent();
-        if (intent.getStringExtra("PressButton").equals("true")) {
-            fab.callOnClick();
+        if (intent.getStringExtra("Action").equals("button")){
+           fab.callOnClick();
+        } else if (intent.getStringExtra("Action").equals("dialog")) {
+            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+                    .setPositiveButton(getString(R.string.yes),null).show();
         }
-    }
-
-    //    private int checkedItemId = R.id.quart_hour;
-//    private String duration = getString(R.string.quart_hour);
-    private void showPopupMenu(final Context context, View view) {
-//        final int checkedItemId = R.id.quart_hour;
-//        final String duration;
-        PopupMenu popupMenu = new PopupMenu(context, view);
-        popupMenu.inflate(R.menu.duration);
-        popupMenu.getMenu().findItem(R.id.quart_hour).setChecked(true);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-//                int checkedItemId = R.id.quart_hour;
-                switch (item.getItemId()) {
-                    case R.id.quart_hour:
-//                        checkedItemId = R.id.quart_hour;
-//                        duration = getString(R.string.qujjjart_hour);
-                        Toast.makeText(context, "ID" + R.id.quart_hour, Toast.LENGTH_SHORT).show();
-//                        durationString = getString(R.string.quart_hour);
-                        break;
-                    case R.id.half_hour:
-//                        checkedItemId = R.id.half_hour;
-                        Toast.makeText(context, "ID" + R.id.half_hour, Toast.LENGTH_SHORT).show();
-//                        duration = getString(R.string.half_hour);
-//                        durationString = getString(R.string.half_hour);
-                        break;
-                    case R.id.one_hour:
-//                        checkedItemId = R.id.one_hour;
-//                        duration = getString(R.string.one_hour);
-                        break;
-                    case R.id.one_and_half_hour:
-//                        checkedItemId = R.id.one_and_half_hour;
-//                        duration = getString(R.string.one_and_half_hour);
-                        break;
-                    case R.id.two_hour:
-//                        checkedItemId = R.id.two_hour;
-//                        duration = getString(R.string.two_hour);
-                        break;
-                    case R.id.three_hour:
-//                        checkedItemId = R.id.three_hour;
-//                        duration = getString(R.string.three_hour);
-                        break;
-                }
-                return true;
-            }
-        });
-        popupMenu.show();
     }
 
     public static class PlaceholderFragment extends Fragment {
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
         public static Calendar CurrentCalendar = Calendar.getInstance();
         public Calendar ShowedCalendar = CurrentCalendar;
-        private LogUI logUI;
-        private Chart chart;
+        public static LogUI logUI;
+        private static ChartView chart;
 
-        public PlaceholderFragment() {
-        }
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {}
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -211,10 +158,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = null;
+            View view;
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
-                view = logUI.getView(getContext(), ShowedCalendar);
+                view =  logUI.getView(getContext(), ShowedCalendar);
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,25 +179,7 @@ public class MainActivity extends AppCompatActivity {
             return view;
         }
 
-        public void initEvent() {
-            DbData dbData1 = new DbData("1970-01-01", "03:33", 200, "Test1");
-            DbData dbData2 = new DbData("1970-01-01", "05:33", 200, "Test2");
-            DbData dbData3 = new DbData("1970-01-01", "20:33", 200, "Test1");
-            DbData dbData4 = new DbData("1970-01-01", "23:33", 200, "Test2");
-            DbData dbData5 = new DbData("1970-01-02", "03:33", 200, "Test5");
-            DbData dbData6 = new DbData("1970-01-02", "13:33", 200, "Test1");
-            DbData dbData7 = new DbData("1970-01-02", "23:33", 200, "Test2");
-            DbHelper dbHelper = new DbHelper(getActivity());
-            dbHelper.addData(dbData1);
-            dbHelper.addData(dbData2);
-            dbHelper.addData(dbData3);
-            dbHelper.addData(dbData4);
-            dbHelper.addData(dbData5);
-            dbHelper.addData(dbData6);
-            dbHelper.addData(dbData7);
-        }
     }
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -268,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
             return 2;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
+            @Override
+            public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
                     return getString(R.string.Log);

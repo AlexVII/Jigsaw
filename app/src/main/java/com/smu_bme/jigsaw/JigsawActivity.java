@@ -143,9 +143,9 @@ public class JigsawActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         Intent intent = new Intent(JigsawActivity.this, MainActivity.class);
         if (v.getId() == R.id.set_plan) {
-            intent.putExtra("PressButton", "true");
+            intent.putExtra("Action", "button");
         } else {
-            intent.putExtra("PressButton", "False");
+            intent.putExtra("Action", "nothing");
         }
         startActivity(intent);
         finish();

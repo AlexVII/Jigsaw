@@ -25,6 +25,8 @@
     <string name="duration_6">Three Hours</string>
     <string name="successful_add_1">New Plan </string>
     <string name="successful_add_2">Successful Added.</string>
+    <string name="successful_change_1">Plan </string>
+    <string name="successful_change_2">Successful Changed.</string>
 
     <string name="t00">00</string>
     <string name="t03">03</string>
@@ -45,7 +47,9 @@
 
     <string name="back">Back</string>
     <string name="edit">Edit</string>
+    <string name="accept">Accept</string>
     <string name="delete">Delete</string>
+    <string name="delete_title">Deleting</string>
 
 
     <string name="pie_chart">Pie Chart</string>
@@ -62,4 +66,7 @@
     <string name="get_to_start">Get to start your Jigsaw Puzzle trip!</string>
     <string name="no_found_on_day">No record on the day</string>
     <string name="no_found_on_week">No record on the week.</string>
+
+
+    <string name="timer">Timer</string>
 </resources>
