@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View view;
             if (getArguments().getInt("section number") == 1) {
                 logUI = new LogUI(getContext(), inflater, container);
