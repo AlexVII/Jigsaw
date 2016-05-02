@@ -18,9 +18,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
@@ -54,16 +56,17 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            private int duration = 900;
+            private double duration = 0.15;
             @Override
             public void onClick(View v) {
                 final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
                 final View layout = inflater.inflate(R.layout.dialog, null);
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
-                TextView textView = (TextView) layout.findViewById(R.id.show_duration);
-                textView.setText(duration / 600 + "hours");
+                final TextView textView = (TextView) layout.findViewById(R.id.show_duration);
+                textView.setText(0.15 + "hours");
                 ImageButton imageButton = (ImageButton) layout.findViewById(R.id.edit_duration);
+                final SeekBar seekBar = (SeekBar) layout.findViewById(R.id.seekBar);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -75,18 +78,35 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()){
-                                    case R.id.quart_hour: duration = 900;  break;
-                                    case R.id.half_hour: duration = 1800; break;
-                                    case R.id.one_hour: duration = 3600; break;
-                                    case R.id.one_and_half_hour: duration = 5400; break;
-                                    case R.id.two_hour: duration = 7200; break;
-                                    case R.id.three_hour: duration = 14400; break;
+                                    case R.id.quart_hour: duration = 0.15;  break;
+                                    case R.id.half_hour: duration = 0.5; break;
+                                    case R.id.one_hour: duration = 1; break;
+                                    case R.id.one_and_half_hour: duration = 1.5; break;
+                                    case R.id.two_hour: duration = 2; break;
+                                    case R.id.three_hour: duration = 3; break;
                                 }
-                                textView.setText(duration / 6000 + "hours");
+                                textView.setText(duration + "hours");
+                                seekBar.setProgress((int)(duration * 4 - 1));
                                 return true;
                             }
                         });
                         popupMenu.show();
+                    }
+                });
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        duration = progress * 0.25 + 0.25;
+                        textView.setText(duration + "hours");
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        textView.setText("Tracking");
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        textView.setText(duration + "hours");
                     }
                 });
                 new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
@@ -103,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
                                     dbHelper = new DbHelper(MainActivity.this);
                                     DbData dbData;
                                     if (remarkInput.equals("")){
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,duration, nameInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,(int)duration * 3600, nameInput);
                                         dbHelper.addData(dbData);
                                     } else {
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,duration, nameInput, remarkInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,(int)duration * 3600, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
                                     Intent intent = new Intent(MainActivity.this, TimerActivity.class);
