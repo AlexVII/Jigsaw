@@ -6,16 +6,18 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.crypto.interfaces.PBEKey;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends AppCompatActivity implements Serializable {
 
     private TextView textView;
     private ProgressBar progressBar;
@@ -29,11 +31,17 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("DEBUGGING", "Intent settings");
         setContentView(R.layout.activity_timer);
+        Log.d("DEBUGGING", "Intent settings");
         Intent intent = getIntent();
-        final DbData dbData = (DbData) intent.getSerializableExtra("Event");
+        Log.d("DEBUGGING", "Intent settings");
+        final DbData dbData = (DbData) intent.getSerializableExtra("Timer");
+        Log.d("DEBUGGING", "Intent settings");
         a = dbData.getDuration() * 10 * 1000;
+        Log.d("DEBUGGING", "Intent settings");
         textView = (TextView) findViewById(R.id.timer);
+        Log.d("DEBUGGING", "Intent settings");
         progressBar = (ProgressBar) findViewById(R.id.timer_progress_bar);
         progressBar.setMax(a);
         name = (TextView) findViewById(R.id.timer_name);

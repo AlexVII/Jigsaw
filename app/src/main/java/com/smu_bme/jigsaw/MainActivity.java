@@ -145,8 +145,12 @@ public class MainActivity extends AppCompatActivity {
                                         dbHelper.addData(dbData);
                                     }
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
-                                    intent.putExtra("Event", dbData);
+                                    Log.d("DEBUGGING", "Intent get");
+                                    intent.putExtra("Timer", dbData);
+                                    Log.d("DEBUGGING", "Intent settings");
                                     startActivity(intent);
+                                    Log.d("DEBUGGING", "Intent use");
+                                    finish();
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();

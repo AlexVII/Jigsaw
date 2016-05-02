@@ -68,10 +68,6 @@ public class LogUI extends View {
                 DatePickerDialog dialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker view, int y, int m, int d) {
-//                        year = y;
-//                        month = m;
-//                        day = d;
-//                        textView.setText(year + "-" + month + "-" + day);
                         calendar.set(Calendar.YEAR, y);
                         calendar.set(Calendar.MONTH, m);
                         calendar.set(Calendar.DAY_OF_MONTH, d);

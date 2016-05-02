@@ -347,6 +347,24 @@ public class DbHelper {
         return out;
     }
 
+    public void changeTheme(int id){
+        db = dbHelper.getWritableDatabase();
+        int themeId = id;
+        ContentValues values = new ContentValues();
+        values.put("num", String.valueOf(themeId));
+        try {
+            db.getVersion();
+        } catch (Exception IllegalStateException) {
+            db = dbHelper.getWritableDatabase();
+        } finally {
+//           TODO: STALL EDITING...
+            db.update("NUM", values, "id=?", new String[]{"1"});
+        }
+        values.clear();
+
+        db.close();
+    }
+
     public void updateProgress() {
         db = dbHelper.getWritableDatabase();
         int nProgress = this.queryProgress() + 1;
