@@ -59,20 +59,20 @@
     <string name="delete_title">Deleting</string>
 
 
-    <string name="pie_chart_title">每日学习</string>
+    <string name="pie_chart">Pie Chart</string>
 
-    <string name="sunday">Sunday</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="week"></string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tuey</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="week">week</string>
 
     <string name="get_to_start">Get to start your Jigsaw Puzzle trip!</string>
-    <string name="no_found_on_day">在这一天并没有找到任何记录</string>
-    <string name="no_found_on_week">整整一周都没有找到记录呢</string>
+    <string name="no_found_on_day">No record on the day</string>
+    <string name="no_found_on_week">No record on the week.</string>
 
 
     <string name="timer">Timer</string>

@@ -52,8 +52,6 @@ public class ChartView extends View {
     private DbHelper dbHelper;
     private BarChart barChart;
     private PieChart pieChart;
-    //        private PieDataSet pieDataSet;
-    private Calendar ShowedDate;
     private ArrayList<String> xVals = new ArrayList<>();
 
 
@@ -71,7 +69,6 @@ public class ChartView extends View {
         this.inflater = inflater;
         this.container = container;
         this.context = context;
-        this.ShowedDate = ShowedDate;
         dbHelper = new DbHelper(context);
         view = inflater.inflate(R.layout.layout_data, container, false);
         {
@@ -175,7 +172,6 @@ public class ChartView extends View {
         ArrayList<BarEntry> barEntry = new ArrayList<>();
         BarData barData = null;
         BarDataSet barDataSet;
-        this.ShowedDate = ShowedDate;
         for (int i = 1; i < 8; i++) {
             ShowedDate.set(Calendar.DAY_OF_WEEK, i);
             String date = f.format(ShowedDate.getTime());
@@ -234,7 +230,7 @@ public class ChartView extends View {
             }
 
 
-            PieDataSet pieDataSet = new PieDataSet(pieEntry, context.getString(R.string.piechart));
+            PieDataSet pieDataSet = new PieDataSet(pieEntry, context.getString(R.string.pie_chart));
             pieDataSet.setValueTextSize(15);
             pieDataSet.setSliceSpace(5);
             pieDataSet.setHighlightEnabled(true);
@@ -248,7 +244,6 @@ public class ChartView extends View {
 
     //
     public View getView(Calendar date) {
-        this.ShowedDate = date;
         setBar(date);
         return view;
     }

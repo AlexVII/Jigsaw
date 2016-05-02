@@ -1,5 +1,6 @@
 package com.smu_bme.jigsaw;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -10,18 +11,20 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.github.mikephil.charting.charts.Chart;
+import com.smu_bme.jigsaw.WorkerThreads.WorkerThreads;
 
 import java.sql.Date;
 
@@ -217,9 +220,18 @@ public class MainActivity extends AppCompatActivity {
                 logUI = new LogUI(getContext(), inflater, container);
                 view = logUI.getView(getContext(), ShowedCalendar);
             } else {
-                chart = new ChartView(inflater,container,getContext(),ShowedCalendar);
-                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
+//                workerThreads.refreshDate(ShowedCalendar);
+//                view = workerThreads.getView();
+//                return initChart(inflater, container);
+                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
+//                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
                 view = chart.getView(ShowedCalendar);
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             return view;
         }
@@ -234,8 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            PlaceholderFragment fragment =  PlaceholderFragment.newInstance(position + 1);
-            return fragment;
+            return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override

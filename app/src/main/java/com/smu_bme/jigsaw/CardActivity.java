@@ -41,7 +41,7 @@ public class CardActivity extends AppCompatActivity {
         cardEdit = (Button) findViewById(R.id.button_edit);
         dbHelper = new DbHelper(CardActivity.this);
         imageView = (ImageView) findViewById(R.id.card_header);
-        imageView.setImageResource(R.mipmap.bull_red);
+//        imageView.setImageResource(R.mipmap.bull_red);
         cardView = (CardView) findViewById(R.id.card_view);
 
 //        Intent intent = getIntent();
