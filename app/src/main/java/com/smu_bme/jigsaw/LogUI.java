@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,9 @@ public class LogUI extends View {
     private mAdapter adapter;
     private DbHelper dbHelper ;
     private List<DbData> list;
-    private Calendar calendar;
+    private int year;
+    private int month;
+    private int day;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     public LogUI(Context context, LayoutInflater inflater, final ViewGroup container){
@@ -52,26 +55,30 @@ public class LogUI extends View {
     public View getView(final Context context, final Calendar calendar){
 
         Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
-        String CurrentDateS  = new SimpleDateFormat("yyyy-MM-dd").format(CurrentDate.getTime());
-        Toast.makeText(context, "Current Time" + CurrentDateS, Toast.LENGTH_SHORT).show();
-        String Date = format.format(calendar.getTime());
-        textView.setText(Date);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+
+       final Date date = new Date();
+        calendar.setTime(date);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day  =calendar.get(Calendar.DAY_OF_MONTH);
+        textView.setText(format.format(calendar.getTime()));
+        imageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        textView.setText(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+                    public void onDateSet(DatePicker view, int y, int m, int d) {
+//                        year = y;
+//                        month = m;
+//                        day = d;
+//                        textView.setText(year + "-" + month + "-" + day);
+                        calendar.set(Calendar.YEAR, y);
+                        calendar.set(Calendar.MONTH, m);
+                        calendar.set(Calendar.DAY_OF_MONTH, d);
+                        textView.setText(format.format(calendar.getTime()));
                     }
-                };
-                new DatePickerDialog(context, dateListener,
-                        calendar.get(Calendar.DAY_OF_MONTH),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                }, year, month, day);
+                dialog.show();
             }
         });
         if (calendar.equals(CurrentDate)){
@@ -79,13 +86,8 @@ public class LogUI extends View {
         } else {
             progressBar.setSecondaryProgress(14400);
         }
-        progressBar.setProgress(dbHelper.querySum(Date) + 1);
-        list = dbHelper.queryData("date", "1970-1-1");
-        if (list != null){
-//            Log.d("DEBUGGING", "list is null");
-        } else {
-//            Log.d("DEBUGGING", "list is not null");
-        }
+        progressBar.setProgress(dbHelper.querySum(format.format(calendar.getTime())) + 1);
+        list = dbHelper.queryData("date", format.format(calendar.getTime()));
         adapter = new mAdapter(list, context);
         recyclerView.setAdapter(adapter);
         return view;

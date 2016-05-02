@@ -15,12 +15,14 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
@@ -30,6 +32,7 @@ import java.sql.Date;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -196,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static class PlaceholderFragment extends Fragment {
 
-        public static Calendar CurrentCalendar = Calendar.getInstance();
+        public static Calendar CurrentCalendar = Calendar.getInstance(Locale.CHINA);
         public Calendar ShowedCalendar = CurrentCalendar;
         public static LogUI logUI;
         private static ChartView chart;
