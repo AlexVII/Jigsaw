@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
 import com.smu_bme.jigsaw.WorkerThreads.WorkerThreads;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -104,14 +105,12 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, getString(R.string.noName), Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbHelper = new DbHelper(MainActivity.this);
-<<<<<<< Temporary merge branch 1
                                     if (remarkInput.equals("")) {
-                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput));
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, duration, nameInput));
                                     } else {
-                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, durationInt, nameInput, remarkInput));
+                                        dbHelper.addData(new DbData(CurrentDateString, CurrentTimeString, duration, nameInput, remarkInput));
                                     }
                                     Toast.makeText(MainActivity.this, getString(R.string.successful_add_1) + nameInput + getString(R.string.successful_add_2), Toast.LENGTH_SHORT).show();
-=======
                                     DbData dbData;
                                     if (remarkInput.equals("")){
                                         dbData = new DbData(CurrentDateString, CurrentTimeString ,duration, nameInput);
@@ -165,13 +164,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
-                workerThreads.refreshDate(ShowedCalendar);
+//                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
+//                workerThreads.refreshDate(ShowedCalendar);
+//                view = workerThreads.getView();
 //                return initChart(inflater, container);
-//                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
+                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
 //                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
-//                initEvent();
-//                view = chart.getView(ShowedCalendar);
+                view = chart.getView(ShowedCalendar);
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

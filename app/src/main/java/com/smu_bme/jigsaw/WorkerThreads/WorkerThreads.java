@@ -6,7 +6,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+
+import com.smu_bme.jigsaw.ChartView;
 
 import java.util.Calendar;
 
@@ -21,38 +24,48 @@ public class WorkerThreads {
 //    Handler logHandler;
     Handler chartHandler;
     ChartHandlerThread chartHandlerThread;
+    private View view;
 
 
     public WorkerThreads(final LayoutInflater inflater, final ViewGroup container, final Context context) {
-        uiHandler = new Handler(Looper.getMainLooper());
+        uiHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.arg1==1){
+                    view = (View) msg.obj;
+                }
+            }
+        };
 
-        chartHandlerThread = new ChartHandlerThread("myHandler",inflater,container,context);
+
+        chartHandlerThread = new ChartHandlerThread("myHandler");
         //First run worker thread
 //        ChartHandlerThread chartHandlerThread = new ChartHandlerThread(inflater, container, context);
         chartHandlerThread.start();
-        chartHandler = new Handler(chartHandlerThread.getLooper(),chartHandlerThread);
-        Log.d("DEBUGGING", "Constructor: Is chartHandler in WorkerThreads null: "+String.valueOf(chartHandler == null));
+        chartHandler = new Handler(chartHandlerThread.getLooper(), chartHandlerThread);
+        chartHandler.post(new Runnable(){
+            @Override
+            public void run() {
+                chartHandlerThread.chartView = new ChartView(inflater, container, context, Calendar.getInstance());
+            }
+        });
+//        Log.d("DEBUGGING", "Constructor: Is chartHandler in WorkerThreads null: " + String.valueOf(chartHandler == null));
     }
 
     public void refreshDate(Calendar ShowedCalendar) {
-        Log.d("DEBUGGING", "refreshDate :Is chartHandler in WorkerThreads null: "+String.valueOf(chartHandler == null));
-        Log.d("DEBUGGING", "refreshDate:" + ShowedCalendar.toString());
+        Log.d("DEBUGGING", "refreshDate--ChartView in WorkerThreads exists: " + String.valueOf(chartHandlerThread.chartView != null));
+//        Log.d("DEBUGGING", "refreshDate:" + ShowedCalendar.toString());
         Message m = new Message();
         m.obj = ShowedCalendar;
 //        Log.d("DEBUGGING", String.valueOf(chartHandler == null));
         chartHandler.sendMessage(m);
     }
 
-    ;
 
-//    public void WorkerThread_DB_Add() {
-//        Thread t = new Thread(new DatabaseThread());
-//        t.start();
-//    }
-
-
-
-
+    public View getView() {
+        return view;
+    }
 }
 
 
