@@ -351,7 +351,10 @@ public class DbHelper {
         db = dbHelper.getWritableDatabase();
         int nProgress = this.queryProgress() + 1;
         ContentValues values = new ContentValues();
-        values.put("sum", String.valueOf(nProgress));
+        if (nProgress >= 45){
+            nProgress =0;
+        }
+        values.put("num", String.valueOf(nProgress));
         try {
             db.getVersion();
         } catch (Exception IllegalStateException) {

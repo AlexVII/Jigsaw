@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/jigsaw_background"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".JigsawActivity">
-    <RelativeLayout
-        android:id="@+id/jigsaw_content"
+    <ImageView
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:id="@+id/jigsaw"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:src="@mipmap/inori"
-            android:id="@+id/background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/jigsaw"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+        android:layout_height="match_parent" />
+
     <Button
+        android:background="@android:color/holo_green_light"
         android:id="@+id/set_plan"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
@@ -32,6 +25,7 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/main_page"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="13sp"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
@@ -40,4 +34,15 @@
         android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/jigsaw_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_visibility_off_black_24dp" />
 </RelativeLayout>
