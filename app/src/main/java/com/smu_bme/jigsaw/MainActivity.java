@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,11 +28,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
     FloatingActionButton fab;
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -140,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                                         dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
+//                                    dbHelper.queryData("")
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
 //                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
@@ -151,13 +156,13 @@ public class MainActivity extends AppCompatActivity {
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
-//        Intent intent = getIntent();
-//        if (intent.getStringExtra("Action").equals("button")){
-//           fab.callOnClick();
-//        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
-//            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
-//                    .setPositiveButton(getString(R.string.yes),null).show();
-//        }
+        Intent intent = getIntent();
+        if (intent.getStringExtra("Action").equals("button")){
+           fab.callOnClick();
+        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
+            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+                    .setPositiveButton(getString(R.string.yes),null).show();
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -187,31 +192,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         inflater = LayoutInflater.from(MainActivity.this);
+
         switch (item.getItemId()){
             case R.id.theme:
-                layout = inflater.inflate(R.layout.dialog_select_theme, null);
-                RadioGroup group = (RadioGroup) findViewById(R.id.radio_group);
-                final RadioButton radioButton1 = (RadioButton) findViewById(R.id.defaultButton);
-                RadioButton radioButton2 = (RadioButton) findViewById(R.id.bananaButton);
-                RadioButton radioButton3 = (RadioButton) findViewById(R.id.grapeButton);
-                RadioButton radioButton4 = (RadioButton) findViewById(R.id.tomatoButton);
-                RadioButton radioButton5 = (RadioButton) findViewById(R.id.graphiteButton);
-                RadioButton radioButton6 = (RadioButton) findViewById(R.id.blueberryButton);
+                layout =  inflater.inflate(R.layout.dialog_select_theme, null);
+                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.dialog_select_theme, null);
+                dialog = new AlertDialog.Builder(MainActivity.this).create();
+//                dialog.setView(layout);
+                dialog.show();
+                dialog.getWindow().setContentView(linearLayout);
+                RadioGroup group = (RadioGroup) layout.findViewById(R.id.radio_group);
+                RadioButton radioButton1 = (RadioButton) layout.findViewById(R.id.defaultButton);
+                RadioButton radioButton2 = (RadioButton) layout.findViewById(R.id.bananaButton);
+                RadioButton radioButton3 = (RadioButton) layout.findViewById(R.id.grapeButton);
+                RadioButton radioButton4 = (RadioButton) layout.findViewById(R.id.tomatoButton);
+                RadioButton radioButton5 = (RadioButton) layout.findViewById(R.id.graphiteButton);
+                RadioButton radioButton6 = (RadioButton) layout.findViewById(R.id.blueberryButton);
                 group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if (checkedId == radioButton1.getId()){
-                            Toast.makeText(MainActivity.this, "Your Chose the 1", Toast.LENGTH_SHORT);
-                        }
+
+                        Toast.makeText(MainActivity.this, "your!!", Toast.LENGTH_SHORT).show();
                     }
                 });
-                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
-                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .show();
+//                dialog.show();
                 break;
             case R.id.back_to_jigsaw: intent = new Intent(MainActivity.this, JigsawActivity.class);
                 startActivity(intent);
@@ -235,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static class PlaceholderFragment extends Fragment {
 
-        public static Calendar CurrentCalendar = Calendar.getInstance(Locale.CHINA);
+        public Calendar CurrentCalendar = Calendar.getInstance(Locale.CHINA);
         public Calendar ShowedCalendar = CurrentCalendar;
         public static LogUI logUI;
         private static ChartView chart;
@@ -265,9 +269,11 @@ public class MainActivity extends AppCompatActivity {
 //                workerThreads.refreshDate(ShowedCalendar);
 //                view = workerThreads.getView();
 //                return initChart(inflater, container);
-                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
+                ChartThread chartThread = new ChartThread();
+                chartThread.init(inflater,container,getContext());
+//                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
 //                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
-                view = chart.getView(ShowedCalendar);
+                view = chartThread.getView();
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,5 +309,14 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (group.getCheckedRadioButtonId()){
+            case R.id.defaultButton:
+                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

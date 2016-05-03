@@ -117,7 +117,7 @@ public class ChartThread {
 
 
     public void refreshDate(Calendar ShowedCalendar) {
-        Log.d("DEBUGGING", Thread.currentThread().getName() + "-refreshDate-chartView exists: " + String.valueOf(chartHandlerThread.chartView != null));
+//        Log.d("DEBUGGING", Thread.currentThread().getName() + "-refreshDate-chartView exists: " + String.valueOf(chartHandlerThread.chartView != null));
 //        Log.d("DEBUGGING", "UIThread refreshDate:" + ShowedCalendar.toString());
         Message m = new Message();
         m.obj = ShowedCalendar;

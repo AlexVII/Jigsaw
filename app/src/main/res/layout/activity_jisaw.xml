@@ -15,7 +15,8 @@
         android:layout_height="match_parent" />
 
     <Button
-        android:background="@android:color/holo_green_light"
+        android:shadowDx="20"
+        android:background="@color/colorPrimary"
         android:id="@+id/set_plan"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
@@ -24,8 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        android:shadowDx="20"
         android:id="@+id/main_page"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="13sp"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"

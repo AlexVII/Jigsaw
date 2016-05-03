@@ -76,6 +76,7 @@
 
 
     <string name="timer">Timer</string>
+    <string name="exit_timer">Stop</string>
 
     <string name="card_view">Card View</string>
 

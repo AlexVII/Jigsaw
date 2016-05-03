@@ -20,6 +20,7 @@ import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class LogUI extends View {
     public LogUI(final Context context, LayoutInflater inflater, final ViewGroup container, final Calendar ShowedDate){
         super(context);
         this.calendar =ShowedDate;
+        Log.d("DEBUGGING","ShowedDate:" + calendar.get(Calendar.YEAR) +  calendar.get(Calendar.MONTH)+"" +calendar.get(Calendar.DAY_OF_MONTH));
         this.view = inflater.inflate(R.layout.layout_log, container, false);
         this.textView = (TextView) view.findViewById(R.id.date);
         this.imageButton = (ImageButton) view.findViewById(R.id.edit_date);
@@ -69,14 +71,16 @@ public class LogUI extends View {
                         chartThread.refreshDate(calendar);
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                Log.d("DEBUGGING",calendar.get(Calendar.YEAR) +  calendar.get(Calendar.MONTH)+"" +calendar.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
             }
+
         });
         setView(context, ShowedDate);
     }
 
     public void setView(int y, int m, int d, Context context){
-        Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
+        Calendar CurrentDate =  Calendar.getInstance();
         if (calendar.equals(CurrentDate)){
             progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
         } else {
@@ -90,7 +94,7 @@ public class LogUI extends View {
     }
 
     public void setView(final Context context, final Calendar calendar){
-        Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
+        Calendar CurrentDate =  Calendar.getInstance();
         textView.setText(format.format(calendar.getTime()));
         if (calendar.equals(CurrentDate)){
             progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
