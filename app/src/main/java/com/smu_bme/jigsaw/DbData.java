@@ -16,6 +16,7 @@ public class DbData implements Serializable {
     private String remark;
     private int sumDate;
     private int sumAll;
+    private int setID;
 
     // Full
     public DbData(int id, String date, int duration, String time, String name, String remark, int sumDate, int sumAll) {
@@ -99,6 +100,14 @@ public class DbData implements Serializable {
 
     public String getTime() {
         return time;
+    }
+
+    public int getSetID() {
+        return setID;
+    }
+
+    public void setSetID(int setID) {
+        this.setID = setID;
     }
 
     public boolean validation() {

@@ -42,11 +42,12 @@ public class LogUI extends View {
     private int day;
     private Calendar calendar;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//    private int Id;
 
     public LogUI(final Context context, LayoutInflater inflater, final ViewGroup container, final Calendar ShowedDate){
         super(context);
         this.calendar =ShowedDate;
-        Log.d("DEBUGGING","ShowedDate:" + calendar.get(Calendar.YEAR) +  calendar.get(Calendar.MONTH)+"" +calendar.get(Calendar.DAY_OF_MONTH));
+//        Log.d("DEBUGGING","ShowedDate:" + calendar.get(Calendar.YEAR) +  calendar.get(Calendar.MONTH)+"" +calendar.get(Calendar.DAY_OF_MONTH));
         this.view = inflater.inflate(R.layout.layout_log, container, false);
         this.textView = (TextView) view.findViewById(R.id.date);
         this.imageButton = (ImageButton) view.findViewById(R.id.edit_date);
@@ -56,21 +57,26 @@ public class LogUI extends View {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         dbHelper = new DbHelper(context);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
         imageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker view, int y, int m, int d) {
-                        setView(y, m, d, context);
-                        ChartThread chartThread = new ChartThread();
                         calendar.set(Calendar.YEAR, y);
                         calendar.set(Calendar.MONTH, m);
                         calendar.set(Calendar.DAY_OF_MONTH, d);
-                        textView.setText(format.format(calendar.getTime()));
+                        year = y;
+                        month = m;
+                        day = d;
+                        setView(context, calendar);
+                        ChartThread chartThread = new ChartThread();
                         chartThread.refreshDate(calendar);
                     }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                }, year, month, day);
                 Log.d("DEBUGGING",calendar.get(Calendar.YEAR) +  calendar.get(Calendar.MONTH)+"" +calendar.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
             }
@@ -79,19 +85,19 @@ public class LogUI extends View {
         setView(context, ShowedDate);
     }
 
-    public void setView(int y, int m, int d, Context context){
-        Calendar CurrentDate =  Calendar.getInstance();
-        if (calendar.equals(CurrentDate)){
-            progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
-        } else {
-            progressBar.setSecondaryProgress(14400);
-        }
-        progressBar.setProgress(dbHelper.querySum(format.format(calendar.getTime())) + 1);
-        list = dbHelper.queryData("date", format.format(calendar.getTime()));
-        adapter = new mAdapter(list, context);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
+//    public void setView(int y, int m, int d, Context context){
+//        Calendar CurrentDate =  Calendar.getInstance();
+//        if (calendar.equals(CurrentDate)){
+//            progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
+//        } else {
+//            progressBar.setSecondaryProgress(14400);
+//        }
+//        progressBar.setProgress(dbHelper.querySum(format.format(calendar.getTime())) + 1);
+//        list = dbHelper.queryData("date", format.format(calendar.getTime()));
+//        adapter = new mAdapter(list, context);
+//        recyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//    }
 
     public void setView(final Context context, final Calendar calendar){
         Calendar CurrentDate =  Calendar.getInstance();

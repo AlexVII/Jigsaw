@@ -32,7 +32,7 @@
         <activity android:name=".CardActivity"></activity>
         <activity
             android:name=".TimerActivity"
-            android:label="@string/timer"></activity>
+            android:label="@string/timer"/>
 
         <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->

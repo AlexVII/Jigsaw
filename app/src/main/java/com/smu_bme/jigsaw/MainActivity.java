@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
     View layout;
     LayoutInflater inflater;
+    private  int Id;
 //    public final static int THEME_DEFAULT = 0;
 //    public final static int THEME_WHITE = 1;
 //    public final static int THEME_BLUE = 2;
@@ -138,14 +140,16 @@ public class MainActivity extends AppCompatActivity {
                                     DbData dbData;
                                     if (remarkInput.equals("")){
                                         dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput);
-                                        dbHelper.addData(dbData);
                                     } else {
                                         dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput, remarkInput);
-                                        dbHelper.addData(dbData);
                                     }
+                                    Id = dbHelper.addData(dbData);
+                                    dbData.setSetID(Id);
+                                    Log.d("DEBUGGING", "ID = " + dbData.getSetID() );
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
 //                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
+                                    intent.putExtra("Id", Id);
 //                                    Log.d("DEBUGGING", "Intent settings");
                                     startActivity(intent);
 //                                    Log.d("DEBUGGING", "Intent use");
@@ -154,13 +158,13 @@ public class MainActivity extends AppCompatActivity {
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
-//        Intent intent = getIntent();
-//        if (intent.getStringExtra("Action").equals("button")){
-//           fab.callOnClick();
-//        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
-//            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
-//                    .setPositiveButton(getString(R.string.yes),null).show();
-//        }
+        Intent intent = getIntent();
+        if (intent.getStringExtra("Action").equals("button")){
+           fab.callOnClick();
+        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
+            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+                    .setPositiveButton(getString(R.string.yes),null).show();
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -307,12 +311,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onCheckedChanged(RadioGroup group, int checkedId) {
-//        switch (group.getCheckedRadioButtonId()){
-//            case R.id.defaultButton:
-//                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
-//        }
-//
-//    }
 }

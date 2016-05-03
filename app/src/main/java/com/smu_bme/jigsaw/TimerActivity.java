@@ -43,9 +43,9 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_timer);
         Intent intent = getIntent();
         final DbData dbData = (DbData) intent.getSerializableExtra("Timer");
-        Id = dbData.getId();
+        Id = intent.getIntExtra("Id", 2333);
         a = dbData.getDuration() * 60 * 1000;
-        Log.d("DEBUGGING", "ID = " + Id);
+        Log.d("DEBUGGING", "ID  233 = " + dbData.getSetID());
         textView = (TextView) findViewById(R.id.timer);
         progressBar = (ProgressBar) findViewById(R.id.timer_progress_bar);
         progressBar.setMax(a * 60);
@@ -98,6 +98,9 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
         DbData dbData = dbHelper.queryData("id", String.valueOf(Id)).get(0);
         dbData.setDuration(duration);
         dbHelper.updateData(dbData);
+        Intent intent = new Intent(TimerActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

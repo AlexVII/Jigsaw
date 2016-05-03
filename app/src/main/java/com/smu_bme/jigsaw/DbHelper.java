@@ -228,7 +228,7 @@ public class DbHelper {
 
     public int addData(DbData dbData) {
 //        Log.d("DEBUGGING","Init");
-        int out = 0;
+        int out ;
         db = dbHelper.getWritableDatabase();
         if (!dbData.validation()) {
 //            Log.d("DEBUGGING","Not Valid");
@@ -281,11 +281,11 @@ public class DbHelper {
                     cursor = db.rawQuery("select id from DATA where date = ? order by id desc limit 0,1;"
                             , new String[]{dbData.getDate()});
                 }
-                if(cursor.getCount()>0) {
+//                if(cursor.getCount()>0) {
                     cursor.moveToFirst();
                     out = cursor.getInt(cursor.getColumnIndex("id"));
                     Log.d("DEBUGGING","id = "+String.valueOf(out));
-                }
+//                }
             }
         }
         db.close();
