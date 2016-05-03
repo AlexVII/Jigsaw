@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,6 +235,7 @@ public class DbHelper {
             out = -1;//"Input is not valid. Any of date, time or duration is empty."
         } else {
             //check whether already exists
+//            "select * from DATA where date = ?"
             Cursor cursor = db.rawQuery("select id from DATA where date = ? and time = ?", new String[]{dbData.getDate(), dbData.getTime()});
             if (cursor.getCount() > 0) {
                 out = -2;//"Data with same date and time already exists"
@@ -282,11 +284,12 @@ public class DbHelper {
                 if(cursor.getCount()>0) {
                     cursor.moveToFirst();
                     out = cursor.getInt(cursor.getColumnIndex("id"));
+                    Log.d("DEBUGGING","id = "+String.valueOf(out));
                 }
             }
         }
         db.close();
-
+        Log.d("DEBUGGING","before out id = "+String.valueOf(out));
         return out;
     }
 

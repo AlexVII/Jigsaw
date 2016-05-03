@@ -19,12 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -304,12 +307,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (group.getCheckedRadioButtonId()){
-            case R.id.defaultButton:
-                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
-        }
-
-    }
+//    @Override
+//    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//        switch (group.getCheckedRadioButtonId()){
+//            case R.id.defaultButton:
+//                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+//        }
+//
+//    }
 }
