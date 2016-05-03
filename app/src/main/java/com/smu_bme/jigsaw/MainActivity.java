@@ -26,6 +26,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -261,15 +263,15 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
+//                ChartThread chartThread = new ChartThread(inflater,container,getContext());
 //                workerThreads.refreshDate(ShowedCalendar);
+                ChartThread chartThread = new ChartThread();
+                chartThread.init(inflater, container, getContext());
 //                view = workerThreads.getView();
 //                return initChart(inflater, container);
-                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
+//                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
 //                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
-                view = chart.getView(ShowedCalendar);
-
-
+                view = chartThread.getView();
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             return view;

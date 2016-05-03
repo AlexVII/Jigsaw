@@ -58,7 +58,8 @@ public class ChartThread {
 //                            synchronized (chartHandlerThread) {
                         if (msg.what == 0) {
                             Calendar ShowedCalendar = (Calendar)msg.obj;
-                            view = chartHandlerThread.chartView.getView(ShowedCalendar);
+                            view =  chartHandlerThread.chartView.getView(ShowedCalendar);
+                            Log.d("DEBUGGING","");
                         }
 //                        else if (msg.what == 1) {
 //
