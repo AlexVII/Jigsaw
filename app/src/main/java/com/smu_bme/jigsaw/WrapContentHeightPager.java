@@ -21,6 +21,8 @@ import android.view.WindowManager;
 public class WrapContentHeightPager extends ViewPager {
 
     private WindowManager manager;
+    private int postion = 0;
+    private int MaxPos = 0;
 
     public WrapContentHeightPager(Context context) {
         super(context);

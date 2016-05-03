@@ -121,7 +121,8 @@ public class ChartView extends View {
             barChart.setAlpha(0.9f);
             barChart.setNoDataText(context.getString(R.string.no_found_on_week));
             barChart.setNoDataTextDescription(context.getString(R.string.get_to_start));
-            barChart.setDescription(null);  // set the description
+            barChart.setDescription(context.getString(R.string.record_week));  // set the description
+            barChart.setDescriptionPosition(1000,80);
 //              barChart.highlightValues(Highlight[] highs);
         }
 
@@ -141,6 +142,7 @@ public class ChartView extends View {
             pieChart.setTransparentCircleAlpha(70);
 //            pieChart.setCenterText("每日学习");
             pieChart.setAlpha(0.9f);
+            pieChart.setBackgroundColor(Color.WHITE);
 //                pieChart.setHighlightPerTapEnabled(true);
 
             // pieChart.setCenterText(false);

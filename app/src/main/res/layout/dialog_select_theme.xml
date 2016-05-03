@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_layout"
-    android:padding="18dp"
+    android:padding="14dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:text="@string/preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <android.support.v7.widget.CardView
         android:layout_marginBottom="10dp"
-        android:layout_weight="1"
         app:cardElevation="5dp"
         app:cardCornerRadius="5dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="200dp">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -25,68 +28,72 @@
                 android:text="@string/app_name"
                 android:gravity=""
                 android:background="@color/colorAccent"
-                android:layout_above="@id/title_preview"
                 android:id="@+id/action_preview"
                 android:layout_width="match_parent"
                 android:layout_height="56dp" />
-            <ImageView
-                android:layout_gravity="end"
-                android:src="@drawable/ic_circle"
-                android:layout_margin="@dimen/fab_margin"
-                android:layout_width="56dp"
-                android:layout_height="56dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_circle"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp" />
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <TableLayout
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TableRow>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_default"
-                android:id="@+id/defaultButton" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_banana"
-                android:id="@+id/bananaButton" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="choushu"
-                android:id="@+id/choushu" />
-        </TableRow>
-        <TableRow>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_grape"
-                android:id="@+id/grapeButton" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_sage"
-                android:id="@+id/sageButton" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_tomato"
-                android:id="@+id/tomatoButton" />
-        </TableRow>
-        <TableRow>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_graphite"
-                android:id="@+id/graphiteButton" />
-            <RadioButton
-                android:layout_span="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_blueberry"
-                android:id="@+id/blueberryButton" />
-        </TableRow>
+        <RadioGroup
+            android:id="@+id/radio_group">
+            <TableRow
+                android:layout_width="match_parent">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_default"
+                    android:id="@+id/defaultButton" />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_banana"
+                    android:id="@+id/bananaButton" />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_grape"
+                    android:id="@+id/grapeButton" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent">
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_tomato"
+                    android:id="@+id/tomatoButton" />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_graphite"
+                    android:id="@+id/graphiteButton" />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/theme_blueberry"
+                    android:id="@+id/blueberryButton" />
+            </TableRow>
+        </RadioGroup>
     </TableLayout>
 </LinearLayout>

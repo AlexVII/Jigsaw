@@ -1,6 +1,5 @@
 package com.smu_bme.jigsaw;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +20,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.github.mikephil.charting.charts.Chart;
-import com.smu_bme.jigsaw.WorkerThreads.WorkerThreads;
-
-import java.sql.Date;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     WrapContentHeightPager mViewPager;
     TabLayout tabLayout;
     DbHelper dbHelper;
-    public Calendar CurrentCalendar = Calendar.getInstance();
+    public Calendar CurrentCalendar = Calendar.getInstance(Locale.CHINA);
     public Calendar ShowedCalendar = CurrentCalendar;
     AlertDialog dialog;
     Intent intent;
@@ -71,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            private double duration = 0.15;
+            private int duration = 15;
             @Override
             public void onClick(View v) {
                 inflater = LayoutInflater.from(MainActivity.this);
@@ -79,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 final EditText name = (EditText) layout.findViewById(R.id.create_name);
                 final EditText remark = (EditText) layout.findViewById(R.id.create_remark);
                 final TextView textView = (TextView) layout.findViewById(R.id.show_duration);
-                textView.setText(0.15 + "hours");
+                textView.setText(15 + "minutes");
                 ImageButton imageButton = (ImageButton) layout.findViewById(R.id.edit_duration);
                 final SeekBar seekBar = (SeekBar) layout.findViewById(R.id.seekBar);
                 imageButton.setOnClickListener(new View.OnClickListener() {
@@ -93,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()){
-                                    case R.id.quart_hour: duration = 0.15;  break;
-                                    case R.id.half_hour: duration = 0.5; break;
-                                    case R.id.one_hour: duration = 1; break;
-                                    case R.id.one_and_half_hour: duration = 1.5; break;
-                                    case R.id.two_hour: duration = 2; break;
-                                    case R.id.three_hour: duration = 3; break;
+                                    case R.id.quart_hour: duration = 15;  break;
+                                    case R.id.half_hour: duration = 30; break;
+                                    case R.id.one_hour: duration = 60; break;
+                                    case R.id.one_and_half_hour: duration = 90; break;
+                                    case R.id.two_hour: duration = 120; break;
+                                    case R.id.three_hour: duration = 180; break;
                                 }
-                                textView.setText(duration + "hours");
-                                seekBar.setProgress((int)(duration * 4 - 1));
+                                textView.setText(duration + "minutes");
+                                seekBar.setProgress(duration / 15);
                                 return true;
                             }
                         });
@@ -111,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        duration = progress * 0.25 + 0.25;
-                        textView.setText(duration + "hours");
+                        duration = progress * 15 + 15;
+                        textView.setText(duration + "minutes");
                     }
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        textView.setText(duration + "hours");
+                        textView.setText(duration + "minutes");
                     }
                 });
                 dialog = new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
@@ -138,19 +134,18 @@ public class MainActivity extends AppCompatActivity {
                                     dbHelper = new DbHelper(MainActivity.this);
                                     DbData dbData;
                                     if (remarkInput.equals("")){
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,(int)duration * 3600, nameInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput);
                                         dbHelper.addData(dbData);
                                     } else {
-                                        dbData = new DbData(CurrentDateString, CurrentTimeString ,(int)duration * 3600, nameInput, remarkInput);
+                                        dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
-                                    Log.d("DEBUGGING", "Intent get");
+//                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
-                                    Log.d("DEBUGGING", "Intent settings");
+//                                    Log.d("DEBUGGING", "Intent settings");
                                     startActivity(intent);
-                                    Log.d("DEBUGGING", "Intent use");
-                                    finish();
+//                                    Log.d("DEBUGGING", "Intent use");
                                 }
                             }
                         }).setNegativeButton(getString(R.string.cancel), null).show();
@@ -163,6 +158,23 @@ public class MainActivity extends AppCompatActivity {
 //            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
 //                    .setPositiveButton(getString(R.string.yes),null).show();
 //        }
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1){
+                    fab.hide();
+                } else {
+                    fab .show();
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
 
@@ -178,7 +190,27 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.theme:
                 layout = inflater.inflate(R.layout.dialog_select_theme, null);
+                RadioGroup group = (RadioGroup) findViewById(R.id.radio_group);
+                final RadioButton radioButton1 = (RadioButton) findViewById(R.id.defaultButton);
+                RadioButton radioButton2 = (RadioButton) findViewById(R.id.bananaButton);
+                RadioButton radioButton3 = (RadioButton) findViewById(R.id.grapeButton);
+                RadioButton radioButton4 = (RadioButton) findViewById(R.id.tomatoButton);
+                RadioButton radioButton5 = (RadioButton) findViewById(R.id.graphiteButton);
+                RadioButton radioButton6 = (RadioButton) findViewById(R.id.blueberryButton);
+                group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if (checkedId == radioButton1.getId()){
+                            Toast.makeText(MainActivity.this, "Your Chose the 1", Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
                 dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
                         .show();
                 break;
             case R.id.back_to_jigsaw: intent = new Intent(MainActivity.this, JigsawActivity.class);
@@ -224,8 +256,8 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View view;
             if (getArguments().getInt("section number") == 1) {
-                logUI = new LogUI(getContext(), inflater, container);
-                view = logUI.getView(getContext(), ShowedCalendar);
+                logUI = new LogUI(getContext(), inflater, container, ShowedCalendar);
+                view = logUI.getView(ShowedCalendar, getContext());
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -30,11 +30,6 @@
         <item name="colorPrimaryDark">#455A64</item>
         <item name="colorAccent">#9E9E9E</item>
     </style>
-    <style name="SageTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#4CAF50</item>
-        <item name="colorPrimaryDark">#388E3C</item>
-        <item name="colorAccent">#FF5722</item>
-    </style>
     <style name="TomatoTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">#F44336</item>
         <item name="colorPrimaryDark">#D32F2F</item>

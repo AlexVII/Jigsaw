@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,10 +39,12 @@ public class LogUI extends View {
     private int year;
     private int month;
     private int day;
+    private Calendar calendar;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-    public LogUI(Context context, LayoutInflater inflater, final ViewGroup container){
+    public LogUI(final Context context, LayoutInflater inflater, final ViewGroup container, final Calendar ShowedDate){
         super(context);
+        this.calendar =ShowedDate;
         this.view = inflater.inflate(R.layout.layout_log, container, false);
         this.textView = (TextView) view.findViewById(R.id.date);
         this.imageButton = (ImageButton) view.findViewById(R.id.edit_date);
@@ -50,33 +54,29 @@ public class LogUI extends View {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         dbHelper = new DbHelper(context);
-    }
-
-    public View getView(final Context context, final Calendar calendar){
-
-        Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
-
-       final Date date = new Date();
-        calendar.setTime(date);
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day  =calendar.get(Calendar.DAY_OF_MONTH);
-        textView.setText(format.format(calendar.getTime()));
         imageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker view, int y, int m, int d) {
+                        setView(y, m, d, context);
+                        ChartThread chartThread = new ChartThread();
                         calendar.set(Calendar.YEAR, y);
                         calendar.set(Calendar.MONTH, m);
                         calendar.set(Calendar.DAY_OF_MONTH, d);
                         textView.setText(format.format(calendar.getTime()));
+                        chartThread.refreshDate(calendar);
                     }
-                }, year, month, day);
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
             }
         });
+        setView(context, ShowedDate);
+    }
+
+    public void setView(int y, int m, int d, Context context){
+        Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
         if (calendar.equals(CurrentDate)){
             progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
         } else {
@@ -86,6 +86,26 @@ public class LogUI extends View {
         list = dbHelper.queryData("date", format.format(calendar.getTime()));
         adapter = new mAdapter(list, context);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void setView(final Context context, final Calendar calendar){
+        Calendar CurrentDate = MainActivity.PlaceholderFragment.CurrentCalendar;
+        textView.setText(format.format(calendar.getTime()));
+        if (calendar.equals(CurrentDate)){
+            progressBar.setSecondaryProgress(CurrentDate.get(Calendar.HOUR) * 60 + CurrentDate.get(Calendar.MINUTE));
+        } else {
+            progressBar.setSecondaryProgress(14400);
+        }
+        progressBar.setProgress(dbHelper.querySum(format.format(calendar.getTime())) + 1);
+        list = dbHelper.queryData("date", format.format(calendar.getTime()));
+        adapter = new mAdapter(list, context);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    public View getView(Calendar calendar, Context context){
+        setView(context, calendar);
         return view;
     }
 }
