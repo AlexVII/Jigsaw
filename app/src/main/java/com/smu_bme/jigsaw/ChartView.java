@@ -1,12 +1,8 @@
 package com.smu_bme.jigsaw;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.SurfaceTexture;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,24 +15,17 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +33,7 @@ import java.util.Map;
  * Created by gollyrui on 4/30/16.
  */
 public class ChartView extends View {
+    static private Calendar ShowedDate;
     private LayoutInflater inflater;
     private ViewGroup container;
     private Context context;
@@ -57,6 +47,7 @@ public class ChartView extends View {
 
     public ChartView(LayoutInflater inflater, ViewGroup container, Context context, final Calendar ShowedDate) {
         super(context);
+        this.ShowedDate = ShowedDate;
         {
             xVals.add(context.getString(R.string.sunday));
             xVals.add(context.getString(R.string.monday));
@@ -82,14 +73,21 @@ public class ChartView extends View {
                     @Override
                     public void onValueSelected(Entry entry, int i, Highlight highlight) {
 //                            Log.d("DEBUGGING","XIndex:"+String.valueOf(1+entry.getXIndex()));
-                        setPie(ShowedDate, entry.getXIndex() + 1);
+                        setPie(ChartView.ShowedDate, entry.getXIndex() + 1);
 //                            Calendar.MONDAY
                     }
 
                     @Override
                     public void onNothingSelected() {
+//                        pieChart.clear();
+//                        pieChart.
+////                        PieData pieData = new PieData();
+//                        pieChart.setData(new PieData());
+//                        pieChart.notifyDataSetChanged();
+//                        pieChart.postInvalidate();
 
                     }
+
                 }
         );
 
@@ -101,7 +99,7 @@ public class ChartView extends View {
             YAxis yAxisRight = barChart.getAxisRight();
             yAxisRight.setEnabled(false);
             YAxis yAxisLeft = barChart.getAxisLeft();
-            yAxisLeft.setAxisMinValue(-1f);
+            yAxisLeft.setAxisMinValue(0f);
             yAxisLeft.setSpaceTop(20f);
 //                yAxisLeft.setAxisMaxValue(60f);
 //                yAxisLeft.setSpaceBottom(10f);
@@ -122,7 +120,8 @@ public class ChartView extends View {
             barChart.setNoDataText(context.getString(R.string.no_found_on_week));
             barChart.setNoDataTextDescription(context.getString(R.string.get_to_start));
             barChart.setDescription(context.getString(R.string.record_week));  // set the description
-            barChart.setDescriptionPosition(1000,80);
+            barChart.setDescriptionTextSize(15);
+            barChart.setDescriptionPosition(1000, 80);
 //              barChart.highlightValues(Highlight[] highs);
         }
 
@@ -130,7 +129,7 @@ public class ChartView extends View {
         {
             pieChart.setNoDataText(context.getString(R.string.no_found_on_day));
             pieChart.setNoDataTextDescription(context.getString(R.string.get_to_start));
-            pieChart.setDescription(context.getString(R.string.week));
+
             pieChart.setDescriptionTextSize(15f);
             pieChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
             pieChart.setUsePercentValues(true);
@@ -171,8 +170,9 @@ public class ChartView extends View {
     }
 
     private void setBar(final Calendar ShowedDate) {
+        this.ShowedDate = ShowedDate;
         ArrayList<BarEntry> barEntry = new ArrayList<>();
-        BarData barData = null;
+        BarData barData;
         BarDataSet barDataSet;
         for (int i = 1; i < 8; i++) {
             ShowedDate.set(Calendar.DAY_OF_WEEK, i);
@@ -184,6 +184,9 @@ public class ChartView extends View {
             BarEntry Chart1Element = new BarEntry(sum, i - 1);
             barEntry.add(Chart1Element);
         }
+        ////////////////////////////////////////////////////
+//        new LogUI(context,inflater,container,ShowedDate).setView(getContext(),ShowedDate);
+        ///////////////////////////////////////////////////
         barDataSet = new BarDataSet(barEntry, context.getString(R.string.week));// 'barEntry" is address
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         barDataSet.setValueTextSize(12f);
@@ -202,6 +205,7 @@ public class ChartView extends View {
         if (dayOfWeek > 0 && dayOfWeek < 8) {
             ShowedDate.set(Calendar.DAY_OF_WEEK, dayOfWeek);
         }
+
 
         ArrayList<String> pieLabels = new ArrayList<>();
         ArrayList<Entry> pieEntry = new ArrayList<>();
@@ -238,15 +242,19 @@ public class ChartView extends View {
             pieDataSet.setHighlightEnabled(true);
             pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
             PieData pieData = new PieData(pieLabels, pieDataSet);
+            pieChart.setDescription(date);
             pieChart.setData(pieData);
             pieChart.notifyDataSetChanged();
             pieChart.postInvalidate();
         }
+
+
     }
 
     //
     public View getView(Calendar date) {
         setBar(date);
+
         return view;
     }
 }

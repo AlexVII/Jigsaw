@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,10 @@ import java.util.List;
  */
 public class DbHelper {
 
-    Context context;
-    private MyDatabaseHelper dbHelper;
     private final String tableName = "DATA";
     private final String tableSum = "SUM";
+    Context context;
+    private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
     public DbHelper(Context context) {
@@ -228,7 +227,7 @@ public class DbHelper {
 
     public int addData(DbData dbData) {
 //        Log.d("DEBUGGING","Init");
-        int out;
+        int out = 0;
         db = dbHelper.getWritableDatabase();
         if (!dbData.validation()) {
 //            Log.d("DEBUGGING","Not Valid");
@@ -271,7 +270,19 @@ public class DbHelper {
                     this.updateSum(dbData.getDate(), dbData.getDuration());
 
                 }
-                out = 0;
+                try {
+                    db.getVersion();
+                }catch (IllegalStateException e){
+                    db = dbHelper.getWritableDatabase();
+                }
+                finally {
+                    cursor = db.rawQuery("select id from DATA where date = ? order by id desc limit 0,1;"
+                            , new String[]{dbData.getDate()});
+                }
+                if(cursor.getCount()>0) {
+                    cursor.moveToFirst();
+                    out = cursor.getInt(cursor.getColumnIndex("id"));
+                }
             }
         }
         db.close();
@@ -347,7 +358,7 @@ public class DbHelper {
         return out;
     }
 
-    public void changeTheme(int id){
+    public void changeTheme(int id) {
         db = dbHelper.getWritableDatabase();
         int themeId = id;
         ContentValues values = new ContentValues();
@@ -369,8 +380,8 @@ public class DbHelper {
         db = dbHelper.getWritableDatabase();
         int nProgress = this.queryProgress() + 1;
         ContentValues values = new ContentValues();
-        if (nProgress >= 45){
-            nProgress =0;
+        if (nProgress >= 45) {
+            nProgress = 0;
         }
         values.put("num", String.valueOf(nProgress));
         try {

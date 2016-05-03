@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,13 +26,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.smu_bme.jigsaw.WorkerThreads.ChartThread;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -144,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                                         dbData = new DbData(CurrentDateString, CurrentTimeString, duration, nameInput, remarkInput);
                                         dbHelper.addData(dbData);
                                     }
-//                                    dbHelper.queryData("")
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
 //                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
@@ -156,13 +151,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         }).setNegativeButton(getString(R.string.cancel), null).show();
             }
         });
-        Intent intent = getIntent();
-        if (intent.getStringExtra("Action").equals("button")){
-           fab.callOnClick();
-        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
-            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
-                    .setPositiveButton(getString(R.string.yes),null).show();
-        }
+//        Intent intent = getIntent();
+//        if (intent.getStringExtra("Action").equals("button")){
+//           fab.callOnClick();
+//        } else if (intent.getStringExtra("Action").equals("dialog_create")) {
+//            new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create))
+//                    .setPositiveButton(getString(R.string.yes),null).show();
+//        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -265,17 +260,15 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             } else {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                WorkerThreads workerThreads = new WorkerThreads(inflater,container,getContext());
+//                ChartThread chartThread = new ChartThread(inflater,container,getContext());
 //                workerThreads.refreshDate(ShowedCalendar);
+                ChartThread chartThread = new ChartThread();
+                chartThread.init(inflater, container, getContext());
 //                view = workerThreads.getView();
 //                return initChart(inflater, container);
-                ChartThread chartThread = new ChartThread();
-                chartThread.init(inflater,container,getContext());
 //                ChartView chart = new ChartView(inflater, container, getContext(), ShowedCalendar);
 //                ShowedCalendar.setTime(Date.valueOf("1970-1-1"));
                 view = chartThread.getView();
-
-
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             return view;
