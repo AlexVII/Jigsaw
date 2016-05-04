@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog = new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
-                            String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
+                            String CurrentTimeString = new SimpleDateFormat("HH:mm").format(CurrentCalendar.getTime());
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
@@ -145,11 +145,12 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     Id = dbHelper.addData(dbData);
                                     dbData.setSetID(Id);
-                                    Log.d("DEBUGGING", "ID = " + dbData.getSetID() );
+                                    Log.d("DEBUGGING", "duration = " + dbData.getDuration() );
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
 //                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
                                     intent.putExtra("Id", Id);
+//                                    intent.putExtra("Calendar", )
 //                                    Log.d("DEBUGGING", "Intent settings");
                                     startActivity(intent);
 //                                    Log.d("DEBUGGING", "Intent use");

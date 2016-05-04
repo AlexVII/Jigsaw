@@ -59,7 +59,7 @@
     <string name="delete_title">Deleting</string>
 <string name="record_week">Record of the week</string>
 
-    <string name="pie_chart">Pie Chart</string>
+    <string name="pie_chart">Record of the day</string>
 
     <string name="sunday">Sun</string>
     <string name="monday">Mon</string>
@@ -77,8 +77,14 @@
 
     <string name="timer">Timer</string>
     <string name="exit_timer">Stop</string>
+    <string name="exit_toast1">Your plan had finished, duration is\ </string>
+    <string name="exit_msg1">Really want to STOP?Your plan\'s duration is\ </string>
+    <string name="exit_msg2"> minutes now.</string>
 
     <string name="card_view">Card View</string>
+    <string name="time">Time:</string>
+    <string name="card_date">Date:</string>
+    
 
     <string name="theme_banana">Banana</string>
     <string name="theme_default">Default</string>

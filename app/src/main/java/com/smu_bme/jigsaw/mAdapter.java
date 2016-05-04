@@ -39,6 +39,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final int j = holder.getAdapterPosition();
         holder.name.setText(list.get(position).getName());
+        Log.d("DEBUGGING1", list.get(position).getTime());
         holder.time.setText(list.get(position).getTime());
         holder.duration.setText(String.valueOf(list.get(position).getDuration()));
         holder.more.setOnClickListener(new View.OnClickListener() {

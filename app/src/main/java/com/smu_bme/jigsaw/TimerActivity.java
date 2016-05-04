@@ -63,7 +63,7 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
         @Override
         public void onTick(long millisUntilFinished) {
             progressBar.setProgress(a -  (int) millisUntilFinished);
-            duration = (int) millisUntilFinished;
+            duration = (a - (int) millisUntilFinished) / 60000;
             Log.d("DEBUGGING", format.format(new Date(millisUntilFinished).getTime()));
             textView.setText(format.format(new Date(millisUntilFinished).getTime()));
         }
@@ -82,8 +82,9 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(TimerActivity.this).setTitle(getString(R.string.create)).setPositiveButton(getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(TimerActivity.this).setTitle(getString(R.string.exit_timer))
+                        .setMessage(getString(R.string.exit_msg1) + duration / 60000 + getString(R.string.exit_msg2))
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 update();
@@ -94,13 +95,16 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
     }
 
     public void update(){
+        Calendar calendar = Calendar.getInstance();
         DbHelper dbHelper = new DbHelper(TimerActivity.this);
         DbData dbData = dbHelper.queryData("id", String.valueOf(Id)).get(0);
-        dbData.setDuration(duration);
+        dbData.setDuration(duration / 60000);
         dbHelper.updateData(dbData);
         Intent intent = new Intent(TimerActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+        MainActivity.PlaceholderFragment.logUI.setView(TimerActivity.this, calendar);
+        Toast.makeText(TimerActivity.this, getString(R.string.exit_toast1) + duration, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -113,7 +117,6 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
     protected void onPause() {
         super.onPause();
         update();
-        Toast.makeText(TimerActivity.this, "Not That Way...", Toast.LENGTH_SHORT).show();
     }
 
     @Override

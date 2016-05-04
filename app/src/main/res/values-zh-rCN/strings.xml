@@ -65,6 +65,8 @@
     <string name="back_to_jigsaw"></string>
     <string name="background"></string>
     <string name="card_view"></string>
+    <string name="about_jigsaw">关于</string>
+    <string name="accept">接受</string>
 </resources>
 
 
