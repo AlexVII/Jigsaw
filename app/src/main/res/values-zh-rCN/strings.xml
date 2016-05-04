@@ -3,7 +3,7 @@
     <string name="Label">Jigsaw</string>
 
     <string name="create_plan">新建事项</string>
-    <string name="go_to_main_page">返回主界面</string>
+    <string name="go_to_main_page">进入记录界面</string>
 
     <string name="date">日期</string>
     <string name="Log">记录</string>
@@ -81,20 +81,21 @@
     <string name="successful_change_1">事项</string>
     <string name="successful_change_2">成功修改</string>
     <string name="theme">主题</string>
-    <string name="version">版本号 0.1.17</string>
+    <string name="version">版本号 0.1.17(测试版）</string>
     <string name="tutorial">教程</string>
     <string name="timer">记时器</string>
     <string name="about_jigsaw">关于</string>
     <string name="accept">接受</string>
-    <string name="back_to_jigsaw">返回拼图</string>
+    <string name="back_to_jigsaw">回到拼图</string>
     <string name="background">Jigsaw</string>
     <string name="card_date">日期：</string>
     <string name="card_view">记录界面</string>
     <string name="exit_msg1">确定停止吗？ 当前项目的时长是</string>
     <string name="exit_msg2">分钟</string>
     <string name="exit_toast1">项目结束，时长是</string>
-    <string name="introduction"></string>
+    <string name="introduction">空</string>
     <string name="remain">剩余</string>
+    <string name="time">时间：</string>
 </resources>
 
 
