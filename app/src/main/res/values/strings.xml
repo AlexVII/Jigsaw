@@ -77,8 +77,15 @@
 
     <string name="timer">Timer</string>
     <string name="exit_timer">Stop</string>
+    <string name="exit_toast1">Your plan had finished, duration is</string>
+    <string name="exit_msg1">Really want to STOP?Your plan\'s duration is </string>
+    <string name="exit_msg2"> minutes now.</string>
+    <string name="remain">remaining..</string>
 
     <string name="card_view">Card View</string>
+    <string name="time">Time:</string>
+    <string name="card_date">Date:</string>
+
 
     <string name="theme_banana">Banana</string>
     <string name="theme_default">Default</string>
@@ -93,5 +100,4 @@
     <string name="version">Version 1.0</string>
     <string name="producer">Produced By \n Toaru SMU No Idea Project</string>
     <string name="introduction">balbalabala</string>
-    <string name="gettostart"></string>
 </resources>

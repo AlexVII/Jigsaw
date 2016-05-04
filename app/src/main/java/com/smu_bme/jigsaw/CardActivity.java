@@ -14,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CardActivity extends AppCompatActivity {
+import java.io.Serializable;
+import java.util.Calendar;
+
+public class CardActivity extends AppCompatActivity implements Serializable {
 
     private EditText cardName;
     private TextView cardTime;
@@ -24,8 +27,10 @@ public class CardActivity extends AppCompatActivity {
     private Button cardEdit;
     private DbHelper dbHelper;
     private ImageView imageView;
+    private TextView cardDate;
     private CardView cardView;
-    private int index;
+    private int Id;
+    private int headerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +41,26 @@ public class CardActivity extends AppCompatActivity {
         cardTime = (TextView) findViewById(R.id.card_time);
         cardDuration = (TextView) findViewById(R.id.card_duration);
         cardRemark = (EditText) findViewById(R.id.card_remark);
-        cardRemark.setEnabled(false);
         cardDelete = (Button) findViewById(R.id.button_delete);
         cardEdit = (Button) findViewById(R.id.button_edit);
         dbHelper = new DbHelper(CardActivity.this);
         imageView = (ImageView) findViewById(R.id.card_header);
-//        imageView.setImageResource(R.mipmap.bull_red);
         cardView = (CardView) findViewById(R.id.card_view);
+        cardDate = (TextView) findViewById(R.id.card_date);
+        headerId  = R.mipmap.header1;
 
-//        Intent intent = getIntent();
 
-        final DbData item = new DbData("2333-33-33", "33:33", 233, "233"); // (DbData) intent.getSerializableExtra("Event");
-        Log.d("DEBUGGING", "Get Name = " + item.getName());
-        cardName.setText(item.getName());
-        cardTime.setText(item.getTime());
-        cardDuration.setText(String.valueOf(item.getDuration()));
-        cardRemark.setText(item.getRemark());
+        Intent intent = getIntent();
+        final DbData item = (DbData) intent.getSerializableExtra("Event");
+        Log.d("DEBUGGING","Validation:"+item.validation());
+        Log.d("DEBUGGING","Date&Time"+item.getDuration()+" "+item.getTime());
+        Id = item.getId() % 7;
+        Log.d("DEBUGGING", "Get Id   = " + Id);
+        setView(item);
+        cardRemark.setEnabled(false);
+        cardName.setEnabled(false);
 //        DELETE AND CANCEL
+        imageView.setImageResource(headerId + Id);
         cardDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +76,7 @@ public class CardActivity extends AppCompatActivity {
                                             intent.putExtra("Action", "nothing");
                                             startActivity(intent);
                                             finish();
-//                                            TODO refresh layout
+                                            MainActivity.PlaceholderFragment.logUI.setView(CardActivity.this, Calendar.getInstance());
                                         }
                                     }).setNegativeButton(getString(R.string.cancel), null).show();
                 } else {
@@ -78,7 +86,7 @@ public class CardActivity extends AppCompatActivity {
                     cardRemark.setText(item.getRemark());
                     cardEdit.setText(getString(R.string.edit));
                     cardDelete.setText(getString(R.string.delete));
-//                    TODO refresh layout
+                    setView(item);
                 }
             }
         });
@@ -105,10 +113,24 @@ public class CardActivity extends AppCompatActivity {
                         cardRemark.setEnabled(false);
                         Toast.makeText(CardActivity.this, getString(R.string.successful_change_1) + item.getName() + getString(R.string.successful_change_2), Toast.LENGTH_SHORT).show();
                         cardDelete.setText(R.string.delete);
-//                        TODO refresh layout
+                        setView(item);
                     }
                 }
             }
         });
+    }
+
+    public void setView(DbData dbData){
+       cardName.setText(dbData.getName());
+        cardRemark.setText(dbData.getRemark());
+        cardTime.setText(dbData.getTime());
+        cardDuration.setText(String.valueOf(dbData.getDuration()));
+        cardDate.setText(dbData.getDate());
+    }
+
+    @Override
+    public void onBackPressed() {
+        MainActivity.PlaceholderFragment.logUI.setView(CardActivity.this, Calendar.getInstance());
+        super.onBackPressed();
     }
 }

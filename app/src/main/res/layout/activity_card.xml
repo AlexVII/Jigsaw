@@ -21,48 +21,53 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/card_header"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"/>
+            <EditText
+                style="@style/AppTheme.AppBarOverlay"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="40sp"
+                android:textColor="@android:color/darker_gray"
+                android:id="@+id/card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TableLayout
+                android:layout_margin="@dimen/text_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/card_header"
+                <TableRow>
+                    <TextView
+                        android:text="@string/card_date"/>
+                    <TextView
+                        android:gravity="end"
+                        android:id="@+id/card_date"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"/>
-                    <EditText
-                        style="@style/AppTheme.AppBarOverlay"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:textSize="40sp"
-                        android:textColor="@android:color/darker_gray"
-                        android:id="@+id/card_name"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="@string/time"/>
+                    <TextView
+                        android:gravity="end"
+                        android:id="@+id/card_time"
                         android:layout_width="match_parent"
-                        android:layout_alignBottom="@id/card_header"
                         android:layout_height="wrap_content"/>
-                </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:id="@+id/card_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/card_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="@string/duration"/>
+                    <TextView
+                        android:gravity="end"
+                        android:id="@+id/card_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </TableRow>
+            </TableLayout>
             <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="match_parent"

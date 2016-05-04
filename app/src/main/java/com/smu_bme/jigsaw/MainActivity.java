@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog = new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.create)).setView(layout).setPositiveButton(getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             String CurrentDateString = new SimpleDateFormat("yyyy-MM-dd").format(CurrentCalendar.getTime());
-                            String CurrentTimeString = new SimpleDateFormat("mm:ss").format(CurrentCalendar.getTime());
+                            String CurrentTimeString = new SimpleDateFormat("HH:mm").format(CurrentCalendar.getTime());
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String nameInput = name.getText().toString();
@@ -145,11 +145,12 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     Id = dbHelper.addData(dbData);
                                     dbData.setSetID(Id);
-                                    Log.d("DEBUGGING", "ID = " + dbData.getSetID() );
+                                    Log.d("DEBUGGING", "duration = " + dbData.getDuration() );
                                     intent = new Intent(MainActivity.this, TimerActivity.class);
 //                                    Log.d("DEBUGGING", "Intent get");
                                     intent.putExtra("Timer", dbData);
                                     intent.putExtra("Id", Id);
+//                                    intent.putExtra("Calendar", )
 //                                    Log.d("DEBUGGING", "Intent settings");
                                     startActivity(intent);
 //                                    Log.d("DEBUGGING", "Intent use");
@@ -196,39 +197,39 @@ public class MainActivity extends AppCompatActivity {
         inflater = LayoutInflater.from(MainActivity.this);
 
         switch (item.getItemId()){
-            case R.id.theme:
-                layout =  inflater.inflate(R.layout.dialog_select_theme, null);
-                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.dialog_select_theme, null);
-                dialog = new AlertDialog.Builder(MainActivity.this).create();
-//                dialog.setView(layout);
-                dialog.show();
-                dialog.getWindow().setContentView(linearLayout);
-                RadioGroup group = (RadioGroup) layout.findViewById(R.id.radio_group);
-                RadioButton radioButton1 = (RadioButton) layout.findViewById(R.id.defaultButton);
-                RadioButton radioButton2 = (RadioButton) layout.findViewById(R.id.bananaButton);
-                RadioButton radioButton3 = (RadioButton) layout.findViewById(R.id.grapeButton);
-                RadioButton radioButton4 = (RadioButton) layout.findViewById(R.id.tomatoButton);
-                RadioButton radioButton5 = (RadioButton) layout.findViewById(R.id.graphiteButton);
-                RadioButton radioButton6 = (RadioButton) layout.findViewById(R.id.blueberryButton);
-                group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                        Toast.makeText(MainActivity.this, "your!!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//            case R.id.theme:
+//                layout =  inflater.inflate(R.layout.dialog_select_theme, null);
+//                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.dialog_select_theme, null);
+//                dialog = new AlertDialog.Builder(MainActivity.this).create();
+////                dialog.setView(layout);
 //                dialog.show();
-                break;
+//                dialog.getWindow().setContentView(linearLayout);
+//                RadioGroup group = (RadioGroup) layout.findViewById(R.id.radio_group);
+//                RadioButton radioButton1 = (RadioButton) layout.findViewById(R.id.defaultButton);
+//                RadioButton radioButton2 = (RadioButton) layout.findViewById(R.id.bananaButton);
+//                RadioButton radioButton3 = (RadioButton) layout.findViewById(R.id.grapeButton);
+//                RadioButton radioButton4 = (RadioButton) layout.findViewById(R.id.tomatoButton);
+//                RadioButton radioButton5 = (RadioButton) layout.findViewById(R.id.graphiteButton);
+//                RadioButton radioButton6 = (RadioButton) layout.findViewById(R.id.blueberryButton);
+//                group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//
+//                        Toast.makeText(MainActivity.this, "your!!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+////                dialog.show();
+//                break;
             case R.id.back_to_jigsaw: intent = new Intent(MainActivity.this, JigsawActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.background:
-                layout = inflater.inflate(R.layout.dialog_select_background, null);
-                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
-                        .show();
-                break;
-//            case R.id.tutorial: intent = new Intent(MainActivity.this, MainActivity.this);
+//            case R.id.background:
+//                layout = inflater.inflate(R.layout.dialog_select_background, null);
+//                dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setNegativeButton(getString(R.string.cancel), null)
+//                        .show();
 //                break;
+////            case R.id.tutorial: intent = new Intent(MainActivity.this, MainActivity.this);
+////                break;
             case R.id.about_jigsaw:
                 layout = inflater.inflate(R.layout.dialog_about_jigsaw, null);
                 dialog = new AlertDialog.Builder(MainActivity.this).setView(layout).setTitle(getString(R.string.about_jigsaw)).setPositiveButton(getString(R.string.yes), null).show();
