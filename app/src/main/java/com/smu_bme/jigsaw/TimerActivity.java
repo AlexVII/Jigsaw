@@ -48,7 +48,7 @@ public class TimerActivity extends AppCompatActivity implements Serializable {
         Log.d("DEBUGGING", "ID  233 = " + dbData.getSetID());
         textView = (TextView) findViewById(R.id.timer);
         progressBar = (ProgressBar) findViewById(R.id.timer_progress_bar);
-        progressBar.setMax(a * 60);
+        progressBar.setMax(a);
         name = (TextView) findViewById(R.id.timer_name);
         name.setText(dbData.getName());
         date = (TextView) findViewById(R.id.timer_date);
