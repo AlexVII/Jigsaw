@@ -2,6 +2,7 @@ package com.smu_bme.jigsaw;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +16,14 @@ import java.util.List;
 /**
  * Created by bme-lab2 on 4/28/16.
  */
-public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
+public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> implements View.OnClickListener{
 
     private Context context;
     private String calendar;
     private DbHelper dbHelper;
     private List<DbData> list;
+    private CardView cardView;
+    private int j;
 
 
     public mAdapter(List<DbData> list, Context context) {
@@ -37,19 +40,13 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final int j = holder.getAdapterPosition();
+        j = holder.getAdapterPosition();
         holder.name.setText(list.get(position).getName());
         Log.d("DEBUGGING1", list.get(position).getTime());
         holder.time.setText(list.get(position).getTime());
         holder.duration.setText(String.valueOf(list.get(position).getDuration()));
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CardActivity.class);
-                intent.putExtra("Event", list.get(j));
-                context.startActivity(intent);
-            }
-        });
+        holder.more.setOnClickListener(this);
+        holder.cardView.setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +59,7 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
         public TextView time;
         public TextView duration;
         public ImageButton more;
+        public CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -69,7 +67,14 @@ public class mAdapter extends RecyclerView.Adapter<mAdapter.ViewHolder> {
             time = (TextView) v.findViewById(R.id.card_view_time);
             duration = (TextView) v.findViewById(R.id.card_view_duration);
             more = (ImageButton) v.findViewById(R.id.card_more);
+            cardView = (CardView) v.findViewById(R.id.card);
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(context, CardActivity.class);
+        intent.putExtra("Event", list.get(j));
+        context.startActivity(intent);
+    }
 }

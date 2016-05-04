@@ -56,10 +56,10 @@
     <string name="edit">Edit</string>
     <string name="accept">Accept</string>
     <string name="delete">Delete</string>
-    <string name="delete_title">Deleting</string>
-<string name="record_week">Record of the week/ (min)</string>
+    <string name="delete_title">Delete?</string>
+<string name="record_week">Record of the week/(min)</string>
 
-    <string name="pie_chart">Record of the day/ (min)</string>
+    <string name="pie_chart"></string>
 
     <string name="sunday">Sun</string>
     <string name="monday">Mon</string>

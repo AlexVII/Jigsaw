@@ -48,8 +48,6 @@
     <string name="delete">删除</string>
 
 
-    <string name="piechart">每日学习</string>
-
     <string name="sunday">周日</string>
     <string name="monday">周一</string>
     <string name="tuesday">周二</string>
@@ -67,14 +65,13 @@
     <!--<string name="card_view">记录界面</string>-->
     <!--<string name="about_jigsaw">关于</string>-->
     <!--<string name="accept">接受</string>-->
-    <string name="delete_title">正在删除</string>
+    <string name="delete_title">删除?</string>
     <string name="exit_timer">停止</string>
     <string name="get_to_start">快开始拼图之旅吧</string>
     <string name="hint_name">必填</string>
     <string name="hint_remark">选填</string>
     <string name="no_found_on_day">在这一天并没有找到任何记录</string>
     <string name="no_found_on_week">整整一周都没有找到记录呢</string>
-    <string name="pie_chart">饼图</string>
     <string name="preview">预览</string>
     <string name="producer">制作者：某南医大的理想计划</string>
     <string name="record_week">一周记录</string>
