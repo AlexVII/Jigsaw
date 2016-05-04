@@ -2,14 +2,14 @@
     <string name="app_name">拼图</string>
     <string name="Label">Jigsaw</string>
 
-    <string name="create_plan">Create Your Plan</string>
+    <string name="create_plan">新建事项</string>
     <string name="go_to_main_page">返回主界面</string>
 
     <string name="date">日期</string>
     <string name="Log">记录</string>
     <string name="Data">数据</string>
 
-    <string name="create">新事项</string>
+    <string name="create">新建事项</string>
     <string name="Name">事项：</string>
     <string name="noName">事项要有名称</string>
     <string name="Remark">备注：</string>
@@ -17,12 +17,12 @@
     <string name="yes">确定</string>
     <string name="cancel">取消</string>
     <string name="duration">时长</string>
-    <string name="duration_1">15分钟</string>
-    <string name="duration_2">0.5小时</string>
-    <string name="duration_3">1小时</string>
-    <string name="duration_4">1.5小时</string>
-    <string name="duration_5">2小时</string>
-    <string name="duration_6">3小时</string>
+    <string name="duration_1">15 分钟</string>
+    <string name="duration_2">30 分钟</string>
+    <string name="duration_3">1 小时</string>
+    <string name="duration_4">1 小时 30 分钟</string>
+    <string name="duration_5">2 小时</string>
+    <string name="duration_6">3 小时</string>
     <string name="successful_add_1">新计划</string>
     <string name="successful_add_2">成功添加</string>
 
@@ -37,11 +37,11 @@
     <string name="t24">24</string>
 
     <string name="quart_hour">15分钟</string>
-    <string name="half_hour">0.5小时</string>
+    <string name="half_hour">30 分钟</string>
     <string name="one_hour">1小时</string>
-    <string name="one_and_half_hour">1.5小时</string>
-    <string name="two_hour">2小时</string>
-    <string name="three_hour">3小时</string>
+    <string name="one_and_half_hour">1 小时 30 分钟</string>
+    <string name="two_hour">2 小时</string>
+    <string name="three_hour">3 小时</string>
 
     <string name="back">返回</string>
     <string name="edit">修改</string>
@@ -62,9 +62,28 @@
     <string name="gettostart">快开始拼图之旅吧</string>
     <string name="nofoundonday">在这一天并没有找到任何记录</string>
     <string name="nofoundonweek">整整一周都没有找到记录呢</string>
-    <string name="back_to_jigsaw"></string>
-    <string name="background"></string>
-    <string name="card_view"></string>
+    <string name="back_to_jigsaw">返回拼图</string>
+    <string name="background">背景</string>
+    <string name="card_view">记录界面</string>
+    <string name="about_jigsaw">关于</string>
+    <string name="accept">接受</string>
+    <string name="delete_title">正在删除</string>
+    <string name="exit_timer">停止</string>
+    <string name="get_to_start">快开始拼图之旅吧</string>
+    <string name="hint_name">必填</string>
+    <string name="hint_remark">选填</string>
+    <string name="no_found_on_day">在这一天并没有找到任何记录</string>
+    <string name="no_found_on_week">整整一周都没有找到记录呢</string>
+    <string name="pie_chart">饼图</string>
+    <string name="preview">预览</string>
+    <string name="producer">制作者：某南医大的理想计划</string>
+    <string name="record_week">一周记录</string>
+    <string name="successful_change_1">事项</string>
+    <string name="successful_change_2">成功修改</string>
+    <string name="theme">主题</string>
+    <string name="version">版本号 1.0</string>
+    <string name="tutorial">教程</string>
+    <string name="timer">记时器</string>
 </resources>
 
 

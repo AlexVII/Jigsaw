@@ -132,7 +132,7 @@ public class ChartView extends View {
 
             pieChart.setDescriptionTextSize(15f);
             pieChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
-            pieChart.setUsePercentValues(true);
+            pieChart.setUsePercentValues(false);
             pieChart.setExtraOffsets(5, 5, 5, 5);
             pieChart.setDragDecelerationFrictionCoef(0.95f);
             pieChart.setDrawSliceText(false);

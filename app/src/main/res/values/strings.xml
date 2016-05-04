@@ -57,9 +57,9 @@
     <string name="accept">Accept</string>
     <string name="delete">Delete</string>
     <string name="delete_title">Deleting</string>
-<string name="record_week">Record of the week</string>
+<string name="record_week">Record of the week/ (min)</string>
 
-    <string name="pie_chart">Pie Chart</string>
+    <string name="pie_chart">Record of the day/ (min)</string>
 
     <string name="sunday">Sun</string>
     <string name="monday">Mon</string>
